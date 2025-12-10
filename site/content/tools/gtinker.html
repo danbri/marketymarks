@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTIN Acoustic Transceiver</title>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+  --bg-primary: #0a0a0c;
+  --bg-secondary: #111115;
+  --bg-tertiary: #1a1a1f;
+  --accent-cyan: #00f0ff;
+  --accent-magenta: #ff00aa;
+  --accent-green: #00ff88;
+  --accent-amber: #ffaa00;
+  --text-primary: #e0e0e5;
+  --text-dim: #606068;
+  --border-color: #2a2a30;
+  --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.3);
+  --glow-magenta: 0 0 20px rgba(255, 0, 170, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: var(--glow-cyan);
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.3em;
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.panel-header {
+  background: var(--bg-tertiary);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-header h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+}
+
+.status-dot.active {
+  background: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.panel-content {
+  padding: 16px;
+}
+
+/* Scanner panel */
+#scanner-container {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--bg-primary);
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+#scanner-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scanner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.scan-target {
+  width: 60%;
+  height: 40%;
+  border: 2px solid var(--accent-cyan);
+  border-radius: 8px;
+  box-shadow: var(--glow-cyan);
+}
+
+.scanner-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* GTIN Display */
+.gtin-display {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.gtin-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.gtin-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 0.1em;
+  text-shadow: var(--glow-cyan);
+  word-break: break-all;
+}
+
+.gtin-input-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.gtin-input {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  color: var(--accent-cyan);
+  letter-spacing: 0.02em;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.gtin-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.gtin-btn {
+  flex-shrink: 0;
+  width: 44px;
+  height: auto;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.gtin-btn:hover {
+  border-color: var(--accent-cyan);
+  background: var(--bg-primary);
+}
+
+.gtin-btn.copied {
+  border-color: var(--accent-green);
+  background: rgba(0, 255, 136, 0.1);
+}
+
+.gtin-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--text-primary);
+}
+
+.gtin-btn:hover svg {
+  stroke: var(--accent-cyan);
+}
+
+.gtin-btn.copied svg {
+  stroke: var(--accent-green);
+}
+
+/* Buttons */
+button {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-cyan);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+  border: none;
+  color: var(--bg-primary);
+}
+
+button.primary:hover {
+  box-shadow: var(--glow-cyan), var(--glow-magenta);
+}
+
+button.active {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  color: var(--bg-primary);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+/* Visualizer */
+.visualizer-container {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+#spectrum-canvas {
+  width: 100%;
+  height: 120px;
+  display: block;
+}
+
+.freq-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* Transmission controls */
+.tx-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mode-toggle {
+  display: flex;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mode-toggle button {
+  border: none;
+  border-radius: 0;
+  padding: 8px 16px;
+}
+
+.mode-toggle button.selected {
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+}
+
+/* Log panel */
+.log-container {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  height: 200px;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  padding: 8px;
+}
+
+.log-entry {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  gap: 10px;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-time {
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.log-msg {
+  word-break: break-all;
+}
+
+.log-msg.tx { color: var(--accent-magenta); }
+.log-msg.rx { color: var(--accent-green); }
+.log-msg.error { color: #ff4444; }
+.log-msg.info { color: var(--accent-amber); }
+
+/* Musical notes display */
+.notes-display {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.note-box {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: all 0.15s;
+}
+
+.note-box.active {
+  background: var(--accent-magenta);
+  border-color: var(--accent-magenta);
+  color: var(--bg-primary);
+  box-shadow: var(--glow-magenta);
+}
+
+/* Decoded display */
+.decoded-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.decoded-gtin {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  color: var(--accent-green);
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+/* Product info panel */
+.product-info {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 12px;
+  margin-top: 12px;
+  display: none;
+}
+
+.product-info.visible {
+  display: block;
+}
+
+.product-info.loading {
+  display: block;
+}
+
+.product-info.loading::after {
+  content: 'Looking up...';
+  color: var(--text-dim);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.5; }
+}
+
+.product-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.product-meta {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.product-meta span {
+  color: var(--accent-amber);
+}
+
+.product-links {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.product-link {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  color: var(--accent-cyan);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.product-link:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.gs1-resolver {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-color);
+}
+
+.gs1-resolver a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+.gs1-resolver a:hover {
+  text-decoration: underline;
+}
+
+/* Settings */
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.settings-row label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  min-width: 100px;
+}
+
+.settings-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent-cyan);
+}
+
+.settings-row .value {
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  min-width: 50px;
+  text-align: right;
+}
+
+/* Full width panel */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>GTIN ACOUSTIC</h1>
+      <div class="subtitle">Dual-layer ultrasonic + musical encoding</div>
+    </header>
+
+<div class="grid">
+  <!-- Scanner Panel -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="status-dot" id="scanner-status"></div>
+      <h2>Barcode Scanner</h2>
+    </div>
+    <div class="panel-content">
+      <div id="scanner-container">
+        <div class="scanner-overlay">
+          <div class="scan-target"></div>
+        </div>
+      </div>
+      <div class="scanner-controls">
+        <button id="btn-start-scanner">Start Scanner</button>
+        <button id="btn-stop-scanner" disabled>Stop Scanner</button>
+      </div>
+      <div class="gtin-display">
+        <div class="gtin-label">Current GTIN</div>
+        <div class="gtin-input-wrapper">
+          <input type="text" class="gtin-input" id="gtin-input" placeholder="0000000000000" maxlength="14">
+          <button class="gtin-btn" id="btn-copy" title="Copy GTIN">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+          <button class="gtin-btn" id="btn-lookup" title="Lookup product info">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="product-info" id="product-info"></div>
+    </div>
+  </div>
+
+  <!-- Transmitter Panel -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="status-dot" id="tx-status"></div>
+      <h2>Transmitter</h2>
+    </div>
+    <div class="panel-content">
+      <div class="settings-row">
+        <label>Symbol Duration</label>
+        <input type="range" id="symbol-duration" min="50" max="200" value="80">
+        <span class="value" id="symbol-duration-val">80ms</span>
+      </div>
+      <div class="settings-row">
+        <label>TX Volume</label>
+        <input type="range" id="tx-volume" min="0" max="100" value="70">
+        <span class="value" id="tx-volume-val">70%</span>
+      </div>
+
+      <div style="margin: 12px 0;">
+        <div class="gtin-label">Encoding Mode</div>
+        <div class="mode-toggle">
+          <button id="mode-both" class="selected">Both</button>
+          <button id="mode-ultra">Ultrasonic</button>
+          <button id="mode-music">Musical</button>
+        </div>
+      </div>
+
+      <div class="tx-controls">
+        <button class="primary" id="btn-transmit">Transmit GTIN</button>
+        <button id="btn-test-tone">Test Tone</button>
+      </div>
+
+      <div class="notes-display" id="notes-display">
+        <div class="note-box">-</div>
+        <div class="note-box">-</div>
+        <div class="note-box">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receiver Panel -->
+  <div class="panel full-width">
+    <div class="panel-header">
+      <div class="status-dot" id="rx-status"></div>
+      <h2>Receiver</h2>
+    </div>
+    <div class="panel-content">
+      <div class="visualizer-container">
+        <canvas id="spectrum-canvas"></canvas>
+        <div class="freq-labels">
+          <span>0 Hz</span>
+          <span>5 kHz</span>
+          <span>10 kHz</span>
+          <span>15 kHz</span>
+          <span>20 kHz</span>
+        </div>
+      </div>
+
+      <div class="tx-controls">
+        <button id="btn-listen" class="primary">Start Listening</button>
+        <button id="btn-stop-listen" disabled>Stop</button>
+      </div>
+
+      <div class="decoded-section">
+        <div class="gtin-label">Decoded GTIN</div>
+        <div class="decoded-gtin" id="decoded-gtin">Waiting for signal...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log Panel -->
+  <div class="panel full-width">
+    <div class="panel-header">
+      <h2>System Log</h2>
+    </div>
+    <div class="panel-content">
+      <div class="log-container" id="log-container"></div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+
+<script>
+// ============================================================
+// GTIN Acoustic Transceiver
+// Dual-layer encoding: Ultrasonic FSK + Musical Chords
+// ============================================================
+
+const CONFIG = {
+  sampleRate: 44100,
+  fftSize: 2048,
+
+  // Ultrasonic dual-tone FSK frequencies (Hz)
+  ultraGroupA: [17500, 18000, 18500, 19000],
+  ultraGroupB: [19200, 19500, 19800, 20100],
+
+  // Musical notes for chord encoding (Hz) - C4 to B5
+  musicalNotes: {
+    'C4': 261.63, 'C#4': 277.18, 'D4': 293.66, 'D#4': 311.13,
+    'E4': 329.63, 'F4': 349.23, 'F#4': 369.99, 'G4': 392.00,
+    'G#4': 415.30, 'A4': 440.00, 'A#4': 466.16, 'B4': 493.88,
+    'C5': 523.25, 'C#5': 554.37, 'D5': 587.33, 'D#5': 622.25,
+    'E5': 659.25, 'F5': 698.46, 'F#5': 739.99, 'G5': 783.99,
+    'G#5': 830.61, 'A5': 880.00
+  },
+
+  // Chord definitions for encoding (indices into note array)
+  // Using triads that sound pleasant together
+  chordSet: [
+    [0, 4, 7],    // C maj
+    [2, 5, 9],    // D min
+    [4, 7, 11],   // E min
+    [5, 9, 12],   // F maj
+    [7, 11, 14],  // G maj
+    [9, 12, 16],  // A min
+    [11, 14, 17], // B dim
+    [12, 16, 19], // C maj (octave)
+  ],
+
+  // Preamble: distinctive pattern for sync
+  preambleUltra: [[0, 0], [3, 3], [0, 0], [3, 3]], // Alternating corner frequencies
+
+  symbolDuration: 80,  // ms per symbol
+  guardInterval: 20,   // ms between symbols
+
+  // Detection thresholds
+  detectionThreshold: 0.15,
+  peakMinDistance: 50, // Hz
+};
+
+// Note name array for easy lookup
+const NOTE_NAMES = Object.keys(CONFIG.musicalNotes);
+const NOTE_FREQS = Object.values(CONFIG.musicalNotes);
+
+// ============================================================
+// Utility Functions
+// ============================================================
+
+function log(msg, type = 'info') {
+  const container = document.getElementById('log-container');
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+
+  const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+  entry.innerHTML = `
+    <span class="log-time">${time}</span>
+    <span class="log-msg ${type}">${msg}</span>
+  `;
+
+  container.appendChild(entry);
+  container.scrollTop = container.scrollHeight;
+}
+
+function gtinToBits(gtin) {
+  // Convert GTIN string to 48-bit binary (42 data + 6 CRC)
+  const num = BigInt(gtin.padStart(14, '0'));
+  const bits = [];
+
+  for (let i = 41; i >= 0; i--) {
+    bits.push((num >> BigInt(i)) & 1n ? 1 : 0);
+  }
+
+  // Simple CRC-6
+  let crc = 0;
+  for (const bit of bits) {
+    const msb = (crc >> 5) & 1;
+    crc = ((crc << 1) | bit) & 0x3F;
+    if (msb) crc ^= 0x03; // polynomial x^6 + x + 1
+  }
+
+  for (let i = 5; i >= 0; i--) {
+    bits.push((crc >> i) & 1);
+  }
+
+  return bits;
+}
+
+function bitsToGtin(bits) {
+  // Convert 48 bits back to GTIN, verify CRC
+  if (bits.length !== 48) return null;
+
+  const dataBits = bits.slice(0, 42);
+  const crcBits = bits.slice(42);
+
+  // Verify CRC
+  let crc = 0;
+  for (const bit of dataBits) {
+    const msb = (crc >> 5) & 1;
+    crc = ((crc << 1) | bit) & 0x3F;
+    if (msb) crc ^= 0x03;
+  }
+
+  let receivedCrc = 0;
+  for (let i = 0; i < 6; i++) {
+    receivedCrc = (receivedCrc << 1) | crcBits[i];
+  }
+
+  if (crc !== receivedCrc) {
+    log(`CRC mismatch: expected ${crc.toString(16)}, got ${receivedCrc.toString(16)}`, 'error');
+    return null;
+  }
+
+  // Convert to number
+  let num = 0n;
+  for (const bit of dataBits) {
+    num = (num << 1n) | BigInt(bit);
+  }
+
+  return num.toString().padStart(13, '0');
+}
+
+function bitsToSymbols(bits) {
+  // Group bits into 4-bit symbols for ultrasonic
+  // and 7-bit groups for musical chords
+  const ultraSymbols = [];
+  const musicalSymbols = [];
+
+  // Ultrasonic: 4 bits per symbol = 12 symbols for 48 bits
+  for (let i = 0; i < bits.length; i += 4) {
+    const nibble = (bits[i] << 3) | (bits[i+1] << 2) | (bits[i+2] << 1) | bits[i+3];
+    const groupA = (nibble >> 2) & 0x3;
+    const groupB = nibble & 0x3;
+    ultraSymbols.push([groupA, groupB]);
+  }
+
+  // Musical: 3-bit groups = chord index (8 chords available)
+  // 48 bits = 16 three-bit symbols
+  for (let i = 0; i < bits.length; i += 3) {
+    const idx = (bits[i] << 2) | (bits[i+1] << 1) | (bits[i+2] || 0);
+    musicalSymbols.push(idx % CONFIG.chordSet.length);
+  }
+
+  return { ultraSymbols, musicalSymbols };
+}
+
+function symbolsToBits(ultraSymbols) {
+  const bits = [];
+  for (const [groupA, groupB] of ultraSymbols) {
+    const nibble = (groupA << 2) | groupB;
+    bits.push((nibble >> 3) & 1);
+    bits.push((nibble >> 2) & 1);
+    bits.push((nibble >> 1) & 1);
+    bits.push(nibble & 1);
+  }
+  return bits;
+}
+
+// ============================================================
+// Audio Context and Nodes
+// ============================================================
+
+let audioCtx = null;
+let analyser = null;
+let micStream = null;
+let isListening = false;
+let isTransmitting = false;
+
+async function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)({
+      sampleRate: CONFIG.sampleRate
+    });
+  }
+
+  if (audioCtx.state === 'suspended') {
+    await audioCtx.resume();
+  }
+
+  return audioCtx;
+}
+
+// ============================================================
+// Transmitter
+// ============================================================
+
+class Transmitter {
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.oscillators = [];
+    this.gains = [];
+    this.masterGain = ctx.createGain();
+    this.masterGain.connect(ctx.destination);
+  }
+
+  setVolume(vol) {
+    this.masterGain.gain.value = vol;
+  }
+
+  async playTone(frequencies, duration, startTime) {
+    const oscs = [];
+    const gains = [];
+
+    for (const freq of frequencies) {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = freq > 10000 ? 'sine' : 'triangle'; // Sine for ultrasonic, triangle for musical
+      osc.frequency.value = freq;
+
+      // Envelope to reduce clicks
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(freq > 10000 ? 0.3 : 0.15, startTime + 0.005);
+      gain.gain.setValueAtTime(freq > 10000 ? 0.3 : 0.15, startTime + duration/1000 - 0.005);
+      gain.gain.linearRampToValueAtTime(0, startTime + duration/1000);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+
+      osc.start(startTime);
+      osc.stop(startTime + duration/1000 + 0.01);
+
+      oscs.push(osc);
+      gains.push(gain);
+    }
+
+    return { oscs, gains };
+  }
+
+  async transmitGTIN(gtin, mode = 'both') {
+    if (isTransmitting) return;
+    isTransmitting = true;
+
+    document.getElementById('tx-status').classList.add('active');
+    log(`Transmitting GTIN: ${gtin}`, 'tx');
+
+    const bits = gtinToBits(gtin);
+    const { ultraSymbols, musicalSymbols } = bitsToSymbols(bits);
+
+    log(`Encoded ${bits.length} bits into ${ultraSymbols.length} ultrasonic symbols`, 'info');
+
+    const symbolDur = parseInt(document.getElementById('symbol-duration').value);
+    const guardDur = CONFIG.guardInterval;
+    const totalSymbolTime = (symbolDur + guardDur) / 1000;
+
+    let time = this.ctx.currentTime + 0.1;
+
+    // Preamble
+    for (const [a, b] of CONFIG.preambleUltra) {
+      if (mode === 'both' || mode === 'ultra') {
+        const freqs = [CONFIG.ultraGroupA[a], CONFIG.ultraGroupB[b]];
+        await this.playTone(freqs, symbolDur, time);
+      }
+      time += totalSymbolTime;
+    }
+
+    // Data symbols
+    const notesDisplay = document.getElementById('notes-display');
+
+    for (let i = 0; i < ultraSymbols.length; i++) {
+      const [a, b] = ultraSymbols[i];
+      const chordIdx = musicalSymbols[i % musicalSymbols.length];
+      const chord = CONFIG.chordSet[chordIdx];
+
+      const freqs = [];
+
+      if (mode === 'both' || mode === 'ultra') {
+        freqs.push(CONFIG.ultraGroupA[a], CONFIG.ultraGroupB[b]);
+      }
+
+      if (mode === 'both' || mode === 'music') {
+        for (const noteIdx of chord) {
+          if (noteIdx < NOTE_FREQS.length) {
+            freqs.push(NOTE_FREQS[noteIdx]);
+          }
+        }
+      }
+
+      await this.playTone(freqs, symbolDur, time);
+
+      // Update display
+      const delay = (time - this.ctx.currentTime) * 1000;
+      setTimeout(() => {
+        const noteBoxes = notesDisplay.querySelectorAll('.note-box');
+        chord.forEach((noteIdx, j) => {
+          if (noteBoxes[j] && noteIdx < NOTE_NAMES.length) {
+            noteBoxes[j].textContent = NOTE_NAMES[noteIdx];
+            noteBoxes[j].classList.add('active');
+          }
+        });
+
+        setTimeout(() => {
+          noteBoxes.forEach(box => {
+            box.classList.remove('active');
+            box.textContent = '-';
+          });
+        }, symbolDur);
+      }, Math.max(0, delay));
+
+      time += totalSymbolTime;
+    }
+
+    // Wait for transmission to complete
+    const totalTime = (time - this.ctx.currentTime) * 1000;
+    setTimeout(() => {
+      isTransmitting = false;
+      document.getElementById('tx-status').classList.remove('active');
+      log('Transmission complete', 'tx');
+    }, totalTime);
+  }
+
+  async testTone() {
+    log('Playing test tone (18kHz + 440Hz)', 'info');
+    const time = this.ctx.currentTime;
+    await this.playTone([18000, 440], 500, time);
+  }
+}
+
+// ============================================================
+// Receiver
+// ============================================================
+
+class Receiver {
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.analyser = ctx.createAnalyser();
+    this.analyser.fftSize = CONFIG.fftSize;
+    this.analyser.smoothingTimeConstant = 0.3;
+
+    this.freqData = new Float32Array(this.analyser.frequencyBinCount);
+    this.canvas = document.getElementById('spectrum-canvas');
+    this.canvasCtx = this.canvas.getContext('2d');
+
+    this.symbolBuffer = [];
+    this.lastSymbol = null;
+    this.preambleDetected = false;
+    this.preambleCount = 0;
+
+    this.animationId = null;
+  }
+
+  async start() {
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false,
+          sampleRate: CONFIG.sampleRate
+        }
+      });
+
+      const source = this.ctx.createMediaStreamSource(micStream);
+      source.connect(this.analyser);
+
+      isListening = true;
+      this.symbolBuffer = [];
+      this.preambleDetected = false;
+      this.preambleCount = 0;
+
+      document.getElementById('rx-status').classList.add('active');
+      log('Receiver started, listening...', 'rx');
+
+      this.analyze();
+    } catch (err) {
+      log(`Microphone error: ${err.message}`, 'error');
+    }
+  }
+
+  stop() {
+    isListening = false;
+
+    if (micStream) {
+      micStream.getTracks().forEach(t => t.stop());
+      micStream = null;
+    }
+
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+    }
+
+    document.getElementById('rx-status').classList.remove('active');
+    log('Receiver stopped', 'rx');
+  }
+
+  freqToBin(freq) {
+    return Math.round(freq * CONFIG.fftSize / CONFIG.sampleRate);
+  }
+
+  binToFreq(bin) {
+    return bin * CONFIG.sampleRate / CONFIG.fftSize;
+  }
+
+  detectPeaks(freqData, minFreq, maxFreq, threshold) {
+    const minBin = this.freqToBin(minFreq);
+    const maxBin = this.freqToBin(maxFreq);
+    const peaks = [];
+
+    // Find local maxima above threshold
+    for (let i = minBin + 1; i < maxBin - 1; i++) {
+      const val = freqData[i];
+      if (val > threshold &&
+          val > freqData[i-1] &&
+          val > freqData[i+1]) {
+        peaks.push({ bin: i, freq: this.binToFreq(i), magnitude: val });
+      }
+    }
+
+    // Sort by magnitude
+    peaks.sort((a, b) => b.magnitude - a.magnitude);
+
+    return peaks;
+  }
+
+  findClosestFreq(targetFreqs, detectedFreq, tolerance = 150) {
+    let closest = -1;
+    let minDiff = tolerance;
+
+    for (let i = 0; i < targetFreqs.length; i++) {
+      const diff = Math.abs(targetFreqs[i] - detectedFreq);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closest = i;
+      }
+    }
+
+    return closest;
+  }
+
+  decodeUltrasonicSymbol(freqData) {
+    const peaks = this.detectPeaks(freqData, 17000, 21000, -50);
+
+    if (peaks.length < 2) return null;
+
+    // Find best match for group A and B
+    let groupA = -1, groupB = -1;
+
+    for (const peak of peaks) {
+      if (groupA === -1) {
+        const idx = this.findClosestFreq(CONFIG.ultraGroupA, peak.freq);
+        if (idx !== -1) groupA = idx;
+      }
+      if (groupB === -1) {
+        const idx = this.findClosestFreq(CONFIG.ultraGroupB, peak.freq);
+        if (idx !== -1) groupB = idx;
+      }
+      if (groupA !== -1 && groupB !== -1) break;
+    }
+
+    if (groupA !== -1 && groupB !== -1) {
+      return [groupA, groupB];
+    }
+
+    return null;
+  }
+
+  analyze() {
+    if (!isListening) return;
+
+    this.analyser.getFloatFrequencyData(this.freqData);
+    this.drawSpectrum();
+
+    // Try to decode ultrasonic symbol
+    const symbol = this.decodeUltrasonicSymbol(this.freqData);
+
+    if (symbol) {
+      const symbolStr = symbol.join(',');
+
+      // Check for preamble
+      if (!this.preambleDetected) {
+        const preambleSymbol = CONFIG.preambleUltra[this.preambleCount];
+        if (symbol[0] === preambleSymbol[0] && symbol[1] === preambleSymbol[1]) {
+          this.preambleCount++;
+          if (this.preambleCount >= CONFIG.preambleUltra.length) {
+            this.preambleDetected = true;
+            this.symbolBuffer = [];
+            log('Preamble detected, receiving data...', 'rx');
+          }
+        } else {
+          this.preambleCount = 0;
+        }
+      } else if (symbolStr !== this.lastSymbol) {
+        // New symbol detected
+        this.symbolBuffer.push(symbol);
+        this.lastSymbol = symbolStr;
+
+        // Check if we have enough symbols (12 for 48 bits)
+        if (this.symbolBuffer.length >= 12) {
+          const bits = symbolsToBits(this.symbolBuffer.slice(0, 12));
+          const gtin = bitsToGtin(bits);
+
+          if (gtin) {
+            document.getElementById('decoded-gtin').textContent = gtin;
+            document.getElementById('gtin-input').value = gtin;
+            log(`Decoded GTIN: ${gtin}`, 'rx');
+
+            // Auto-lookup decoded GTIN
+            lookupGTIN(gtin);
+
+            // Reset for next transmission
+            this.preambleDetected = false;
+            this.preambleCount = 0;
+            this.symbolBuffer = [];
+            this.lastSymbol = null;
+          } else {
+            // CRC failed, might be noise - keep collecting
+            if (this.symbolBuffer.length > 20) {
+              // Too many symbols without valid decode, reset
+              log('Decode failed, resetting...', 'error');
+              this.preambleDetected = false;
+              this.preambleCount = 0;
+              this.symbolBuffer = [];
+              this.lastSymbol = null;
+            }
+          }
+        }
+      }
+    } else {
+      this.lastSymbol = null;
+    }
+
+    this.animationId = requestAnimationFrame(() => this.analyze());
+  }
+
+  drawSpectrum() {
+    const canvas = this.canvas;
+    const ctx = this.canvasCtx;
+    const width = canvas.width = canvas.offsetWidth * 2;
+    const height = canvas.height = canvas.offsetHeight * 2;
+
+    ctx.fillStyle = '#0a0a0c';
+    ctx.fillRect(0, 0, width, height);
+
+    const binCount = this.freqData.length;
+    const maxFreq = CONFIG.sampleRate / 2;
+
+    // Draw frequency markers
+    ctx.strokeStyle = '#1a1a1f';
+    ctx.lineWidth = 1;
+
+    for (let f = 5000; f < maxFreq; f += 5000) {
+      const x = (f / maxFreq) * width;
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+    }
+
+    // Highlight ultrasonic band
+    const ultraStart = (17000 / maxFreq) * width;
+    const ultraEnd = (21000 / maxFreq) * width;
+    ctx.fillStyle = 'rgba(0, 240, 255, 0.1)';
+    ctx.fillRect(ultraStart, 0, ultraEnd - ultraStart, height);
+
+    // Draw spectrum
+    ctx.beginPath();
+    ctx.moveTo(0, height);
+
+    for (let i = 0; i < binCount; i++) {
+      const x = (i / binCount) * width;
+      const dbValue = this.freqData[i];
+      const normalized = (dbValue + 100) / 100; // -100dB to 0dB -> 0 to 1
+      const y = height - (Math.max(0, normalized) * height);
+
+      if (i === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    }
+
+    ctx.lineTo(width, height);
+    ctx.closePath();
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, 'rgba(255, 0, 170, 0.8)');
+    gradient.addColorStop(0.5, 'rgba(0, 240, 255, 0.5)');
+    gradient.addColorStop(1, 'rgba(0, 240, 255, 0.1)');
+
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // Draw target frequencies
+    ctx.fillStyle = '#00ff88';
+    for (const freq of [...CONFIG.ultraGroupA, ...CONFIG.ultraGroupB]) {
+      const x = (freq / maxFreq) * width;
+      ctx.fillRect(x - 1, height - 10, 2, 10);
+    }
+  }
+}
+
+// ============================================================
+// Barcode Scanner
+// ============================================================
+
+let html5QrCode = null;
+let lastScanTime = 0;
+const SCAN_DEBOUNCE = 1500; // ms between accepting same code
+
+async function startScanner() {
+  if (html5QrCode) return;
+
+  html5QrCode = new Html5Qrcode("scanner-container");
+
+  const config = {
+    fps: 15,  // Higher FPS for better detection
+    qrbox: { width: 280, height: 180 },
+    aspectRatio: 1.333,
+    disableFlip: false,
+    experimentalFeatures: {
+      useBarCodeDetectorIfSupported: true  // Use native API when available
+    },
+    formatsToSupport: [
+      Html5QrcodeSupportedFormats.EAN_13,
+      Html5QrcodeSupportedFormats.EAN_8,
+      Html5QrcodeSupportedFormats.UPC_A,
+      Html5QrcodeSupportedFormats.UPC_E,
+      Html5QrcodeSupportedFormats.CODE_128,
+      Html5QrcodeSupportedFormats.CODE_39,
+      Html5QrcodeSupportedFormats.ITF,
+      Html5QrcodeSupportedFormats.QR_CODE,
+      Html5QrcodeSupportedFormats.DATA_MATRIX,
+    ]
+  };
+
+  try {
+    await html5QrCode.start(
+      { facingMode: "environment" },
+      config,
+      (decodedText, decodedResult) => {
+        const now = Date.now();
+        if (now - lastScanTime < SCAN_DEBOUNCE) return;
+        lastScanTime = now;
+
+        // Extract GTIN from various formats
+        let gtin = decodedText.replace(/[^0-9]/g, '');
+
+        // Pad or trim to 13 digits
+        if (gtin.length < 13) {
+          gtin = gtin.padStart(13, '0');
+        } else if (gtin.length > 14) {
+          gtin = gtin.slice(0, 14);
+        }
+
+        document.getElementById('gtin-input').value = gtin;
+        log(`Scanned: ${decodedResult.result.format.formatName} -> ${gtin}`, 'info');
+
+        // Auto-lookup on scan
+        lookupGTIN(gtin);
+      },
+      (errorMessage) => {
+        // Ignore scan errors (no code in view)
+      }
+    );
+
+    document.getElementById('scanner-status').classList.add('active');
+    document.getElementById('btn-start-scanner').disabled = true;
+    document.getElementById('btn-stop-scanner').disabled = false;
+    log('Scanner started', 'info');
+
+  } catch (err) {
+    log(`Scanner error: ${err}`, 'error');
+    html5QrCode = null;
+  }
+}
+
+// ============================================================
+// Product Lookup APIs
+// ============================================================
+
+function detectGTINType(gtin) {
+  const g = gtin.replace(/[^0-9]/g, '').padStart(14, '0');
+
+  // ISBN: starts with 978 or 979
+  if (g.startsWith('00978') || g.startsWith('00979') ||
+      g.slice(1).startsWith('978') || g.slice(1).startsWith('979')) {
+    return 'isbn';
+  }
+
+  // ISSN: starts with 977
+  if (g.startsWith('00977') || g.slice(1).startsWith('977')) {
+    return 'issn';
+  }
+
+  // Check GS1 prefix ranges
+  const prefix3 = g.slice(1, 4);
+  const prefixNum = parseInt(prefix3);
+
+  // NATO Stock Numbers use specific ranges (hypothetically - NSN is separate system)
+  // Pharmaceutical: 300-379 (France), etc.
+
+  return 'gtin';
+}
+
+function gtinToISBN13(gtin) {
+  // Extract ISBN-13 from GTIN-13 or GTIN-14
+  const g = gtin.replace(/[^0-9]/g, '');
+  if (g.length === 13 && (g.startsWith('978') || g.startsWith('979'))) {
+    return g;
+  }
+  if (g.length === 14 && (g.startsWith('0978') || g.startsWith('0979'))) {
+    return g.slice(1);
+  }
+  return null;
+}
+
+async function lookupGTIN(gtin) {
+  const infoPanel = document.getElementById('product-info');
+  infoPanel.className = 'product-info loading';
+  infoPanel.innerHTML = '';
+
+  const gtinType = detectGTINType(gtin);
+  const cleanGtin = gtin.replace(/[^0-9]/g, '').padStart(13, '0');
+
+  log(`Looking up ${gtinType.toUpperCase()}: ${cleanGtin}`, 'info');
+
+  const results = [];
+
+  try {
+    // 1. GS1 Digital Link resolver
+    const gs1Url = `https://id.gs1.org/01/${cleanGtin.padStart(14, '0')}`;
+    results.push({
+      source: 'GS1 Digital Link',
+      url: gs1Url,
+      note: 'Official GS1 resolver'
+    });
+
+    // 2. Open Food Facts (for food/beverage products)
+    try {
+      const offResponse = await fetch(`https://world.openfoodfacts.org/api/v2/product/${cleanGtin}.json`);
+      if (offResponse.ok) {
+        const offData = await offResponse.json();
+        if (offData.status === 1 && offData.product) {
+          const p = offData.product;
+          results.push({
+            source: 'Open Food Facts',
+            title: p.product_name || p.product_name_en,
+            brand: p.brands,
+            category: p.categories_tags?.[0]?.replace('en:', ''),
+            image: p.image_small_url,
+            url: `https://world.openfoodfacts.org/product/${cleanGtin}`
+          });
+        }
+      }
+    } catch (e) { /* API unavailable */ }
+
+    // 3. Open Beauty Facts
+    try {
+      const obfResponse = await fetch(`https://world.openbeautyfacts.org/api/v2/product/${cleanGtin}.json`);
+      if (obfResponse.ok) {
+        const obfData = await obfResponse.json();
+        if (obfData.status === 1 && obfData.product) {
+          const p = obfData.product;
+          results.push({
+            source: 'Open Beauty Facts',
+            title: p.product_name,
+            brand: p.brands,
+            url: `https://world.openbeautyfacts.org/product/${cleanGtin}`
+          });
+        }
+      }
+    } catch (e) { /* API unavailable */ }
+
+    // 4. ISBN-specific lookups
+    if (gtinType === 'isbn') {
+      const isbn = gtinToISBN13(cleanGtin);
+      if (isbn) {
+        // Open Library
+        try {
+          const olResponse = await fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
+          if (olResponse.ok) {
+            const olData = await olResponse.json();
+            const bookKey = `ISBN:${isbn}`;
+            if (olData[bookKey]) {
+              const book = olData[bookKey];
+              results.push({
+                source: 'Open Library',
+                title: book.title,
+                brand: book.authors?.map(a => a.name).join(', '),
+                category: 'Book',
+                image: book.cover?.small,
+                url: book.url
+              });
+            }
+          }
+        } catch (e) { /* API unavailable */ }
+
+        // Google Books
+        try {
+          const gbResponse = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
+          if (gbResponse.ok) {
+            const gbData = await gbResponse.json();
+            if (gbData.items?.[0]) {
+              const vol = gbData.items[0].volumeInfo;
+              results.push({
+                source: 'Google Books',
+                title: vol.title,
+                brand: vol.authors?.join(', '),
+                category: vol.categories?.[0],
+                image: vol.imageLinks?.smallThumbnail,
+                url: vol.infoLink
+              });
+            }
+          }
+        } catch (e) { /* API unavailable */ }
+      }
+    }
+
+    // 5. UPC Database (community)
+    results.push({
+      source: 'UPC Database',
+      url: `https://www.upcdatabase.com/item/${cleanGtin}`,
+      note: 'Community database'
+    });
+
+    // 6. Barcode Lookup
+    results.push({
+      source: 'Barcode Lookup',
+      url: `https://www.barcodelookup.com/${cleanGtin}`,
+      note: 'Aggregator'
+    });
+
+  } catch (err) {
+    log(`Lookup error: ${err.message}`, 'error');
+  }
+
+  // Render results
+  renderProductInfo(cleanGtin, results);
+}
+
+function renderProductInfo(gtin, results) {
+  const infoPanel = document.getElementById('product-info');
+
+  // Find first result with actual product data
+  const productData = results.find(r => r.title);
+
+  let html = '';
+
+  if (productData) {
+    html += `<div class="product-title">${escapeHtml(productData.title)}</div>`;
+    if (productData.brand) {
+      html += `<div class="product-meta">Brand: <span>${escapeHtml(productData.brand)}</span></div>`;
+    }
+    if (productData.category) {
+      html += `<div class="product-meta">Category: <span>${escapeHtml(productData.category)}</span></div>`;
+    }
+    html += `<div class="product-meta">Source: <span>${productData.source}</span></div>`;
+  } else {
+    html += `<div class="product-title" style="color: var(--text-dim)">No product data found</div>`;
+  }
+
+  // GS1 Digital Link
+  const gs1Link = results.find(r => r.source === 'GS1 Digital Link');
+  if (gs1Link) {
+    html += `<div class="gs1-resolver">
+      GS1 Digital Link: <a href="${gs1Link.url}" target="_blank" rel="noopener">${gs1Link.url}</a>
+    </div>`;
+  }
+
+  // All lookup links
+  html += '<div class="product-links">';
+  for (const r of results) {
+    if (r.url) {
+      html += `<a href="${r.url}" target="_blank" rel="noopener" class="product-link">${r.source}</a>`;
+    }
+  }
+  html += '</div>';
+
+  infoPanel.className = 'product-info visible';
+  infoPanel.innerHTML = html;
+
+  const foundCount = results.filter(r => r.title).length;
+  log(`Found ${foundCount} product matches, ${results.length} lookup links`, 'info');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+async function stopScanner() {
+  if (!html5QrCode) return;
+
+  try {
+    await html5QrCode.stop();
+    html5QrCode = null;
+
+    document.getElementById('scanner-status').classList.remove('active');
+    document.getElementById('btn-start-scanner').disabled = false;
+    document.getElementById('btn-stop-scanner').disabled = true;
+    log('Scanner stopped', 'info');
+  } catch (err) {
+    log(`Stop scanner error: ${err}`, 'error');
+  }
+}
+
+// ============================================================
+// UI Setup
+// ============================================================
+
+let transmitter = null;
+let receiver = null;
+let encodingMode = 'both';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize audio on first user interaction
+  const initOnInteraction = async () => {
+    if (!audioCtx) {
+      await initAudio();
+      transmitter = new Transmitter(audioCtx);
+      receiver = new Receiver(audioCtx);
+
+      // Set initial volume
+      const vol = parseInt(document.getElementById('tx-volume').value) / 100;
+      transmitter.setVolume(vol);
+
+      log('Audio system initialized', 'info');
+    }
+  };
+
+  // Scanner buttons
+  document.getElementById('btn-start-scanner').addEventListener('click', async () => {
+    await initOnInteraction();
+    startScanner();
+  });
+
+  document.getElementById('btn-stop-scanner').addEventListener('click', stopScanner);
+
+  // Copy button
+  document.getElementById('btn-copy').addEventListener('click', async () => {
+    const gtin = document.getElementById('gtin-input').value;
+    if (!gtin) return;
+
+    try {
+      await navigator.clipboard.writeText(gtin);
+      const btn = document.getElementById('btn-copy');
+      btn.classList.add('copied');
+      // Change to checkmark icon temporarily
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>`;
+      log(`Copied: ${gtin}`, 'info');
+
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>`;
+      }, 1500);
+    } catch (err) {
+      log(`Copy failed: ${err.message}`, 'error');
+    }
+  });
+
+  // Lookup button
+  document.getElementById('btn-lookup').addEventListener('click', () => {
+    const gtin = document.getElementById('gtin-input').value.replace(/[^0-9]/g, '');
+    if (gtin.length < 8) {
+      log('Enter a valid GTIN to lookup', 'error');
+      return;
+    }
+    lookupGTIN(gtin);
+  });
+
+  // Transmit button
+  document.getElementById('btn-transmit').addEventListener('click', async () => {
+    await initOnInteraction();
+    const gtin = document.getElementById('gtin-input').value.replace(/[^0-9]/g, '');
+    if (gtin.length < 8) {
+      log('Enter a valid GTIN (8-14 digits)', 'error');
+      return;
+    }
+    transmitter.transmitGTIN(gtin.padStart(13, '0'), encodingMode);
+  });
+
+  // Test tone button
+  document.getElementById('btn-test-tone').addEventListener('click', async () => {
+    await initOnInteraction();
+    transmitter.testTone();
+  });
+
+  // Listen buttons
+  document.getElementById('btn-listen').addEventListener('click', async () => {
+    await initOnInteraction();
+    receiver.start();
+    document.getElementById('btn-listen').disabled = true;
+    document.getElementById('btn-stop-listen').disabled = false;
+  });
+
+  document.getElementById('btn-stop-listen').addEventListener('click', () => {
+    receiver.stop();
+    document.getElementById('btn-listen').disabled = false;
+    document.getElementById('btn-stop-listen').disabled = true;
+  });
+
+  // Mode toggle
+  ['mode-both', 'mode-ultra', 'mode-music'].forEach(id => {
+    document.getElementById(id).addEventListener('click', (e) => {
+      document.querySelectorAll('.mode-toggle button').forEach(b => b.classList.remove('selected'));
+      e.target.classList.add('selected');
+      encodingMode = id.replace('mode-', '');
+      log(`Encoding mode: ${encodingMode}`, 'info');
+    });
+  });
+
+  // Settings sliders
+  document.getElementById('symbol-duration').addEventListener('input', (e) => {
+    document.getElementById('symbol-duration-val').textContent = `${e.target.value}ms`;
+    CONFIG.symbolDuration = parseInt(e.target.value);
+  });
+
+  document.getElementById('tx-volume').addEventListener('input', (e) => {
+    document.getElementById('tx-volume-val').textContent = `${e.target.value}%`;
+    if (transmitter) {
+      transmitter.setVolume(parseInt(e.target.value) / 100);
+    }
+  });
+
+  // GTIN input validation
+  document.getElementById('gtin-input').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 14);
+  });
+
+  log('GTIN Acoustic Transceiver ready', 'info');
+  log('Scan a barcode or enter GTIN to transmit', 'info');
+});
+</script>
+
+</body>
+</html>
