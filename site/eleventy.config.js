@@ -1,6 +1,7 @@
 module.exports = function(eleventyConfig) {
   // Copy static assets
   eleventyConfig.addPassthroughCopy("content/assets");
+  eleventyConfig.addPassthroughCopy({ "content/CNAME": "CNAME" });
 
   // Watch for changes in content
   eleventyConfig.addWatchTarget("content/");
