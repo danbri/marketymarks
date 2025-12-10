@@ -25,11 +25,11 @@
     .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 1.5rem;
     }
 
     header {
-      padding: 1.5rem 0;
+      padding: 1rem 0;
       border-bottom: 1px solid rgba(0,0,0,0.06);
       background: rgba(255,255,255,0.8);
       backdrop-filter: blur(10px);
@@ -40,7 +40,7 @@
 
     .logo {
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       color: #1a1a2e;
       text-decoration: none;
       display: flex;
@@ -49,45 +49,39 @@
     }
 
     .logo-mark {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      border-radius: 8px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     main {
-      padding: 2.5rem 0;
+      padding: 1.5rem 0;
     }
 
     @media (min-width: 768px) {
       main {
-        padding: 4rem 0;
+        padding: 2rem 0;
       }
     }
 
     .hero {
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto 2rem;
-    }
-
-    @media (min-width: 768px) {
-      .hero {
-        margin: 0 auto 3rem;
-      }
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 700;
       line-height: 1.2;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.75rem;
       background: linear-gradient(135deg, #1a1a2e 0%, #4a4a6a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -101,23 +95,23 @@
     }
 
     .hero p {
-      font-size: 1.25rem;
+      font-size: 1rem;
       color: #64748b;
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      max-width: 500px;
+      margin: 0 auto;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       background: rgba(99, 102, 241, 0.1);
       color: #6366f1;
-      padding: 0.5rem 1rem;
+      padding: 0.35rem 0.75rem;
       border-radius: 100px;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .badge::before {
@@ -126,15 +120,15 @@
 
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
     }
 
     .feature {
       background: white;
-      padding: 2rem;
-      border-radius: 16px;
+      padding: 1.25rem;
+      border-radius: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
       border: 1px solid rgba(0,0,0,0.06);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -146,35 +140,37 @@
     }
 
     .feature-icon {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       background: linear-gradient(135deg, #f0f4ff 0%, #e8ecff 100%);
-      border-radius: 12px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
     }
 
     .feature h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
       color: #1a1a2e;
     }
 
     .feature p {
       color: #64748b;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+      line-height: 1.5;
     }
 
     footer {
-      padding: 3rem 0;
+      padding: 1.5rem 0;
       text-align: center;
       color: #94a3b8;
-      font-size: 0.875rem;
+      font-size: 0.8rem;
       border-top: 1px solid rgba(0,0,0,0.06);
+      margin-top: 1rem;
     }
 
     footer a {
@@ -188,16 +184,73 @@
 
     .content {
       background: white;
-      padding: 3rem;
-      border-radius: 16px;
+      padding: 2rem;
+      border-radius: 12px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       border: 1px solid rgba(0,0,0,0.06);
     }
 
-    .content h1 { font-size: 2rem; margin-bottom: 1rem; }
-    .content h2 { font-size: 1.5rem; margin: 2rem 0 1rem; }
-    .content p { margin-bottom: 1rem; color: #475569; }
+    .content h1 { font-size: 1.75rem; margin-bottom: 1rem; }
+    .content h2 { font-size: 1.25rem; margin: 1.5rem 0 0.75rem; }
+    .content p { margin-bottom: 0.75rem; color: #475569; }
     .content a { color: #6366f1; }
+
+    /* Zebra easter egg */
+    .zebra {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      animation: zebra-glitch 20s infinite;
+      position: relative;
+    }
+
+    @keyframes zebra-glitch {
+      0%, 9%, 11%, 100% {
+        transform: scale(1) translate(0, 0);
+        filter: none;
+        opacity: 1;
+      }
+      9.5% {
+        transform: scale(5) translate(2px, -1px);
+        filter: blur(1px) contrast(2) saturate(0);
+        opacity: 0.9;
+      }
+      10% {
+        transform: scale(4) translate(-3px, 2px) skewX(10deg);
+        filter: blur(0.5px) contrast(1.5) hue-rotate(90deg);
+        text-shadow: -2px 0 #ff0000, 2px 0 #00ffff;
+        opacity: 0.95;
+      }
+      10.5% {
+        transform: scale(5) translate(1px, -2px) skewX(-5deg);
+        filter: blur(2px) brightness(1.5);
+        text-shadow: 3px 0 #ff00ff, -3px 0 #00ff00;
+        opacity: 0.85;
+      }
+    }
+
+    .zebra::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      opacity: 0;
+      pointer-events: none;
+      animation: zebra-static 20s infinite;
+    }
+
+    @keyframes zebra-static {
+      0%, 9%, 11%, 100% {
+        opacity: 0;
+      }
+      9.5%, 10.5% {
+        opacity: 0.3;
+      }
+      10% {
+        opacity: 0.5;
+      }
+    }
   </style>
 </head>
 <body>
@@ -218,7 +271,7 @@
 
   <footer>
     <div class="container">
-      <p>&copy; 2024 MarketyMarks. Building the future of e-commerce data.</p>
+      <p>&copy; 2024 MarketyMarks<a href="/tools/gtinker/" class="zebra" title="🦓">🦓</a></p>
     </div>
   </footer>
 </body>
