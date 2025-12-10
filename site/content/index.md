@@ -4,7 +4,6 @@ layout: base.njk
 ---
 
 <div class="hero">
-  <span class="badge">Coming Soon</span>
   <h1>E-commerce data,<br><span class="highlight">linked and ready</span></h1>
   <p>Structured product data infrastructure for the modern web.</p>
 </div>
