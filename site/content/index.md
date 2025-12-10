@@ -25,6 +25,6 @@ layout: base.njk
   <div class="feature">
     <div class="feature-icon">📊</div>
     <h3>E-commerce Ready</h3>
-    <p>Products, offers, reviews, availability—all the commerce vocabularies you need, properly connected.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
   </div>
 </div>
