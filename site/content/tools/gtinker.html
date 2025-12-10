@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GTIN Acoustic Transceiver</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://unpkg.com/@ericblade/quagga2@1.8.4/dist/quagga.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@400;700;900&display=swap');
 
@@ -168,6 +169,67 @@ h1 {
   display: flex;
   gap: 10px;
   margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.scanner-settings {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.scanner-settings label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scanner-settings select {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-family: inherit;
+}
+
+.scan-status {
+  font-size: 0.75rem;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+  display: none;
+}
+
+.scan-status.detecting {
+  display: block;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.scan-status.stable {
+  display: block;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid var(--accent-green);
+  color: var(--accent-green);
+}
+
+#process-canvas {
+  display: none;
+  width: 100%;
+  margin-top: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+#process-canvas.visible {
+  display: block;
 }
 
 /* GTIN Display */
@@ -574,8 +636,27 @@ button.active {
       </div>
       <div class="scanner-controls">
         <button id="btn-start-scanner">Start Scanner</button>
-        <button id="btn-stop-scanner" disabled>Stop Scanner</button>
+        <button id="btn-stop-scanner" disabled>Stop</button>
+        <button id="btn-capture">Capture & Process</button>
       </div>
+      <div class="scanner-settings">
+        <label>Engine:
+          <select id="scanner-engine">
+            <option value="quagga">QuaggaJS (1D)</option>
+            <option value="html5qr">Html5-QR</option>
+            <option value="both">Both</option>
+          </select>
+        </label>
+        <label>Resolution:
+          <select id="scanner-res">
+            <option value="hd">720p</option>
+            <option value="fhd" selected>1080p</option>
+            <option value="4k">4K</option>
+          </select>
+        </label>
+      </div>
+      <div class="scan-status" id="scan-status"></div>
+      <canvas id="process-canvas"></canvas>
       <div class="gtin-display">
         <div class="gtin-label">Current GTIN</div>
         <div class="gtin-input-wrapper">
@@ -1281,25 +1362,308 @@ class Receiver {
 }
 
 // ============================================================
-// Barcode Scanner
+// Barcode Scanner - Enhanced with QuaggaJS + Image Processing
 // ============================================================
 
 let html5QrCode = null;
-let lastScanTime = 0;
-const SCAN_DEBOUNCE = 1500; // ms between accepting same code
+let cameraStream = null;
+let videoElement = null;
+let scannerActive = false;
+let quaggaActive = false;
+
+// Stable detection: require same code N times before confirming
+const STABLE_THRESHOLD = 3;
+let detectionBuffer = [];
+let lastConfirmedCode = null;
+
+// Resolution presets
+const RESOLUTIONS = {
+  hd: { width: 1280, height: 720 },
+  fhd: { width: 1920, height: 1080 },
+  '4k': { width: 3840, height: 2160 }
+};
+
+function updateScanStatus(code, count, isStable) {
+  const status = document.getElementById('scan-status');
+  if (!code) {
+    status.className = 'scan-status';
+    status.textContent = '';
+    return;
+  }
+  if (isStable) {
+    status.className = 'scan-status stable';
+    status.textContent = `✓ Confirmed: ${code}`;
+  } else {
+    status.className = 'scan-status detecting';
+    status.textContent = `Detecting: ${code} (${count}/${STABLE_THRESHOLD})`;
+  }
+}
+
+function processDetection(code, source) {
+  if (!code) return;
+
+  // Clean the code
+  let gtin = code.replace(/[^0-9]/g, '');
+  if (gtin.length < 8) return;
+
+  // Pad to 13 digits
+  if (gtin.length < 13) {
+    gtin = gtin.padStart(13, '0');
+  } else if (gtin.length > 14) {
+    gtin = gtin.slice(0, 14);
+  }
+
+  // Add to detection buffer
+  detectionBuffer.push(gtin);
+  if (detectionBuffer.length > 10) detectionBuffer.shift();
+
+  // Count occurrences of this code in recent detections
+  const count = detectionBuffer.filter(c => c === gtin).length;
+
+  updateScanStatus(gtin, count, false);
+
+  // Check for stable detection
+  if (count >= STABLE_THRESHOLD && gtin !== lastConfirmedCode) {
+    lastConfirmedCode = gtin;
+    detectionBuffer = [];
+
+    updateScanStatus(gtin, count, true);
+    document.getElementById('gtin-input').value = gtin;
+    log(`Stable scan [${source}]: ${gtin}`, 'info');
+
+    // Auto-lookup
+    lookupGTIN(gtin);
+
+    // Clear status after delay
+    setTimeout(() => updateScanStatus(null), 2000);
+  }
+}
+
+// Image processing for difficult scans
+function enhanceImage(canvas, ctx, imageData) {
+  const data = imageData.data;
+
+  // Convert to grayscale and boost contrast
+  for (let i = 0; i < data.length; i += 4) {
+    // Grayscale using luminosity method
+    const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+
+    // Boost contrast (stretch histogram)
+    const contrast = 1.5;
+    const adjusted = ((gray - 128) * contrast) + 128;
+    const clamped = Math.max(0, Math.min(255, adjusted));
+
+    // Apply threshold for sharper edges
+    const threshold = clamped > 128 ? 255 : 0;
+
+    data[i] = data[i + 1] = data[i + 2] = threshold;
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+  return canvas;
+}
+
+async function captureAndProcess() {
+  if (!videoElement || !cameraStream) {
+    log('Start scanner first', 'error');
+    return;
+  }
+
+  log('Capturing frame for processing...', 'info');
+
+  const canvas = document.getElementById('process-canvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+  // Get video dimensions
+  const vw = videoElement.videoWidth;
+  const vh = videoElement.videoHeight;
+
+  // Set canvas to video size
+  canvas.width = vw;
+  canvas.height = vh;
+  canvas.classList.add('visible');
+
+  // Draw video frame
+  ctx.drawImage(videoElement, 0, 0, vw, vh);
+
+  // Get image data and enhance
+  const imageData = ctx.getImageData(0, 0, vw, vh);
+  enhanceImage(canvas, ctx, imageData);
+
+  // Try decoding with QuaggaJS on the processed image
+  try {
+    const result = await new Promise((resolve) => {
+      Quagga.decodeSingle({
+        src: canvas.toDataURL('image/png'),
+        numOfWorkers: 0,
+        locate: true,
+        decoder: {
+          readers: [
+            'ean_reader',
+            'ean_8_reader',
+            'upc_reader',
+            'upc_e_reader',
+            'code_128_reader',
+            'code_39_reader',
+            'i2of5_reader'
+          ]
+        },
+        locator: {
+          patchSize: 'medium',
+          halfSample: false
+        }
+      }, (result) => resolve(result));
+    });
+
+    if (result && result.codeResult) {
+      const code = result.codeResult.code;
+      log(`Processed frame decode: ${code}`, 'info');
+      processDetection(code, 'processed');
+
+      // Draw detection box
+      if (result.box) {
+        ctx.strokeStyle = '#00ff88';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(result.box[0][0], result.box[0][1]);
+        for (let i = 1; i < result.box.length; i++) {
+          ctx.lineTo(result.box[i][0], result.box[i][1]);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+    } else {
+      log('No barcode found in processed image', 'error');
+    }
+  } catch (err) {
+    log(`Process error: ${err.message}`, 'error');
+  }
+
+  // Hide canvas after delay
+  setTimeout(() => canvas.classList.remove('visible'), 5000);
+}
 
 async function startScanner() {
-  if (html5QrCode) return;
+  if (scannerActive) return;
 
+  const engine = document.getElementById('scanner-engine').value;
+  const resKey = document.getElementById('scanner-res').value;
+  const res = RESOLUTIONS[resKey];
+
+  log(`Starting scanner: ${engine} @ ${res.width}x${res.height}`, 'info');
+
+  // Reset detection state
+  detectionBuffer = [];
+  lastConfirmedCode = null;
+  updateScanStatus(null);
+
+  try {
+    // Request camera with high resolution and focus hints
+    const constraints = {
+      video: {
+        facingMode: 'environment',
+        width: { ideal: res.width },
+        height: { ideal: res.height },
+        focusMode: { ideal: 'continuous' },
+        // Try to get best quality
+        advanced: [
+          { focusMode: 'continuous' },
+          { focusDistance: { ideal: 0.3 } }, // ~30cm for close-up
+          { zoom: { ideal: 1 } }
+        ]
+      }
+    };
+
+    cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+
+    // Log actual resolution
+    const track = cameraStream.getVideoTracks()[0];
+    const settings = track.getSettings();
+    log(`Camera: ${settings.width}x${settings.height}`, 'info');
+
+    if (engine === 'quagga' || engine === 'both') {
+      await startQuagga(cameraStream);
+    }
+
+    if (engine === 'html5qr' || engine === 'both') {
+      await startHtml5QrCode();
+    }
+
+    // Keep reference to video element for capture
+    videoElement = document.querySelector('#scanner-container video');
+
+    scannerActive = true;
+    document.getElementById('scanner-status').classList.add('active');
+    document.getElementById('btn-start-scanner').disabled = true;
+    document.getElementById('btn-stop-scanner').disabled = false;
+
+  } catch (err) {
+    log(`Scanner error: ${err.message}`, 'error');
+    stopScanner();
+  }
+}
+
+async function startQuagga(stream) {
+  return new Promise((resolve, reject) => {
+    Quagga.init({
+      inputStream: {
+        name: 'Live',
+        type: 'LiveStream',
+        target: document.getElementById('scanner-container'),
+        constraints: {
+          deviceId: stream.getVideoTracks()[0].getSettings().deviceId
+        }
+      },
+      frequency: 10,
+      locate: true,
+      decoder: {
+        readers: [
+          'ean_reader',
+          'ean_8_reader',
+          'upc_reader',
+          'upc_e_reader',
+          'code_128_reader',
+          'code_39_reader',
+          'i2of5_reader'
+        ],
+        multiple: false
+      },
+      locator: {
+        patchSize: 'medium',
+        halfSample: true
+      }
+    }, (err) => {
+      if (err) {
+        log(`QuaggaJS init failed: ${err}`, 'error');
+        reject(err);
+        return;
+      }
+
+      Quagga.start();
+      quaggaActive = true;
+      log('QuaggaJS started', 'info');
+
+      Quagga.onDetected((result) => {
+        if (result && result.codeResult) {
+          processDetection(result.codeResult.code, 'Quagga');
+        }
+      });
+
+      resolve();
+    });
+  });
+}
+
+async function startHtml5QrCode() {
   html5QrCode = new Html5Qrcode("scanner-container");
 
   const config = {
-    fps: 15,  // Higher FPS for better detection
-    qrbox: { width: 280, height: 180 },
+    fps: 10,
+    qrbox: { width: 300, height: 200 },
     aspectRatio: 1.333,
     disableFlip: false,
     experimentalFeatures: {
-      useBarCodeDetectorIfSupported: true  // Use native API when available
+      useBarCodeDetectorIfSupported: true
     },
     formatsToSupport: [
       Html5QrcodeSupportedFormats.EAN_13,
@@ -1314,45 +1678,16 @@ async function startScanner() {
     ]
   };
 
-  try {
-    await html5QrCode.start(
-      { facingMode: "environment" },
-      config,
-      (decodedText, decodedResult) => {
-        const now = Date.now();
-        if (now - lastScanTime < SCAN_DEBOUNCE) return;
-        lastScanTime = now;
+  await html5QrCode.start(
+    { facingMode: "environment" },
+    config,
+    (decodedText, decodedResult) => {
+      processDetection(decodedText, 'Html5QR');
+    },
+    () => {} // Ignore errors
+  );
 
-        // Extract GTIN from various formats
-        let gtin = decodedText.replace(/[^0-9]/g, '');
-
-        // Pad or trim to 13 digits
-        if (gtin.length < 13) {
-          gtin = gtin.padStart(13, '0');
-        } else if (gtin.length > 14) {
-          gtin = gtin.slice(0, 14);
-        }
-
-        document.getElementById('gtin-input').value = gtin;
-        log(`Scanned: ${decodedResult.result.format.formatName} -> ${gtin}`, 'info');
-
-        // Auto-lookup on scan
-        lookupGTIN(gtin);
-      },
-      (errorMessage) => {
-        // Ignore scan errors (no code in view)
-      }
-    );
-
-    document.getElementById('scanner-status').classList.add('active');
-    document.getElementById('btn-start-scanner').disabled = true;
-    document.getElementById('btn-stop-scanner').disabled = false;
-    log('Scanner started', 'info');
-
-  } catch (err) {
-    log(`Scanner error: ${err}`, 'error');
-    html5QrCode = null;
-  }
+  log('Html5-QR started', 'info');
 }
 
 // ============================================================
@@ -1572,19 +1907,44 @@ function escapeHtml(str) {
 }
 
 async function stopScanner() {
-  if (!html5QrCode) return;
-
-  try {
-    await html5QrCode.stop();
-    html5QrCode = null;
-
-    document.getElementById('scanner-status').classList.remove('active');
-    document.getElementById('btn-start-scanner').disabled = false;
-    document.getElementById('btn-stop-scanner').disabled = true;
-    log('Scanner stopped', 'info');
-  } catch (err) {
-    log(`Stop scanner error: ${err}`, 'error');
+  // Stop QuaggaJS
+  if (quaggaActive) {
+    try {
+      Quagga.stop();
+      quaggaActive = false;
+    } catch (e) {}
   }
+
+  // Stop Html5QrCode
+  if (html5QrCode) {
+    try {
+      await html5QrCode.stop();
+      html5QrCode = null;
+    } catch (e) {}
+  }
+
+  // Stop camera stream
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(t => t.stop());
+    cameraStream = null;
+  }
+
+  videoElement = null;
+  scannerActive = false;
+
+  // Clear scanner container
+  const container = document.getElementById('scanner-container');
+  const overlay = container.querySelector('.scanner-overlay');
+  container.innerHTML = '';
+  if (overlay) container.appendChild(overlay);
+
+  document.getElementById('scanner-status').classList.remove('active');
+  document.getElementById('btn-start-scanner').disabled = false;
+  document.getElementById('btn-stop-scanner').disabled = true;
+  document.getElementById('process-canvas').classList.remove('visible');
+  updateScanStatus(null);
+
+  log('Scanner stopped', 'info');
 }
 
 // ============================================================
@@ -1618,6 +1978,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   document.getElementById('btn-stop-scanner').addEventListener('click', stopScanner);
+  document.getElementById('btn-capture').addEventListener('click', captureAndProcess);
 
   // Copy button
   document.getElementById('btn-copy').addEventListener('click', async () => {
