@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Eleventy output (generated)
+site/www/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# npm debug logs
+npm-debug.log*

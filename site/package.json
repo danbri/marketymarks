@@ -1,0 +1,13 @@
+{
+  "name": "marketymarks-site",
+  "version": "1.0.0",
+  "description": "MarketyMarks static site built with Eleventy",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "watch": "eleventy --watch"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}
