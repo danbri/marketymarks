@@ -243,6 +243,8 @@ class DppStructured extends HTMLElement {
 const TABS_CSS = `
 [role=tablist] { display: flex; gap: .4rem; margin-bottom: .8rem; flex-wrap: wrap; }
 pre { background: var(--soft); padding: .6rem; overflow: auto; font-size: 12px; margin: 0; max-height: 70vh; }
+.ok { color: var(--dpp-ok, #075a32); font-weight: 700; } .bad { color: var(--dpp-bad, #a3200f); font-weight: 700; }
+@media (prefers-color-scheme: dark) { .ok { color: var(--dpp-ok, #6fd3a0); } .bad { color: var(--dpp-bad, #ff8a7a); } }
 .srow { display: flex; justify-content: space-between; gap: 1rem; padding: 3px 6px; border-bottom: 1px solid var(--line); }
 .srow > div:first-child { font-weight: 700; } .srow > div:last-child { width: 55%; overflow-wrap: anywhere; }
 `;
@@ -259,6 +261,7 @@ class DppViews extends HTMLElement {
     const p = viewFor(full, this.audience || 'all', await loadTerms());
     const tabs = [['readable', 'Readable'], ['structured', 'Structured'], ['schemaorg', 'schema.org'], ['json', 'JSON']];
     if (this.source) tabs.push(['source', 'Source']);
+    tabs.push(['vc', 'VC (illustration)']);
     if (this.#tab === 'source' && !this.source) this.#tab = 'readable';
     const bar = el('div', { role: 'tablist' }, tabs.map(([id, label]) => el('button', {
       role: 'tab', 'aria-selected': String(id === this.#tab), class: id === this.#tab ? 'on' : null, text: label,
@@ -272,9 +275,52 @@ class DppViews extends HTMLElement {
     else if (this.#tab === 'structured') { body = el('dpp-structured'); body.passport = p; }
     else if (this.#tab === 'schemaorg') body = await schemaOrgPanel(p);
     else if (this.#tab === 'source') body = sourcePanel(this.source);
+    else if (this.#tab === 'vc') body = vcPanel(p);
     else body = el('pre', { text: JSON.stringify(p, null, 2) });
     this.shadowRoot.replaceChildren(bar, el('div', { role: 'tabpanel' }, body));
   }
+}
+
+// the passport as a signed W3C Verifiable Credential: an illustration only (the EC 1.0.0 release
+// does not specify signed passports). Signs in the browser with a throwaway did:key.
+let vcTools;
+async function passportCredentials() {
+  return (vcTools ??= (async () => {
+    const F = await loadEngine();
+    const [{ Checker }, { PassportCredentials }] = await Promise.all([import('../lib/dpp-check.mjs'), import('../lib/dpp-vc.mjs')]);
+    const text = (u) => fetch(u).then((r) => { if (!r.ok) throw new Error(`${u}: ${r.status}`); return r.text(); });
+    const checker = new Checker(F, (p) => text(new URL('../ec/1.0.0/' + p, import.meta.url)));
+    return new PassportCredentials(F, checker, (p) => text(new URL('../' + p, import.meta.url)));
+  })());
+}
+function vcPanel(p) {
+  const out = el('div', { 'aria-live': 'polite' });
+  const pre = el('pre');
+  let signed = null;
+  const show = (r) => out.replaceChildren(el('p', { class: r.verified ? 'ok' : 'bad', text: r.verified ? 'Verified: the passport is unchanged since it was signed.' : `Not verified: ${r.reason}.` }),
+    r.issuer ? el('p', { class: 'muted', text: 'Issuer: ' + r.issuer }) : null);
+  const tamper = el('button', { text: 'Change one value, then verify', disabled: true, onclick: async () => {
+    const t = structuredClone(signed), subj = t.credentialSubject;
+    const k = Object.keys(subj).find((x) => typeof subj[x] === 'string' && !x.startsWith('@') && x !== 'id');
+    if (k) subj[k] = subj[k] + ' (changed)';
+    pre.textContent = JSON.stringify(t, null, 2);
+    show(await (await passportCredentials()).verify(t));
+  } });
+  const sign = el('button', { class: 'on', text: 'Sign with a throwaway key', onclick: async () => {
+    sign.disabled = true; out.replaceChildren(el('p', { class: 'muted', text: 'Loading the engine (once), making a key and signing…' }));
+    try {
+      const vc = await passportCredentials();
+      signed = await vc.sign(p, await vc.newKey());
+      pre.textContent = JSON.stringify(signed, null, 2);
+      show(await vc.verify(signed));
+      tamper.disabled = false;
+    } catch (e) { out.replaceChildren(el('p', { text: 'Could not sign: ' + e.message })); }
+    finally { sign.disabled = false; }
+  } });
+  return el('div', {},
+    el('p', { class: 'muted', text: 'Illustration only: the EC\u2019s 1.0.0 release does not say how passports are signed (the Registry\u2019s proof of registration is a hash with a qualified seal). This shows one option under discussion: the same EC JSON as a W3C Verifiable Credential 2.0, signed with eddsa-rdfc-2022. The key is made in your browser and thrown away.' }),
+    el('div', { class: 'row', style: 'display:flex;gap:.5rem;flex-wrap:wrap;margin:.5rem 0' }, sign, tamper), out,
+    el('details', {}, el('summary', { text: 'Signed credential (JSON-LD)' }), pre));
 }
 
 // where a passport came from, and the source's own fields (for data mapped from another format)
