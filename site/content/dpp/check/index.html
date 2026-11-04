@@ -83,15 +83,22 @@ templateEngineOverride: false
     <h2>2. Check</h2>
     <div class="row">
       <button class="primary" id="run" disabled>Check passport</button>
-      <button id="selftest" disabled>Run self-test</button>
       <span class="status" id="engine">Loading the checking engine (about 31 MB, once; then cached)…</span>
     </div>
   </div>
 
   <div class="panel" id="out" hidden></div>
 
+  <div class="panel">
+    <h2>3. Diagnostics</h2>
+    <div class="row">
+      <button id="selftest" disabled>Run self-test</button>
+      <span class="status">to check that all valid EC sample passports pass, and deliberately broken ones fail.</span>
+    </div>
+    <div id="diag" hidden style="margin-top:1rem"></div>
+  </div>
+
   <footer>
-    <p>The self-test runs deliberately broken passports that must fail. If any of them passes, don't trust the results.</p>
     <p>Not an official EC tool. EC files © European Union, EUPL-1.2.</p>
   </footer>
 </div>
@@ -153,16 +160,17 @@ $('run').addEventListener('click', async () => {
 });
 
 $('selftest').addEventListener('click', async () => {
-  busy(true, 'Running self-test…');
+  busy(true);
+  const d = $('diag'); d.hidden = false;
   try {
-    const t = await checker.selfTest();
-    const good = t.every((x) => x.ok);
-    $('out').innerHTML = `<div class="verdict ${good ? 'passes' : 'fails'}">${good ? 'Self-test passed: every broken passport was caught' : 'Self-test FAILED: do not trust results on this setup'}</div>
-      <div class="table-scroll"><table><thead><tr><th>Test passport</th><th>Expected</th><th>Got</th><th>EC codes reported</th></tr></thead><tbody>
-      ${t.map((x) => `<tr><td>${esc(x.name)}</td><td>${x.expected}</td><td class="${x.ok ? 'ok' : 'bad'}">${x.got}</td><td><code>${esc(x.codes.join(', '))}</code></td></tr>`).join('')}
+    const t = await checker.selfTest((done, total) => { d.innerHTML = `<p class="status">Running ${done} of ${total}…</p>`; });
+    const good = t.every((x) => x.ok), bad = t.filter((x) => !x.ok).length;
+    d.innerHTML = `<div class="verdict ${good ? 'passes' : 'fails'}">${good ? `Self-test passed: ${t.length} of ${t.length} correct` : `Self-test FAILED: ${bad} of ${t.length} wrong. Do not trust results on this setup.`}</div>
+      <div class="table-scroll"><table><thead><tr><th>Passport</th><th>Expected</th><th>Got</th><th>EC codes reported</th></tr></thead><tbody>
+      ${t.map((x) => `<tr><td>${esc(x.kind === 'EC sample' ? `EC sample ${x.name}` : `broken: ${x.name}`)}</td><td>${x.expected}</td><td class="${x.ok ? 'ok' : 'bad'}">${x.got}</td><td><code>${esc(x.codes.join(', '))}</code></td></tr>`).join('')}
       </tbody></table></div>`;
-    $('out').hidden = false; $('engine').textContent = 'Ready.';
-  } finally { busy(false); }
+  } catch (e) { d.innerHTML = `<div class="verdict not-checked">Self-test could not run<small>${esc(e.message)}</small></div>`; }
+  finally { busy(false); }
 });
 
 try {

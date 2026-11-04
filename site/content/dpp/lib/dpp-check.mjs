@@ -234,24 +234,34 @@ export class Checker {
     };
   }
 
-  // Must-fail test inputs: each is a valid EC sample with one deliberate error.
-  // If any of these passes, this checker cannot be trusted on this engine.
-  async selfTest() {
-    const base = JSON.parse(await this.load('product/batteries/subgroup/evb/1.0.0/tests/conforms/pub-batteries-evb.json'));
-    const cases = [
-      ['valid EC sample (must pass)', base, 'pub', 'passes'],
-      ['unknown battery category code', { ...base, batteryCategory: EC + 'product/batteries/vocabs/battery-category#flyingCarBattery' }, 'pub', 'fails'],
-      ['unknown granularity code', { ...base, granularity: EC + 'core/vocabs/granularity-level#galaxy' }, 'pub', 'fails'],
-      ['field not in the EC model', { ...base, totallyUnknownField: 'x' }, 'pub', 'fails'],
-      ['bad language tag', { ...base, extinguishingAgent: { english: 'water' } }, 'pub', 'fails'],
-      ['bad language tag in a nested object', { ...base, wasteBatteryPreventionManagementInfo: { ...base.wasteBatteryPreventionManagementInfo, endUserRoleInWastePrevention: { en: 'x' } } }, 'pub', 'fails'],
-      ['passport that names no EC rule set (core only)', { ...base, contentSpecificationIds: [] }, 'pub', 'fails'],
-    ];
-    const out = [];
-    for (const [name, passport, view, expected] of cases) {
-      const r = await this.check(passport, { view });
-      out.push({ name, expected, got: r.verdict, ok: r.verdict === expected, codes: [...new Set(r.problems.map((p) => p.code).filter(Boolean))] });
+  // Diagnostics: every EC sample passport must pass, and each deliberately
+  // broken copy of a valid sample must fail. If either goes wrong, this
+  // checker cannot be trusted on this engine. onProgress(done, total) is optional.
+  async selfTest(onProgress = () => {}) {
+    const cases = [];
+    for (const f of await this.samples()) {
+      const name = f.split('/').pop().replace('.json', '');
+      const view = (name.match(/^(pub|res1|res2|res3)-/) || [, 'all'])[1];
+      cases.push({ kind: 'EC sample', name, passport: JSON.parse(await this.load(f)), view, expected: 'passes' });
     }
+    const base = JSON.parse(await this.load('product/batteries/subgroup/evb/1.0.0/tests/conforms/pub-batteries-evb.json'));
+    const broken = [
+      ['unknown battery category code', { ...base, batteryCategory: EC + 'product/batteries/vocabs/battery-category#flyingCarBattery' }],
+      ['unknown granularity code', { ...base, granularity: EC + 'core/vocabs/granularity-level#galaxy' }],
+      ['field not in the EC model', { ...base, totallyUnknownField: 'x' }],
+      ['bad language tag', { ...base, extinguishingAgent: { english: 'water' } }],
+      ['bad language tag in a nested object', { ...base, wasteBatteryPreventionManagementInfo: { ...base.wasteBatteryPreventionManagementInfo, endUserRoleInWastePrevention: { en: 'x' } } }],
+      ['names no EC rule set (core only)', { ...base, contentSpecificationIds: [] }],
+    ];
+    for (const [name, passport] of broken) cases.push({ kind: 'broken', name, passport, view: 'pub', expected: 'fails' });
+    const out = [];
+    for (const [i, c] of cases.entries()) {
+      onProgress(i, cases.length);
+      const r = await this.check(c.passport, { view: c.view });
+      out.push({ kind: c.kind, name: c.name, view: c.view, expected: c.expected, got: r.verdict, ok: r.verdict === c.expected,
+        codes: [...new Set(r.problems.map((p) => p.code).filter(Boolean))], ms: r.ms });
+    }
+    onProgress(cases.length, cases.length);
     return out;
   }
 
