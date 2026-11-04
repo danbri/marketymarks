@@ -238,6 +238,8 @@ export class Checker {
     const checkedNodes = Number(typed[0].get('n').value);
     let verdict = main.conforms && unk.conforms ? 'passes' : 'fails';
     if (checkedNodes === 0) { verdict = 'not-checked'; notes.push('No passport node was found, so no rule applied. This is not a pass.'); }
+    // a restricted view has no core rules, so with no product rule set nothing was really checked
+    if (view.startsWith('res') && !profile.product && verdict === 'passes') { verdict = 'not-checked'; notes.push('The passport names no product rule set (contentSpecificationIds), so no restricted-view rule applied. This is not a pass.'); }
     if (sh.untouchedPropertyRules) notes.push(`${sh.untouchedPropertyRules} property-level SPARQL rule(s) could not be moved and may not have been evaluated.`);
     return {
       verdict, problems, notes, view, profile: { product: profile.product, sub: profile.sub },
@@ -265,6 +267,8 @@ export class Checker {
       ['names no EC rule set (core only)', { ...base, contentSpecificationIds: [] }],
     ];
     for (const [name, passport] of broken) cases.push({ kind: 'broken', name, passport, view: 'pub', expected: 'fails' });
+    { const { contentSpecificationIds: _, ...noSpec } = JSON.parse(await this.load('product/batteries/subgroup/evb/1.0.0/tests/conforms/res1-batteries-evb.json'));
+      cases.push({ kind: 'broken', name: 'restricted view naming no rule set', passport: noSpec, view: 'res1', expected: 'not-checked' }); }
     const out = [];
     for (const [i, c] of cases.entries()) {
       onProgress(i, cases.length);
