@@ -1,0 +1,97 @@
+---
+permalink: dpp/sign/index.html
+templateEngineOverride: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPP Signing</title>
+<style>
+  :root { --bg: #fff; --ink: #111; --muted: #555; --line: #ddd; --edge: #767676; --soft: #fafafa; --ok: #075a32; --bad: #a3200f; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #b3b3b3; --line: #333; --edge: #8a8a8a; --soft: #1a1a1a; --ok: #6fd3a0; --bad: #ff8a7a; } }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--ink); }
+  body { font: 15px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; max-width: 60rem; margin: 3rem auto 4rem; padding: 0 16px; }
+  a { color: inherit; text-underline-offset: 3px; }
+  header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; }
+  h1, h2 { font-size: 1rem; margin: 0 0 .75rem; }
+  header a, .lede, label, .muted, .status { color: var(--muted); }
+  .panel { border-top: 1px solid var(--line); padding: 1rem 0; }
+  select, textarea, button { font: inherit; color: var(--ink); }
+  select { background: var(--bg); border: 1px solid var(--edge); padding: 4px 6px; max-width: 100%; }
+  textarea { width: 100%; min-height: 12rem; font-size: 12px; background: var(--soft); border: 1px solid var(--edge); padding: 8px; resize: vertical; }
+  button { background: var(--bg); border: 1px solid var(--ink); padding: 5px 12px; cursor: pointer; }
+  button.primary { background: var(--ink); color: var(--bg); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  .row { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin: .6rem 0; }
+  code { overflow-wrap: anywhere; }
+  .ok { color: var(--ok); font-weight: 700; } .bad { color: var(--bad); font-weight: 700; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+</head>
+<body>
+<header><h1>dpp signing <span style="font-weight:400;color:var(--muted)">(experimental)</span></h1><a href="../">marketymarks / dpp</a></header>
+<p class="lede">Sign a passport so anyone can check it hasn't been changed and who issued it. The EC JSON goes inside a W3C Verifiable Credential, signed with Data Integrity <code>eddsa-rdfc-2022</code> (RDF canonicalization, then Ed25519), with a <code>did:key</code> issuer. Keys made here stay in this page.</p>
+
+<div class="panel">
+  <h2>1. Passport</h2>
+  <div class="row"><label for="sample">Start from:</label><select id="sample"><option value="">— choose —</option></select></div>
+  <textarea id="passport" spellcheck="false" placeholder="Paste passport JSON (EC format)"></textarea>
+</div>
+<div class="panel">
+  <h2>2. Sign</h2>
+  <div class="row"><button id="key" disabled>Make a signing key</button><span class="status" id="did">Loading the engine (about 31 MB, once)…</span></div>
+  <div class="row"><button id="sign" class="primary" disabled>Sign passport</button><button id="download" disabled>Download signed passport</button></div>
+</div>
+<div class="panel">
+  <h2>3. Verify</h2>
+  <textarea id="signed" spellcheck="false" placeholder="Paste a signed passport (Verifiable Credential JSON)"></textarea>
+  <div class="row"><button id="verify" class="primary" disabled>Verify</button><button id="tamper" disabled>Change one value, then verify</button></div>
+  <p id="result" aria-live="polite"></p>
+</div>
+<footer>A demonstration of signed passports, not an EC requirement: the EC Registry validates the plain JSON. A did:key proves only that the holder of that key signed; tying a key to a company needs a trusted identifier (for example did:web or an eIDAS seal). Not an official EC tool.</footer>
+<script type="module">
+import { loadEngine } from '../components/engine.mjs';
+import { Checker } from '../lib/dpp-check.mjs';
+import { PassportCredentials } from '../lib/dpp-vc.mjs';
+const $ = (id) => document.getElementById(id);
+const text = (u) => fetch(u).then((r) => { if (!r.ok) throw new Error(u + ': ' + r.status); return r.text(); });
+const F = await loadEngine();
+const checker = new Checker(F, (p) => text(new URL('../ec/1.0.0/' + p, location.href)));
+const vc = new PassportCredentials(F, checker, (p) => text(new URL('../' + p, location.href)));
+for (const f of await (await fetch('../demo/index.json')).json()) $('sample').add(new Option(`fictional demo ${f.replace('.json', '')}`, '../demo/' + f));
+$('sample').addEventListener('change', async (e) => { if (e.target.value) $('passport').value = await text(e.target.value); });
+let key = null;
+$('did').textContent = 'Ready. Make a key to sign.'; $('key').disabled = false; $('verify').disabled = false;
+$('key').addEventListener('click', async () => { key = await vc.newKey(); $('did').innerHTML = ''; $('did').append('Issuer: ', Object.assign(document.createElement('code'), { textContent: key.did })); $('sign').disabled = false; });
+$('sign').addEventListener('click', async () => {
+  let p; try { p = JSON.parse($('passport').value); } catch { $('result').textContent = 'The passport is not valid JSON.'; return; }
+  $('sign').disabled = true;
+  try { $('signed').value = JSON.stringify(await vc.sign(p, key), null, 2); $('download').disabled = false; $('tamper').disabled = false; await verify(); }
+  catch (e) { $('result').textContent = 'Could not sign: ' + e.message; }
+  finally { $('sign').disabled = false; }
+});
+$('download').addEventListener('click', () => {
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([$('signed').value], { type: 'application/json' })), download: 'signed-passport.json' });
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+async function verify() {
+  let s; try { s = JSON.parse($('signed').value); } catch { $('result').textContent = 'Not valid JSON.'; return; }
+  $('result').textContent = 'Checking…';
+  const r = await vc.verify(s);
+  $('result').innerHTML = '';
+  $('result').append(Object.assign(document.createElement('span'), { className: r.verified ? 'ok' : 'bad', textContent: r.verified ? 'Verified: unchanged since it was signed.' : 'Not verified: ' + r.reason + '.' }),
+    r.issuer ? Object.assign(document.createElement('div'), { textContent: 'Issuer: ' + r.issuer }) : '');
+}
+$('verify').addEventListener('click', verify);
+$('tamper').addEventListener('click', async () => {
+  const s = JSON.parse($('signed').value);
+  const cs = s.credentialSubject; const k = ['batteryCapacity', 'batteryWeight'].find((x) => cs[x]?.value != null);
+  if (k) cs[k].value = cs[k].value + 1; else cs.lastUpdate = new Date().toISOString();
+  $('signed').value = JSON.stringify(s, null, 2); await verify();
+});
+</script>
+</body>
+</html>

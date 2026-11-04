@@ -7,6 +7,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("content/dpp/lib");
   eleventyConfig.addPassthroughCopy("content/dpp/components");
   eleventyConfig.addPassthroughCopy("content/dpp/demo");
+  eleventyConfig.addPassthroughCopy("content/dpp/vc");
 
   // Watch for changes in content
   eleventyConfig.addWatchTarget("content/");

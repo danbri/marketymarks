@@ -175,9 +175,14 @@ export class Checker {
     };
   }
 
+  // The EC JSON-LD context for a passport's rule set, with its @import chain flattened.
+  contextFor(profile) {
+    return flatContext(this.load, CONTEXTS[profile.sub || profile.product || 'core']);
+  }
+
   // Turn EC JSON into RDF with the right (flattened) EC context.
   async toRDF(passport, profile) {
-    const ctx = await flatContext(this.load, CONTEXTS[profile.sub || profile.product || 'core']);
+    const ctx = await this.contextFor(profile);
     const doc = { '@context': ctx, '@type': 'dpp:DigitalProductPassport', ...passport };
     if (passport.digitalProductPassportId) doc['@id'] = passport.digitalProductPassportId;
     return this.F.jsonldToRdf(JSON.stringify(doc));
