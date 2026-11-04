@@ -166,7 +166,7 @@ $('selftest').addEventListener('click', async () => {
 });
 
 try {
-  const F = await import('https://cdn.jsdelivr.net/npm/@factoidal/core@0.29.0/browser.js');
+  const F = await import('https://cdn.jsdelivr.net/npm/@factoidal/core@0.30.0/browser.js');
   checker = new Checker(F, load);
   for (const f of await checker.samples()) $('sample').add(new Option(`${nameOf(f)} (${VIEW_LABELS[viewOf(nameOf(f))]})`, f));
   await F.parse('<urn:a> <urn:b> <urn:c> .', 'ntriples'); // start the engine now, not on first click

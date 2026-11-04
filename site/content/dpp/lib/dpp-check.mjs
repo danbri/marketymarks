@@ -6,7 +6,7 @@
 //   load  async (path) => text, for a path inside the EC release folder
 //         (e.g. 'core/1.0.0/shapes/core-shapes.ttl')
 //
-// Factoidal 0.29.0 has two SHACL gaps that would make an EC check pass
+// Factoidal 0.29.0 and 0.30.0 have two SHACL gaps that would make an EC check pass
 // passports it should fail. This module works around both, and says so in its
 // output:
 //   1. sh:sparql on a property shape, or in a shape reached through sh:node,
