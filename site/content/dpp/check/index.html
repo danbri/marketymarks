@@ -57,8 +57,8 @@ templateEngineOverride: false
     <a href="../">marketymarks / dpp</a>
   </header>
   <p class="lede">Check an EU Digital Product Passport (EC JSON) against the European Commission's own published rules,
-    <a href="../ec/1.0.0/NOTICE.md">release 1.0.0</a>: the same SHACL shapes and codelists the DPP Registry uses.
-    Everything runs in your browser; nothing is uploaded. Batteries are covered (EV, industrial, light means of transport), plus the shared core.</p>
+    <a href="../ec/1.0.0/NOTICE.md">release 1.0.0</a> (SHACL shapes and SKOS codelists).
+    Runs in your browser; nothing is uploaded. Covers batteries (EV, industrial, light means of transport) and the shared core.</p>
 
   <div class="panel">
     <h2>1. Passport</h2>
@@ -88,10 +88,8 @@ templateEngineOverride: false
   <div class="panel" id="out" hidden></div>
 
   <footer>
-    <p>How it works: the passport JSON is turned into RDF with the EC's JSON-LD contexts, then validated with the EC's SHACL shapes,
-      merged with the EC's SKOS codelists, using <a href="https://www.npmjs.com/package/@factoidal/core">@factoidal/core</a> 0.29.0 (Lean-based, WebAssembly).
-      The self-test feeds it deliberately broken passports that must fail; if any passes, don't trust the results.</p>
-    <p style="margin-top:6px">Not an official EC tool. EC files © European Union, EUPL-1.2. Factoidal is experimental and unreviewed.</p>
+    <p>The self-test runs deliberately broken passports that must fail. If any of them passes, don't trust the results.</p>
+    <p>Not an official EC tool. EC files © European Union, EUPL-1.2.</p>
   </footer>
 </div>
 
