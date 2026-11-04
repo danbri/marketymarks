@@ -19,6 +19,11 @@ export function loadProfile(id) {
     .then((p) => p || { id, title: ['uniqueProductIdentifier', 'digitalProductPassportId'], subtitle: [], summary: [], groups: [] }));
   return profiles.get(id);
 }
+let crosswalkPromise;
+// what each EC field is called in other DPP / battery models (Catena-X, Battery Pass, UNTP)
+export function loadCrosswalk() {
+  return (crosswalkPromise ??= fetch(new URL('crosswalk/batteries.json' + V, HERE)).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+}
 export function profileIdFor(passport) {
   const ids = passport?.contentSpecificationIds || [];
   return ids.some((x) => String(x).startsWith(EC + 'product/batteries/')) ? 'batteries' : 'core';

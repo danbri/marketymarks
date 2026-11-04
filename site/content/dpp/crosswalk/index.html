@@ -1,0 +1,30 @@
+---
+permalink: dpp/crosswalk/index.html
+templateEngineOverride: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPP Crosswalk</title>
+<style>
+  :root { --bg: #fff; --ink: #111; --muted: #555; --line: #ddd; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #b3b3b3; --line: #333; } }
+  html { background: var(--bg); color: var(--ink); }
+  body { font: 15px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; max-width: 80rem; margin: 3rem auto 4rem; padding: 0 16px; }
+  a { color: inherit; text-underline-offset: 3px; }
+  header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; }
+  h1 { font-size: 1rem; margin: 0; }
+  header a, .lede, footer { color: var(--muted); }
+  footer { font-size: 13px; margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+<script type="module" src="../components/dpp-elements.mjs"></script>
+</head>
+<body>
+<header><h1>dpp crosswalk <span style="font-weight:400;color:var(--muted)">(experimental)</span></h1><a href="../">marketymarks / dpp</a></header>
+<p class="lede">Each field of the EU battery passport (EC 1.0.0), and what it is called in three other models: the Catena-X battery pass, the Battery Pass consortium's data model, and the UN Transparency Protocol's product passport. Each match is marked exact, close, broader, narrower or partial, with the main difference.</p>
+<dpp-crosswalk></dpp-crosswalk>
+<footer>Every mapping was checked against the published source files of each model, at the versions linked above. Property names belong to their models; this table is a reading aid, not an official alignment. Not an official EC tool.</footer>
+</body>
+</html>

@@ -12,7 +12,7 @@
 import {
   loadTerms, loadProfile, profileIdFor, subgroupOf, classify, textOf, fieldLabel, accessOf, ACCESS_LABELS,
   pickLang, userLangs, codeLabel, countryName, formatDate, formatQuantity, formatRange, describe, orderedKeys,
-  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences,
+  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences, loadCrosswalk,
 } from './dpp-model.mjs';
 import { loadEngine } from './engine.mjs';
 
@@ -45,6 +45,7 @@ dl dl { grid-template-columns: minmax(8rem, 12rem) 1fr; padding-left: .6rem; bor
 dd ul { margin: 0; padding-left: 1.1rem; }
 .info { border: 0; padding: 0 .2rem; background: none; color: var(--muted); cursor: help; text-decoration: underline dotted; }
 .note { grid-column: 1 / -1; background: var(--soft); padding: .4rem .6rem; font-size: .85em; }
+.note ul { margin: .2rem 0 0; padding-left: 1.1rem; } .note code { font: inherit; overflow-wrap: anywhere; }
 .restricted { font-size: .75em; border: 1px solid var(--edge); padding: 0 .3rem; margin-left: .3rem; color: var(--muted); }
 details.other > summary { cursor: pointer; color: var(--muted); }
 @media (max-width: 600px) { dl, dl dl { grid-template-columns: 1fr; } dd { margin-bottom: .4rem; } }
@@ -116,8 +117,13 @@ function renderFields(obj, keys, terms, langs) {
     const dt = el('dt', {}, fieldLabel(k, terms));
     if (Array.isArray(access) && access.length) dt.append(el('span', { class: 'restricted', title: access.map((a) => ACCESS_LABELS[a]).join('\n'), text: 'restricted' }));
     if (f?.definition) {
+      const xw = terms._crosswalk?.fields?.[k];
       const note = el('div', { class: 'note', hidden: true }, f.definition,
-        f.legal ? el('div', { class: 'muted', text: f.legal }) : null);
+        f.legal ? el('div', { class: 'muted', text: f.legal }) : null,
+        xw ? el('div', { class: 'xw' }, el('div', { class: 'muted', text: 'In other models:' }),
+          el('ul', {}, Object.entries(xw).flatMap(([t, ms]) => ms.map((m) => el('li', {},
+            `${terms._crosswalk.targets[t].label} ${terms._crosswalk.targets[t].version}: `, el('code', { text: m.path }),
+            el('span', { class: 'muted', text: ` (${m.match})${m.note ? ' — ' + m.note : ''}` })))))) : null);
       const btn = el('button', { class: 'info', type: 'button', 'aria-expanded': 'false', title: 'What is this?', text: '?' });
       btn.addEventListener('click', () => { note.hidden = !note.hidden; btn.setAttribute('aria-expanded', String(!note.hidden)); });
       dt.append(' ', btn);
@@ -149,7 +155,8 @@ class DppPassport extends HTMLElement {
   async render() {
     const full = this.#passport; if (!full) return;
     const langs = this.getAttribute('lang') ? [this.getAttribute('lang')] : userLangs();
-    const [terms, profile] = await Promise.all([loadTerms(), loadProfile(profileIdFor(full))]);
+    const [terms, profile, crosswalk] = await Promise.all([loadTerms(), loadProfile(profileIdFor(full)), loadCrosswalk()]);
+    terms._crosswalk ??= crosswalk;
     const audience = this.getAttribute('audience') || 'all';
     const p = viewFor(full, audience, terms);
     const d = describe(p, profile, terms, langs);
@@ -569,7 +576,42 @@ async function geocode(place) {
   return result;
 }
 
+// ---- <dpp-crosswalk>: every EC battery field and its counterparts elsewhere -----------------
+class DppCrosswalk extends HTMLElement {
+  constructor() { super(); this.attachShadow({ mode: 'open' }); styles(this.shadowRoot, COLL_CSS); }
+  async connectedCallback() {
+    const [terms, xw] = await Promise.all([loadTerms(), loadCrosswalk()]);
+    if (!xw) { this.shadowRoot.replaceChildren(el('p', { text: 'Crosswalk not available.' })); return; }
+    const targets = Object.entries(xw.targets);
+    const q = el('input', { type: 'search', placeholder: 'Filter fields (any words)', 'aria-label': 'Filter fields' });
+    const only = el('select', { 'aria-label': 'Match filter' }, ['all matches', 'exact only', 'no counterpart somewhere'].map((t, i) => el('option', { value: i, text: t })));
+    const tb = el('tbody'), count = el('span', { class: 'count', 'aria-live': 'polite' });
+    const rows = Object.keys(xw.fields).concat(Object.keys(terms.fields).filter((k) => !(k in xw.fields) && terms.fields[k].iri.includes('battery-vocabulary')))
+      .map((k) => ({ k, label: fieldLabel(k, terms), m: xw.fields[k] || {} }));
+    const draw = () => {
+      const words = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+      const shown = rows.filter((r) => {
+        const text = [r.k, r.label, ...Object.values(r.m).flat().map((m) => m.path + ' ' + (m.note || ''))].join(' ').toLowerCase();
+        if (!words.every((w) => text.includes(w))) return false;
+        if (only.value === '1') return Object.values(r.m).flat().some((m) => m.match === 'exact');
+        if (only.value === '2') return targets.some(([t]) => !(r.m[t] || []).length);
+        return true;
+      });
+      tb.replaceChildren(...shown.map((r) => el('tr', {}, el('th', { scope: 'row' }, r.label, el('div', {}, el('code', { class: 'muted', text: r.k }))),
+        targets.map(([t]) => el('td', {}, (r.m[t] || []).length ? (r.m[t]).map((m) => el('div', {}, el('code', { text: m.path }),
+          el('div', { class: 'muted', text: m.match + (m.note ? ' — ' + m.note : '') }))) : el('span', { class: 'muted', text: '—' }))))));
+      count.textContent = `${shown.length} of ${rows.length} fields`;
+    };
+    q.addEventListener('input', draw); only.addEventListener('change', draw);
+    this.shadowRoot.replaceChildren(el('div', { class: 'bar' }, q, only, count),
+      el('div', { class: 'tablewrap' }, el('table', {}, el('thead', {}, el('tr', {}, el('th', { text: 'EC field' }),
+        targets.map(([, v]) => el('th', {}, el('a', { href: v.url, rel: 'noopener', target: '_blank', text: `${v.label} ${v.version}` }), el('div', { class: 'muted', text: v.licence || '' }))))), tb)));
+    draw();
+  }
+}
+
 customElements.define('dpp-passport', DppPassport);
 customElements.define('dpp-structured', DppStructured);
 customElements.define('dpp-views', DppViews);
 customElements.define('dpp-collection', DppCollection);
+customElements.define('dpp-crosswalk', DppCrosswalk);

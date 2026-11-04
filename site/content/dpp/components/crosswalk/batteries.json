@@ -1,0 +1,1493 @@
+{
+ "generated": "2026-11-04",
+ "about": "Which property in other battery and product-passport models corresponds to each EC DPP 1.0.0 battery field. Every mapping was checked against the source files listed; match is exact, close, broader, narrower or partial, with a note on differences.",
+ "conventions": {
+  "path": "catenax: JSON payload path from the aspect root; batterypass: '<AspectFile>:<payload path>'; untp: JSON path in the DigitalProductPassport credential. [] = list item; [key=value] = pick the list entry with that value.",
+  "ref": "Identifier of the leaf (or container) property: SAMM URN for catenax/batterypass, JSON-LD term IRI from untp-context.jsonld for untp."
+ },
+ "targets": {
+  "catenax": {
+   "label": "Catena-X battery pass",
+   "version": "6.1.0",
+   "url": "https://github.com/eclipse-tractusx/sldt-semantic-models/blob/9c6660490472082d1381ce0f53f5fcf20fc7abc5/io.catenax.battery.battery_pass/6.1.0/BatteryPass.ttl",
+   "licence": "CC-BY-4.0"
+  },
+  "batterypass": {
+   "label": "Battery Pass data model",
+   "version": "1.2.0",
+   "url": "https://github.com/batterypass/BatteryPassDataModel/tree/7f4091810d56ad4cd031897d58dd5e438b4d979f/BatteryPass",
+   "licence": "CC-BY-4.0"
+  },
+  "untp": {
+   "label": "UN Transparency Protocol DPP",
+   "version": "0.7.0",
+   "url": "https://opensource.unicc.org/un/unece/uncefact/spec-untp/-/tree/v0.7.0/artefacts",
+   "licence": "GPL-3.0 (repository licence)"
+  }
+ },
+ "fields": {
+  "digitalProductPassportId": {
+   "catenax": [
+    {
+     "path": "metadata.passportIdentifier",
+     "match": "close",
+     "note": "Catena-X requires a UUID v4 (optionally urn:uuid:); EC allows any string."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:batteryPassportIdentifier",
+     "match": "close",
+     "note": "Constrained to the pattern ^urn:[a-z0-9]+:[a-z0-9]+$; EC allows any string."
+    }
+   ],
+   "untp": [
+    {
+     "path": "id",
+     "match": "close",
+     "note": "Identifier (URI) of the passport credential itself; EC passport id is a plain string."
+    }
+   ]
+  },
+  "uniqueProductIdentifier": {
+   "catenax": [
+    {
+     "path": "identification.idDmc",
+     "match": "close",
+     "note": "Described as the unique identifier linked from the QR code (Art. 77(3)); same idea, free string."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:productIdentifier",
+     "match": "close",
+     "note": "Same meaning (Art. 3(66)); Battery Pass also says it identifies the passport."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.id",
+     "match": "close",
+     "note": "Must be a URI (identifier scheme + identifier, or a DID); EC allows any string. Scheme given separately in credentialSubject.idScheme."
+    }
+   ]
+  },
+  "granularity": {
+   "untp": [
+    {
+     "path": "credentialSubject.idGranularity",
+     "match": "close",
+     "note": "Same three levels (model, batch, item) but coded as plain strings; EC uses IRIs from its granularity-level code list."
+    }
+   ]
+  },
+  "dppStatus": {
+   "catenax": [
+    {
+     "path": "metadata.status",
+     "match": "partial",
+     "note": "Values draft/approved/invalid/expired, optional; EC has only valid/invalid (instance-status code list)."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialStatus",
+     "match": "partial",
+     "note": "UNTP uses a W3C Bitstring Status List entry (revocation/suspension) rather than a status value in the passport. Term not defined in the UNTP context file; it comes from the W3C credentials context."
+    }
+   ]
+  },
+  "lastUpdate": {
+   "catenax": [
+    {
+     "path": "metadata.lastModification",
+     "match": "close",
+     "note": "Date only (yyyy-mm-dd) and optional; EC requires xsd:dateTime."
+    }
+   ],
+   "untp": [
+    {
+     "path": "validFrom",
+     "match": "partial",
+     "note": "Start of validity of this credential version; an updated passport is a newly issued credential, so this approximates last update but is not defined as such."
+    }
+   ]
+  },
+  "registrantIdentity": {
+   "catenax": [
+    {
+     "path": "metadata.economicOperatorId",
+     "match": "partial",
+     "note": "An identifier (BPNL in Catena-X) of the passport owner, not a name."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:operatorInformation.contactName",
+     "match": "partial",
+     "note": "Battery Pass 'operator information' (DIN DKE SPEC 99100 6.1.2.3); unclear whether it is the party responsible for the passport (Art. 77(4))."
+    }
+   ],
+   "untp": [
+    {
+     "path": "issuer.name",
+     "match": "partial",
+     "note": "Name of the organisation issuing the passport credential; issuer is not explicitly defined as the responsible economic operator."
+    }
+   ]
+  },
+  "manufacturerIdentification": {
+   "catenax": [
+    {
+     "path": "operation.manufacturer.manufacturer",
+     "match": "partial",
+     "note": "BPNL company number only; no name, trade name or trademark fields."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturerInformation",
+     "match": "close",
+     "note": "Contact block with name, postal address, identifier, optional email and web."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedParty[role=manufacturer].party",
+     "match": "close",
+     "note": "Party with role 'manufacturer'; has legal name and identifiers, no trade name or trademark fields."
+    }
+   ]
+  },
+  "manufacturerName": {
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturerInformation.contactName",
+     "match": "close",
+     "note": "Free text 'contactName'; not explicitly the legal or registered name."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedParty[role=manufacturer].party.name",
+     "match": "close",
+     "note": "'Legal registered name of this party'."
+    }
+   ]
+  },
+  "manufacturerTradeName": {},
+  "manufacturerTrademark": {},
+  "manufacturerPostalAddress": {
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturerInformation.postalAddress",
+     "match": "close",
+     "note": "Structured as addressCountry, postalCode, streetAddress only (no town/city field); EC is a single string."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedParty[role=manufacturer].party.partyAddress",
+     "match": "close",
+     "note": "Structured address (street, postal code, locality, region, country); EC is a single string."
+    }
+   ]
+  },
+  "manufacturerContactDetails": {
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturerInformation",
+     "match": "broader",
+     "note": "Email and web address sit inside the general manufacturer contact block."
+    }
+   ]
+  },
+  "manufacturerWebsite": {
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturerInformation.webAddress",
+     "match": "exact",
+     "note": "Optional URI in both."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedParty[role=manufacturer].party.organisationWebsite",
+     "match": "exact",
+     "note": "Optional URI."
+    }
+   ]
+  },
+  "manufacturerEmail": {
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturerInformation.emailAddress",
+     "match": "close",
+     "note": "Plain text with an email pattern; EC types it as xsd:anyURI."
+    }
+   ]
+  },
+  "batteryCategory": {
+   "catenax": [
+    {
+     "path": "identification.category",
+     "match": "broader",
+     "note": "Six values (SLI, LMT, EV, industrial, portable, incorporated) as strings; EC has three IRI codes (EVB, LMT, industrial >2 kWh)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:batteryCategory",
+     "match": "close",
+     "note": "Values lmt, ev, industrial, stationary (strings); EC has no separate 'stationary' and uses IRI codes."
+    }
+   ]
+  },
+  "batteryIdentification": {
+   "catenax": [
+    {
+     "path": "identification.identification",
+     "match": "close",
+     "note": "Container of serial, batch, part type, codes; also data-carrier and classification."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject",
+     "match": "broader",
+     "note": "modelNumber, batchNumber and itemNumber sit directly on the product."
+    }
+   ]
+  },
+  "modelIdentifier": {
+   "catenax": [
+    {
+     "path": "identification.identification.type.manufacturerPartId",
+     "match": "close",
+     "note": "Manufacturer part number used as model id; defined in io.catenax.part_type_information:1.0.0 (not downloaded; path from generated schema)."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.modelNumber",
+     "match": "exact",
+     "note": "Optional string in both."
+    }
+   ]
+  },
+  "batchNumber": {
+   "catenax": [
+    {
+     "path": "identification.identification.batch[key=batchId].value",
+     "match": "close",
+     "note": "Key/value list; batch number is the entry with key 'batchId'. Defined in io.catenax.batch:3.0.0 (path from generated schema)."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.batchNumber",
+     "match": "exact",
+     "note": "Optional string in both."
+    }
+   ]
+  },
+  "serialNumber": {
+   "catenax": [
+    {
+     "path": "identification.identification.serial[key=partInstanceId].value",
+     "match": "close",
+     "note": "Key/value list; serial is the entry with key 'partInstanceId'. Defined in io.catenax.serial_part:3.0.0 (path from generated schema)."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.itemNumber",
+     "match": "close",
+     "note": "'Specific serialised item' number; same intent, different name."
+    }
+   ]
+  },
+  "productNumber": {
+   "catenax": [
+    {
+     "path": "identification.identification.codes[]",
+     "match": "partial",
+     "note": "Generic key/value codes (e.g. GTIN); no dedicated product number."
+    }
+   ]
+  },
+  "otherIdentificationElement": {
+   "catenax": [
+    {
+     "path": "identification.identification.codes[]",
+     "match": "partial",
+     "note": "Generic key/value codes can carry other identifiers."
+    }
+   ]
+  },
+  "manufacturingPlace": {
+   "catenax": [
+    {
+     "path": "operation.manufacturer.facility[].facility",
+     "match": "partial",
+     "note": "Facility given only as a BPNA site number; no town, region or country fields."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturingPlace",
+     "match": "close",
+     "note": "Postal address (country, postal code, street); no town or region field."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.producedAtFacility",
+     "match": "partial",
+     "note": "Reference to a facility (id, name); its address lives in a separate facility record."
+    }
+   ]
+  },
+  "manufacturingCity": {},
+  "manufacturingRegion": {},
+  "manufacturingCountry": {
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturingPlace.addressCountry",
+     "match": "close",
+     "note": "Free text (example 'DE'); EC requires a 3-letter upper-case code (^[A-Z]{3}$)."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.countryOfProduction.countryCode",
+     "match": "close",
+     "note": "ISO 3166 code from UN/CEFACT CountryId list (address docs say two-letter); EC requires 3 letters."
+    }
+   ]
+  },
+  "manufacturingDate": {
+   "catenax": [
+    {
+     "path": "operation.manufacturer.manufacturingDate",
+     "match": "close",
+     "note": "Full date yyyy-mm-dd and optional; EC requires month and year (xsd:gYearMonth)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:manufacturingDate",
+     "match": "close",
+     "note": "xsd:dateTimeStamp (full timestamp); EC is month and year."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.productionDate",
+     "match": "close",
+     "note": "Full date, optional; EC is month and year, required."
+    }
+   ]
+  },
+  "batteryWeight": {
+   "catenax": [
+    {
+     "path": "characteristics.physicalDimension.weight",
+     "match": "close",
+     "note": "value + unit, unit from a list (gram, kilogram, tonne, pound ...); EC allows only kg or g."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:batteryMass",
+     "match": "close",
+     "note": "Fixed unit kilogram; EC allows kg or g."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.dimensions.weight",
+     "match": "close",
+     "note": "value + UN/ECE Rec 20 unit code (e.g. KGM); EC uses its own unit IRIs."
+    }
+   ]
+  },
+  "batteryCapacity": {
+   "catenax": [
+    {
+     "path": "performance.rated.capacity.value",
+     "match": "close",
+     "note": "Catena-X has one rated capacity (Ah) covering both the label capacity and Annex IV rated capacity; EC keeps two fields and allows mAh."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.ratedCapacity",
+     "match": "close",
+     "note": "Only 'rated capacity' (Ah) exists; EC keeps label capacity separate."
+    }
+   ]
+  },
+  "batteryChemistry": {
+   "catenax": [
+    {
+     "path": "identification.chemistry",
+     "match": "partial",
+     "note": "Free text (e.g. 'NCM'); EC requires a code from its battery-chemistry list."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "MaterialComposition:batteryChemistry",
+     "match": "partial",
+     "note": "Free text shortName + clearName; EC uses a code list."
+    }
+   ]
+  },
+  "hazardousSubstances": {
+   "catenax": [
+    {
+     "path": "materials.hazardous.other[]",
+     "match": "close",
+     "note": "Structured list (id, concentration, unit, location, impact docs) instead of free text."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "MaterialComposition:hazardousSubstances[]",
+     "match": "close",
+     "note": "Structured list (hazard class, name, concentration %, CAS, location, impact); EC is free text."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.materialProvenance[].hazardous",
+     "match": "partial",
+     "note": "Only a yes/no flag per material, plus a safety-information link."
+    }
+   ]
+  },
+  "extinguishingAgent": {
+   "catenax": [
+    {
+     "path": "safety.usableExtinguishAgent[].media",
+     "match": "close",
+     "note": "List of agents with fire class; plain text, not language-tagged."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:safetyMeasures.extinguishingAgents",
+     "match": "close",
+     "note": "List of plain strings; not language-tagged."
+    }
+   ]
+  },
+  "criticalRawMaterials": {
+   "catenax": [
+    {
+     "path": "materials.composition[].critical",
+     "match": "partial",
+     "note": "Yes/no flag per listed material; EC requires codes from the EU critical raw material list."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "MaterialComposition:batteryMaterials[].isCriticalRawMaterial",
+     "match": "partial",
+     "note": "Yes/no flag per material (with name and CAS number); EC uses a code list."
+    }
+   ]
+  },
+  "renewableContentShare": {
+   "catenax": [
+    {
+     "path": "materials.composition[].renewable",
+     "match": "narrower",
+     "note": "Given per material, not for the whole battery."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:renewableContent",
+     "match": "exact",
+     "note": "Single percentage for the battery."
+    }
+   ]
+  },
+  "minimalVoltage": {
+   "catenax": [
+    {
+     "path": "performance.rated.voltage.min",
+     "match": "close",
+     "note": "Volts; one optional test temperature shared by all three voltages, where EC allows a temperature range per value."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.minimumVoltage",
+     "match": "close",
+     "note": "Volts; no temperature range."
+    }
+   ]
+  },
+  "nominalVoltage": {
+   "catenax": [
+    {
+     "path": "performance.rated.voltage.nominal",
+     "match": "close",
+     "note": "Volts; one optional test temperature shared by all three voltages, where EC allows a temperature range per value."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.nominalVoltage",
+     "match": "close",
+     "note": "Volts; no temperature range."
+    }
+   ]
+  },
+  "maximumVoltage": {
+   "catenax": [
+    {
+     "path": "performance.rated.voltage.max",
+     "match": "close",
+     "note": "Volts; one optional test temperature shared by all three voltages, where EC allows a temperature range per value."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.maximumVoltage",
+     "match": "close",
+     "note": "Volts; no temperature range."
+    }
+   ]
+  },
+  "originalPowerCapability": {
+   "catenax": [
+    {
+     "path": "performance.rated.power.value",
+     "match": "close",
+     "note": "Watts; Catena-X adds values at 20% and 80% state of charge."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.originalPowerCapability[]",
+     "match": "partial",
+     "note": "List of (state of charge %, power capability) pairs; the power value is declared in percent, not watts."
+    }
+   ]
+  },
+  "powerLimit": {
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.ratedMaximumPower",
+     "match": "close",
+     "note": "Single value in kilowatts; EC uses watts and allows several values with temperature ranges."
+    }
+   ]
+  },
+  "expectedLifetimeCycles": {
+   "catenax": [
+    {
+     "path": "performance.rated.lifetime.cycleLifeTesting.cycles",
+     "match": "close",
+     "note": "Integer within the cycle-life test block (with temperature, depth of discharge, C-rates)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.expectedNumberOfCycles",
+     "match": "exact",
+     "note": "Integer number of cycles."
+    }
+   ]
+  },
+  "cycleLifeReferenceTest": {
+   "catenax": [
+    {
+     "path": "performance.rated.lifetime.report",
+     "match": "partial",
+     "note": "List of documents (header, content, type), not free text."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.lifetimeReferenceTest",
+     "match": "partial",
+     "note": "A link (URI), not free text."
+    }
+   ]
+  },
+  "capacityExhaustionThreshold": {
+   "catenax": [
+    {
+     "path": "performance.rated.capacity.thresholdExhaustion",
+     "match": "exact",
+     "note": "Percent."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.capacityThresholdForExhaustion",
+     "match": "close",
+     "note": "Percent, but defined as a share of certified energy (SOCE) rather than of capacity."
+    }
+   ]
+  },
+  "notInUseTemperatureRange": {
+   "catenax": [
+    {
+     "path": "performance.rated.temperature",
+     "match": "close",
+     "note": "lower/upper in °C; the lower/upper descriptions speak of operating temperature although the parent cites the not-in-use requirement (Annex XIII 1(l))."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.temperatureRangeIdleState",
+     "match": "partial",
+     "note": "Modelled as a single °C value constrained to -20..60, not a min/max pair."
+    }
+   ]
+  },
+  "notInUseTemperatureRangeTest": {
+   "catenax": [
+    {
+     "path": "conformity.resultOfTestReport",
+     "match": "partial",
+     "note": "Document list whose description cites the not-in-use reference test, but also covers all compliance test reports."
+    }
+   ]
+  },
+  "commercialWarrantyPeriod": {
+   "catenax": [
+    {
+     "path": "characteristics.warranty",
+     "match": "close",
+     "note": "lifeValue + lifeUnit (day, month, year, cycle, operating hour); EC is integer months."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:warrentyPeriod",
+     "match": "close",
+     "note": "Unit month, but datatype xsd:gMonth (a calendar month, not a count); property name is spelt 'warrenty'."
+    }
+   ]
+  },
+  "initialRoundTripEnergyEfficiency": {
+   "catenax": [
+    {
+     "path": "performance.rated.roundTripEfficiency.initial",
+     "match": "exact",
+     "note": "Percent."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.roundtripEfficiency",
+     "match": "close",
+     "note": "Percent; not explicitly labelled 'initial', but sits among pre-use properties."
+    }
+   ]
+  },
+  "roundTripEfficiencyAtHalfCycleLife": {
+   "catenax": [
+    {
+     "path": "performance.rated.roundTripEfficiency.50PercentLife",
+     "match": "exact",
+     "note": "Percent."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.roundTripEfficiencyat50PerCentCycleLife",
+     "match": "close",
+     "note": "Percent; placed in the in-use condition block."
+    }
+   ]
+  },
+  "internalCellResistance": {
+   "catenax": [
+    {
+     "path": "performance.rated.resistance.cell",
+     "match": "exact",
+     "note": "Ohm."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.initialInternalResistance[batteryComponent=cell].ohmicResistance",
+     "match": "close",
+     "note": "List of (ohm value, component pack/module/cell); select component 'cell'."
+    }
+   ]
+  },
+  "internalPackResistance": {
+   "catenax": [
+    {
+     "path": "performance.rated.resistance.pack",
+     "match": "exact",
+     "note": "Ohm."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.initialInternalResistance[batteryComponent=pack].ohmicResistance",
+     "match": "close",
+     "note": "List of (ohm value, component); select component 'pack'."
+    }
+   ]
+  },
+  "cycleLifeChargeCRate": {
+   "catenax": [
+    {
+     "path": "performance.rated.lifetime.cycleLifeTesting.appliedChargeRate",
+     "match": "close",
+     "note": "Dimensionless double; EC states it as a number."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.cRateLifeCycleTest",
+     "match": "partial",
+     "note": "One C-rate value; no separate charge and discharge values."
+    }
+   ]
+  },
+  "cycleLifeDischargeCRate": {
+   "catenax": [
+    {
+     "path": "performance.rated.lifetime.cycleLifeTesting.appliedDischargeRate",
+     "match": "close",
+     "note": "Dimensionless double; EC gives unit 'reciprocal hour'."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.cRateLifeCycleTest",
+     "match": "partial",
+     "note": "One C-rate value; no separate charge and discharge values."
+    }
+   ]
+  },
+  "separateCollectionSymbol": {
+   "batterypass": [
+    {
+     "path": "Labeling:labels[labelingSubject=SeparateCollection]",
+     "match": "partial",
+     "note": "A label entry with a symbol link and meaning text, not a yes/no value."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.productLabel[]",
+     "match": "partial",
+     "note": "Embedded label images (base64); not a yes/no value."
+    }
+   ]
+  },
+  "chemicalSymbol": {
+   "batterypass": [
+    {
+     "path": "Labeling:labels[labelingSubject=HazardousMaterial]",
+     "match": "partial",
+     "note": "Label entry with symbol link; no Cd/Pb/none code."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.productLabel[]",
+     "match": "partial",
+     "note": "Embedded label images; no Cd/Pb/none code."
+    }
+   ]
+  },
+  "euDeclarationOfConformity": {
+   "catenax": [
+    {
+     "path": "conformity.declarationOfConformity",
+     "match": "close",
+     "note": "List of documents (header, content, contentType); Catena-X also has an optional declarationOfConformityId."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Labeling:declarationOfConformity",
+     "match": "close",
+     "note": "A single link (URI); EC resource also carries title, media type and language."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedDocument[]",
+     "match": "broader",
+     "note": "Generic document link (URL, name, media type, link type); no dedicated declaration-of-conformity property in v0.7.0."
+    }
+   ]
+  },
+  "wasteBatteryPreventionManagementInfo": {
+   "catenax": [
+    {
+     "path": "sustainability.documents",
+     "match": "broader",
+     "note": "Holds separateCollection and wastePrevention document lists (plus optional taxonomy/sustainability reports)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation",
+     "match": "close",
+     "note": "Three links: wastePrevention, separateCollection, informationOnCollection."
+    }
+   ]
+  },
+  "endUserRoleInWastePrevention": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.wastePrevention",
+     "match": "close",
+     "note": "Document list instead of language-tagged text."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation.wastePrevention",
+     "match": "close",
+     "note": "A link (URI) instead of language-tagged text; Art. 74(1)(a)."
+    }
+   ]
+  },
+  "endUserRoleInSeparateCollection": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.separateCollection",
+     "match": "broader",
+     "note": "One document list whose description covers all of Art. 74(1)(a)-(f)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation.separateCollection",
+     "match": "close",
+     "note": "A link (URI); Art. 74(1)(b)."
+    }
+   ]
+  },
+  "separateCollectionPoints": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.separateCollection",
+     "match": "broader",
+     "note": "One document list covering all of Art. 74(1)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation.informationOnCollection",
+     "match": "broader",
+     "note": "One link covering all of Art. 74(1)(c); EC splits it into five texts."
+    }
+   ]
+  },
+  "takeBackCollectionPoints": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.separateCollection",
+     "match": "broader",
+     "note": "One document list covering all of Art. 74(1)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation.informationOnCollection",
+     "match": "broader",
+     "note": "One link covering all of Art. 74(1)(c); EC splits it into five texts."
+    }
+   ]
+  },
+  "preparationForReuseFacilities": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.separateCollection",
+     "match": "broader",
+     "note": "One document list covering all of Art. 74(1)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation.informationOnCollection",
+     "match": "broader",
+     "note": "One link covering all of Art. 74(1)(c); EC splits it into five texts."
+    }
+   ]
+  },
+  "preparationForRepurposingFacilities": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.separateCollection",
+     "match": "broader",
+     "note": "One document list covering all of Art. 74(1)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation.informationOnCollection",
+     "match": "broader",
+     "note": "One link covering all of Art. 74(1)(c); EC splits it into five texts."
+    }
+   ]
+  },
+  "wasteBatteryTreatmentFacilities": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.separateCollection",
+     "match": "broader",
+     "note": "One document list covering all of Art. 74(1)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:endOfLifeInformation.informationOnCollection",
+     "match": "broader",
+     "note": "One link covering all of Art. 74(1)(c); EC splits it into five texts."
+    }
+   ]
+  },
+  "wasteBatterySafetyInstructions": {
+   "catenax": [
+    {
+     "path": "sustainability.documents.separateCollection",
+     "match": "broader",
+     "note": "Description quotes Art. 74(1)(d) among all other points."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:safetyMeasures.safetyInstructions",
+     "match": "broader",
+     "note": "One link for both general safety measures and waste-battery handling."
+    }
+   ]
+  },
+  "batteryLabelSymbolMeaning": {
+   "catenax": [
+    {
+     "path": "safety.meaningOfLabels",
+     "match": "close",
+     "note": "Document list instead of language-tagged text."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Labeling:labels[].labelingMeaning",
+     "match": "close",
+     "note": "Multi-language text per label entry."
+    }
+   ]
+  },
+  "batterySubstancesImpact": {
+   "catenax": [
+    {
+     "path": "materials.hazardous.other[].impactOfSubstances",
+     "match": "partial",
+     "note": "Per-substance document lists (also on cadmium, mercury, lead); no single text."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "MaterialComposition:hazardousSubstances[].hazardousSubstanceImpact",
+     "match": "partial",
+     "note": "Per-substance list of impact statements."
+    }
+   ]
+  },
+  "detailedComposition": {
+   "catenax": [
+    {
+     "path": "materials.composition[]",
+     "match": "partial",
+     "note": "Structured material list (id, concentration, unit, critical, recycled, renewable, location); EC is free text."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "MaterialComposition:batteryMaterials[]",
+     "match": "partial",
+     "note": "Structured list (component location, CAS, name, mass in g, critical flag); EC is free text."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.materialProvenance[]",
+     "match": "partial",
+     "note": "Materials with origin country and mass fraction; not organised by cathode/anode/electrolyte."
+    }
+   ]
+  },
+  "sparePartReplacementDetails": {
+   "catenax": [
+    {
+     "path": "handling.content",
+     "match": "partial",
+     "note": "Structured: spare-part producers (BPNL) and part numbers; EC is a web link."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:sparePartSources[]",
+     "match": "partial",
+     "note": "Structured supplier list (name, address, email, web, part numbers); EC is a web link."
+    }
+   ]
+  },
+  "dismantlingInformation": {
+   "catenax": [
+    {
+     "path": "safety.dismantling",
+     "match": "close",
+     "note": "Document list."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:dismantlingAndRemovalInformation[]",
+     "match": "close",
+     "note": "List of (document type, media type, URL); also covers removal manuals."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedDocument[]",
+     "match": "broader",
+     "note": "Generic document link."
+    }
+   ]
+  },
+  "safetyMeasures": {
+   "catenax": [
+    {
+     "path": "safety.safetyMeasures",
+     "match": "close",
+     "note": "Document list; EC is one web link."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Circularity:safetyMeasures.safetyInstructions",
+     "match": "close",
+     "note": "A link (URI)."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedDocument[]",
+     "match": "broader",
+     "note": "Generic document link."
+    }
+   ]
+  },
+  "complianceTestReportResults": {
+   "catenax": [
+    {
+     "path": "conformity.resultOfTestReport",
+     "match": "close",
+     "note": "Document list."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "Labeling:resultOfTestReport",
+     "match": "close",
+     "note": "A link (URI)."
+    }
+   ],
+   "untp": [
+    {
+     "path": "credentialSubject.relatedDocument[]",
+     "match": "broader",
+     "note": "Generic document link; UNTP prefers conformity evidence to be attached to claims."
+    }
+   ]
+  },
+  "ratedCapacity": {
+   "catenax": [
+    {
+     "path": "performance.rated.capacity.value",
+     "match": "exact",
+     "note": "Ampere-hours (EC also allows mAh)."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.ratedCapacity",
+     "match": "exact",
+     "note": "Ampere-hours (EC also allows mAh)."
+    }
+   ]
+  },
+  "capacityFade": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.capacity.fade.value",
+     "match": "close",
+     "note": "Percent with a timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.capacityFade.capacityFadeValue",
+     "match": "close",
+     "note": "Percent with lastUpdate."
+    }
+   ]
+  },
+  "powerCapability": {
+   "catenax": [
+    {
+     "path": "performance.rated.power.value",
+     "match": "exact",
+     "note": "Watts."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.originalPowerCapability[]",
+     "match": "partial",
+     "note": "(state of charge, value) pairs with the value declared in percent."
+    }
+   ]
+  },
+  "powerFade": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.power.fade.value",
+     "match": "close",
+     "note": "Percent with a timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.powerFade",
+     "match": "exact",
+     "note": "Percent."
+    }
+   ]
+  },
+  "internalResistance": {
+   "catenax": [
+    {
+     "path": "performance.rated.resistance",
+     "match": "partial",
+     "note": "Split into cell, optional module, pack (ohm); EC has one value."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.initialInternalResistance[]",
+     "match": "partial",
+     "note": "List of (ohm, component); EC has one value."
+    }
+   ]
+  },
+  "internalResistanceIncrease": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.resistance.increase",
+     "match": "partial",
+     "note": "Split into pack, optional module, cell (percent with timestamp); EC has one value."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.internalResistanceIncrease[]",
+     "match": "partial",
+     "note": "List of (percent, lastUpdate, component); EC has one value."
+    }
+   ]
+  },
+  "roundTripEnergyEfficiency": {
+   "catenax": [
+    {
+     "path": "performance.rated.roundTripEfficiency.initial",
+     "match": "close",
+     "note": "Percent; Catena-X has one initial value serving both the Annex IV and Annex XIII 1(n) items."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.roundtripEfficiency",
+     "match": "close",
+     "note": "Percent; same single value used for both EC items."
+    }
+   ]
+  },
+  "roundTripEnergyEfficiencyFade": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.roundTripEfficiency.fade.value",
+     "match": "close",
+     "note": "Percent with a timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.roundTripEfficiencyFade",
+     "match": "exact",
+     "note": "Percent."
+    }
+   ]
+  },
+  "expectedLifetimeCyclesRest": {
+   "catenax": [
+    {
+     "path": "performance.rated.lifetime.cycleLifeTesting.cycles",
+     "match": "close",
+     "note": "One cycle count serves both EC lifetime-in-cycles fields."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.expectedNumberOfCycles",
+     "match": "close",
+     "note": "One cycle count serves both EC lifetime-in-cycles fields."
+    }
+   ]
+  },
+  "expectedLifetimeYears": {
+   "catenax": [
+    {
+     "path": "performance.rated.lifetime.expectedYears",
+     "match": "exact",
+     "note": "Integer years."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryTechicalProperties.expectedLifetime",
+     "match": "exact",
+     "note": "Integer (short) years."
+    }
+   ]
+  },
+  "stateOfCertifiedEnergy": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.energy.soce.value",
+     "match": "close",
+     "note": "Percent with a timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.stateOfCertifiedEnergy.stateOfCertifiedEnergyValue",
+     "match": "close",
+     "note": "Percent with lastUpdate."
+    }
+   ]
+  },
+  "remainingCapacity": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.capacity.capacity.value",
+     "match": "close",
+     "note": "Ampere-hours with a timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.remainingCapacity.remainingCapacityValue",
+     "match": "partial",
+     "note": "Declared in kilowatt-hours although described as matching rated capacity (Ah); EC uses Ah."
+    }
+   ]
+  },
+  "remainingPowerCapability": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.power.remaining.value",
+     "match": "close",
+     "note": "Watts with a timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.remainingPowerCapability[]",
+     "match": "partial",
+     "note": "(state of charge, value, timestamp) entries with the value declared in percent, not watts."
+    }
+   ]
+  },
+  "remainingRoundTripEfficiency": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.roundTripEfficiency.remaining.value",
+     "match": "close",
+     "note": "Percent with a timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.remainingRoundTripEnergyEfficiency.remainingRoundTripEnergyEfficiencyValue",
+     "match": "close",
+     "note": "Percent with lastUpdate."
+    }
+   ]
+  },
+  "selfDischargingRateSet": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.selfDischargingRate",
+     "match": "partial",
+     "note": "One current value (percent per month), no history; EC is a timestamped series in percent per year."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.currentSelfDischargingRate",
+     "match": "partial",
+     "note": "One current value with lastUpdate, no history; initial value is in percent per month."
+    }
+   ]
+  },
+  "selfDischargingRate": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.selfDischargingRate",
+     "match": "partial",
+     "note": "Percent per month, no timestamp; EC is percent per year with timestamp."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.currentSelfDischargingRate.currentSelfDischargingRateEntity",
+     "match": "close",
+     "note": "Percent with lastUpdate; time basis not stated."
+    }
+   ]
+  },
+  "ohmicResistance": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.resistance.remaining",
+     "match": "partial",
+     "note": "Remaining resistance in ohm per pack/module/cell with timestamp; not named ohmic resistance."
+    }
+   ]
+  },
+  "batteryStatus": {
+   "catenax": [
+    {
+     "path": "sustainability.status",
+     "match": "close",
+     "note": "Strings original, repurposed, re-used, remanufactured, waste; EC uses IRI codes (and 'reused')."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "GeneralProductInformation:batteryStatus",
+     "match": "close",
+     "note": "Capitalised strings Original, Repurposed, Reused, Remanufactured, Waste; EC uses IRI codes."
+    }
+   ]
+  },
+  "numberOfChargingCycles": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.fullCycles.value",
+     "match": "partial",
+     "note": "Count of full equivalent cycles; no separate charging count."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.numberOfFullCycles.numberOfFullCyclesValue",
+     "match": "partial",
+     "note": "Count of full cycles; no separate charging count."
+    }
+   ]
+  },
+  "numberOfDischargingCycles": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.fullCycles.value",
+     "match": "partial",
+     "note": "Count of full equivalent cycles; no separate discharging count."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.numberOfFullCycles.numberOfFullCyclesValue",
+     "match": "partial",
+     "note": "Count of full cycles; no separate discharging count."
+    }
+   ]
+  },
+  "negativeEvents": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.negativeEvents",
+     "match": "close",
+     "note": "Optional document list."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.negativeEvents[].negativeEvent",
+     "match": "close",
+     "note": "Plain text with lastUpdate; not language-tagged."
+    }
+   ]
+  },
+  "environmentalConditionHistogramSet": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.operatingEnvironment",
+     "match": "partial",
+     "note": "Optional document list; no histogram structure."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.temperatureInformation",
+     "match": "partial",
+     "note": "Four totals of minutes spent at extreme temperatures; no histogram."
+    }
+   ]
+  },
+  "environmentalConditionHistogram": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.operatingEnvironment",
+     "match": "partial",
+     "note": "Document list; no histogram bins."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.temperatureInformation",
+     "match": "partial",
+     "note": "Minutes above/below temperature limits; no bins."
+    }
+   ]
+  },
+  "stateOfChargeHistogram": {
+   "catenax": [
+    {
+     "path": "performance.dynamic.stateOfCharge",
+     "match": "partial",
+     "note": "One value (percent) with timestamp, not a histogram."
+    }
+   ],
+   "batterypass": [
+    {
+     "path": "PerformanceAndDurability:batteryCondition.stateOfCharge.stateOfChargeValue",
+     "match": "partial",
+     "note": "One value (percent) with lastUpdate, not a histogram."
+    }
+   ]
+  }
+ }
+}
