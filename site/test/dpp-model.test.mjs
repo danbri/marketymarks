@@ -41,5 +41,12 @@ for (const f of manifest.files.filter((x) => x.includes('/tests/conforms/'))) {
     if (leak.length) { bad++; console.log(`FAIL no-leak ${f} as ${aud}: ${leak.join(', ')}`); }
   }
 }
-console.log(bad ? `${bad} model failure(s)` : `model: all ${checks.length} checks and the no-leak check passed`);
+// nothing lost: an EC sample made for one view must come through that view's filter unchanged
+for (const f of manifest.files.filter((x) => /\/tests\/conforms\/(pub|res1|res2|res3)-/.test(x))) {
+  const p = JSON.parse(await readFile(new URL(f, root), 'utf8'));
+  const aud = f.match(/\/(pub|res1|res2|res3)-/)[1];
+  const v = M.viewFor(p, aud, terms);
+  if (JSON.stringify(v) !== JSON.stringify(p)) { bad++; console.log(`FAIL nothing-lost ${f} as ${aud}`); }
+}
+console.log(bad ? `${bad} model failure(s)` : `model: all ${checks.length} checks, the no-leak and the nothing-lost checks passed`);
 process.exit(bad ? 1 : 0);

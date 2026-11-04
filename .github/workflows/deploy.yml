@@ -48,6 +48,10 @@ jobs:
         working-directory: site
         run: npm test
 
+      - name: Test the reference host and mock registry end to end
+        working-directory: site
+        run: npm run test:servers
+
       - name: Build with Eleventy
         working-directory: site
         run: npm run build

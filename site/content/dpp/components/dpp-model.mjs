@@ -162,11 +162,14 @@ export const ACCESS_LABELS = {
 
 // May this audience see the field? audience: 'all' | 'pub' | 'res1' | 'res2' | 'res3'.
 // Public fields are visible to everyone; restricted fields only to their own levels;
-// fields the vocabulary doesn't know are shown only in 'all'.
+// fields with no access level in the vocabulary (core identifiers, units, values) follow
+// their parent; fields the vocabulary doesn't know are shown only in 'all'.
 export function visibleTo(key, audience, terms) {
   if (!audience || audience === 'all') return true;
-  const a = terms?.fields[key]?.access;
-  if (!a || !a.length) return false;
+  const f = terms?.fields[key];
+  if (!f) return false;                       // not in the EC vocabulary: only in 'all'
+  const a = f.access || [];
+  if (!a.length) return true;                 // core and structural fields (ids, unit, value, …) carry no level: they go with their parent
   return a.includes('pub') || a.includes(audience);
 }
 export const AUDIENCES = [
