@@ -1,0 +1,42 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/battery-passport-poc-pilots/pilot-3/#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:battery-passport-poc-pilots_pilot-3_",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2023-01-16T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "Audi"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery",
+  "manufacturingPlace": {
+    "manufacturingCountry": "DEU"
+  },
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 580
+  },
+  "batteryCapacity": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+    "value": 151
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonNMC"
+  ],
+  "minimalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 450
+  },
+  "nominalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 662
+  },
+  "maximumVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 742
+  }
+}

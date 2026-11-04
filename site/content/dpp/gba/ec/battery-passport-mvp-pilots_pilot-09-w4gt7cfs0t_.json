@@ -1,0 +1,47 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-09-w4gt7cfs0t/#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:battery-passport-mvp-pilots_pilot-09-w4gt7cfs0t_",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#batch",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2024-11-01T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "SNAT"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "PBH3XD9E50S"
+  },
+  "manufacturingPlace": {
+    "manufacturingCountry": "CHN"
+  },
+  "manufacturingDate": "2024-07",
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 394
+  },
+  "batteryCapacity": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+    "value": 139
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLFP"
+  ],
+  "minimalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 285
+  },
+  "nominalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 361
+  },
+  "maximumVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 416
+  },
+  "expectedLifetimeCycles": 2000
+}

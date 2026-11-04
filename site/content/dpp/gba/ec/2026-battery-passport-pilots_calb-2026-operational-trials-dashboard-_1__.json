@@ -1,0 +1,31 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/2026-battery-passport-pilots/calb-2026-operational-trials-dashboard-/1//#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:serial:0B5PMC87100091",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2026-09-01T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "CALB Group Co., Ltd."
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "D310F94AA",
+    "serialNumber": "0B5PMC87100091"
+  },
+  "manufacturingPlace": {
+    "manufacturingCountry": "CHN"
+  },
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 685
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLFP"
+  ],
+  "expectedLifetimeCycles": 712
+}

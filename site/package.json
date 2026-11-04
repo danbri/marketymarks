@@ -6,7 +6,7 @@
     "build": "node tools/build-dpp-terms.mjs && eleventy && node tools/copy-engine.mjs && node tools/stamp-assets.mjs",
     "serve": "eleventy --serve",
     "watch": "eleventy --watch",
-    "test": "node test/dpp-model.test.mjs && node test/dpp-auth.test.mjs && node test/dpp-check.test.mjs && node test/dpp-vc.test.mjs && node test/dpp-cli.test.mjs",
+    "test": "node test/dpp-model.test.mjs && node test/dpp-auth.test.mjs && node test/dpp-check.test.mjs && node test/dpp-vc.test.mjs && node test/dpp-cli.test.mjs && node test/dpp-schemaorg.test.mjs",
     "test:servers": "node test/dpp-servers.test.mjs && node test/dpp-registry-client.test.mjs"
   },
   "devDependencies": {

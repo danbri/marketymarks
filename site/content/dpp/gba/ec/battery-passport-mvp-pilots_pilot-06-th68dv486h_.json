@@ -1,0 +1,35 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-06-th68dv486h/#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:serial:LGE15S02217",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#batch",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2024-11-01T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "LG Energy Solution"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "LGAMEV24-C1",
+    "serialNumber": "LGE15S02217"
+  },
+  "manufacturingPlace": {
+    "manufacturingCountry": "POL"
+  },
+  "manufacturingDate": "2024-06",
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 31
+  },
+  "batteryCapacity": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+    "value": 262
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonNMC"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-07-h58fbc3dl0/#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:serial:0B5PEHT0A1082JE9W000",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2024-11-01T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "CALB"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "D300N97EA",
+    "serialNumber": "0B5PEHT0A1082JE9W000"
+  },
+  "manufacturingPlace": {
+    "manufacturingCountry": "CHN"
+  },
+  "manufacturingDate": "2024-01",
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 560
+  },
+  "batteryCapacity": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+    "value": 279
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLFP"
+  ],
+  "minimalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 269
+  },
+  "nominalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 350
+  },
+  "maximumVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 418
+  },
+  "expectedLifetimeCycles": 1500
+}

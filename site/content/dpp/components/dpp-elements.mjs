@@ -2,7 +2,7 @@
 //   <dpp-passport>    one passport, readable, grouped by theme, labels from the EC vocabularies
 //   <dpp-structured>  one passport as a property/value ladder (after schema.org's example
 //                     "structured" view, from schemarama's pretty-markup, Apache-2.0, Google LLC)
-//   <dpp-views>       tabs: Readable | Structured | JSON
+//   <dpp-views>       tabs: Readable | Structured | schema.org | JSON
 //   <dpp-collection>  many passports: search, cards, compare table, carousel, map, SPARQL
 // Set data with the .passport / .passports properties, or a src attribute (URL of JSON;
 // for a collection, a JSON array of passports or of URLs).
@@ -15,6 +15,7 @@ import {
   pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences, loadCrosswalk,
 } from './dpp-model.mjs';
 import { loadEngine } from './engine.mjs';
+import { toSchemaOrg, PENDING, OFFLINE_CONTEXT } from './dpp-schemaorg.mjs';
 
 const CSS = `
 :host { --bg: var(--dpp-bg, #fff); --ink: var(--dpp-ink, #111); --muted: var(--dpp-muted, #555); --line: var(--dpp-line, #ddd);
@@ -242,6 +243,8 @@ class DppStructured extends HTMLElement {
 const TABS_CSS = `
 [role=tablist] { display: flex; gap: .4rem; margin-bottom: .8rem; flex-wrap: wrap; }
 pre { background: var(--soft); padding: .6rem; overflow: auto; font-size: 12px; margin: 0; max-height: 70vh; }
+.srow { display: flex; justify-content: space-between; gap: 1rem; padding: 3px 6px; border-bottom: 1px solid var(--line); }
+.srow > div:first-child { font-weight: 700; } .srow > div:last-child { width: 55%; overflow-wrap: anywhere; }
 `;
 class DppViews extends HTMLElement {
   static observedAttributes = ['src'];
@@ -254,7 +257,9 @@ class DppViews extends HTMLElement {
     const full = this.#passport; if (!full) return;
     // every tab shows only what the chosen audience may see
     const p = viewFor(full, this.audience || 'all', await loadTerms());
-    const tabs = [['readable', 'Readable'], ['structured', 'Structured'], ['json', 'JSON']];
+    const tabs = [['readable', 'Readable'], ['structured', 'Structured'], ['schemaorg', 'schema.org'], ['json', 'JSON']];
+    if (this.source) tabs.push(['source', 'Source']);
+    if (this.#tab === 'source' && !this.source) this.#tab = 'readable';
     const bar = el('div', { role: 'tablist' }, tabs.map(([id, label]) => el('button', {
       role: 'tab', 'aria-selected': String(id === this.#tab), class: id === this.#tab ? 'on' : null, text: label,
       onclick: () => { this.#tab = id; this.render(); },
@@ -265,9 +270,68 @@ class DppViews extends HTMLElement {
     let body;
     if (this.#tab === 'readable') { body = el('dpp-passport', { audience: this.audience || 'all' }); body.passport = full; } // it filters, and says how much it hid
     else if (this.#tab === 'structured') { body = el('dpp-structured'); body.passport = p; }
+    else if (this.#tab === 'schemaorg') body = await schemaOrgPanel(p);
+    else if (this.#tab === 'source') body = sourcePanel(this.source);
     else body = el('pre', { text: JSON.stringify(p, null, 2) });
     this.shadowRoot.replaceChildren(bar, el('div', { role: 'tabpanel' }, body));
   }
+}
+
+// where a passport came from, and the source's own fields (for data mapped from another format)
+function sourcePanel(it) {
+  const src = it.source || {};
+  const parts = [el('dl', {},
+    el('dt', { text: 'Origin' }), el('dd', { text: originOf(it) }),
+    src.name ? [el('dt', { text: 'Source' }), el('dd', { text: src.name })] : null,
+    src.url ? [el('dt', { text: 'Original page' }), el('dd', {}, el('a', { href: src.url, rel: 'noopener', target: '_blank', text: src.url }))] : null,
+    src.retrieved ? [el('dt', { text: 'Retrieved' }), el('dd', { text: src.retrieved })] : null,
+    el('dt', { text: 'Licence' }), el('dd', { text: src.licence || (originOf(it) === 'EC sample' ? 'EUPL-1.2 (EC files)' : originOf(it) === 'fictional demo' ? 'fictional data' : 'none stated') }))];
+  if (it.raw) {
+    const fields = Object.entries(it.raw).filter(([, v]) => v != null && typeof v !== 'object');
+    parts.push(el('h3', { text: 'As published by the source' }),
+      el('p', { class: 'muted', text: 'Field names and values exactly as on the original page. Those with an EC field are also in the other tabs; the rest have no place in the EC model yet.' }),
+      el('dl', {}, fields.flatMap(([k, v]) => [el('dt', { text: k }), el('dd', { text: String(v) })])));
+    if (it.raw.provenance?.length) {
+      parts.push(el('h3', { text: 'Where the materials came from' }), el('dl', {}, it.raw.provenance.flatMap((pv) => [
+        el('dt', { text: pv.material }),
+        el('dd', {}, pv.countries?.length ? el('ul', {}, pv.countries.map(([c, share]) => el('li', { text: `${c}: ${share}` }))) : el('span', { class: 'muted', text: `supply chain mapped: ${pv.supplyChainMapped || 'not stated'}` }))])));
+    }
+  }
+  return el('div', {}, parts);
+}
+function originOf(it) {
+  return it.origin || (/global battery/i.test(it.source?.name || '') ? 'GBA pilot' : /\/demo\//.test(it.source?.url || '') ? 'fictional demo'
+    : /\/ec\/1\.0\.0\//.test(it.source?.url || '') ? 'EC sample' : 'other');
+}
+
+// the passport as schema.org (with the pending Digital Product Passport terms marked)
+async function schemaOrgPanel(p) {
+  const terms = await loadTerms(), profile = await loadProfile(profileIdFor(p));
+  const so = toSchemaOrg(p, terms, profile, userLangs());
+  const used = new Set();
+  const walk = (o) => { if (Array.isArray(o)) return o.forEach(walk); if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) {
+    if (PENDING.has(k)) used.add(k); if (k === '@type' && PENDING.has(v)) used.add(v); walk(v); } };
+  walk(so);
+  const rows = [];
+  const ladder = (o, level, hue) => {
+    for (const [k, v] of Object.entries(o)) {
+      if (k === '@context') continue;
+      for (const x of Array.isArray(v) ? v : [v]) {
+        const bar = el('span', { style: `display:inline-block;width:${level * 20}px;border-right:3px solid hsl(${hue} 55% 55%);margin-right:4px;height:1em;vertical-align:middle` });
+        const name = el('span', {}, k, PENDING.has(k) ? el('span', { class: 'restricted', title: 'pending.schema.org term (schema.org issue 4870)', text: 'pending' }) : null);
+        if (x && typeof x === 'object') {
+          rows.push(el('div', { class: 'srow' }, el('div', {}, bar, name), el('div', { class: 'muted' }, x['@type'] ? String(x['@type']) : '', PENDING.has(x['@type']) ? el('span', { class: 'restricted', text: 'pending' }) : null)));
+          ladder(Object.fromEntries(Object.entries(x).filter(([kk]) => kk !== '@type')), level + 1, (hue + 137.5) % 360);
+        } else rows.push(el('div', { class: 'srow' }, el('div', {}, bar, name), el('div', { text: String(x) })));
+      }
+    }
+  };
+  ladder(so, 0, 210);
+  return el('div', {},
+    el('p', { class: 'muted' }, 'The passport as schema.org markup, as a product page could publish it. ',
+      used.size ? `Terms marked "pending" (${[...used].join(', ')}) are in schema.org's pending area, proposed for Digital Product Passports.` : ''),
+    el('div', { class: 'ladder' }, rows),
+    el('details', {}, el('summary', { text: 'JSON-LD' }), el('pre', { text: JSON.stringify(so, null, 2) })));
 }
 
 // ---- <dpp-collection> ---------------------------------------------------------------
@@ -279,6 +343,7 @@ const COLL_CSS = `
 .card { border: 1px solid var(--line); padding: .7rem .8rem; cursor: pointer; background: var(--bg); text-align: left; width: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; }
 .card:hover, .card:focus-visible { border-color: var(--ink); }
 .card h4 { margin: 0 0 .2rem; font-size: 1rem; }
+.badge { font-size: .75em; color: var(--muted); border: 1px solid var(--edge); align-self: flex-start; padding: 0 .35rem; margin-bottom: .3rem; }
 .card ul { list-style: none; padding: 0; margin: .4rem 0 0; font-size: .85em; }
 .card li b { font-weight: 400; color: var(--muted); }
 mark { background: #ffe066; color: #111; }
@@ -308,11 +373,18 @@ class DppCollection extends HTMLElement {
   // passports: array of passport objects, or {passport, label?, source?}
   set passports(list) { this.#items = list.map((x, i) => (x && x.passport ? { ...x } : { passport: x })).map((x, i) => ({ ...x, n: i })); this.render(); }
   get passports() { return this.#items.map((x) => x.passport); }
+  // add passports, keeping each one's source information: items are passports or {passport, source, raw, origin, view, wave}
+  addPassports(list) {
+    const start = this.#items.length;
+    this.#items = [...this.#items, ...list.map((x) => (x && x.passport ? { ...x } : { passport: x })).map((x, i) => ({ ...x, n: start + i }))];
+    this.render();
+  }
   async attributeChangedCallback() {
     const src = this.getAttribute('src'); if (!src) return;
     const list = await fetchJson(src);
     const base = new URL(src, location.href);
-    this.passports = await Promise.all(list.map(async (x) => (typeof x === 'string' ? { passport: await fetchJson(new URL(x, base)), source: x } : x)));
+    this.passports = await Promise.all(list.map(async (x) => (typeof x === 'string' ? { passport: await fetchJson(new URL(x, base)), source: { url: new URL(x, base).href } }
+      : typeof x?.passport === 'string' ? { ...x, passport: await fetchJson(new URL(x.passport, base)) } : x)));
   }
   async ready() {
     this.#terms ??= await loadTerms();
@@ -351,7 +423,7 @@ class DppCollection extends HTMLElement {
     if (document.activeElement === this && this.#query) search.focus();
   }
   updateCount() { const n = this.visible().length; this.countEl.textContent = `${n} of ${this.#items.length} passport${this.#items.length === 1 ? '' : 's'}`; }
-  open(it) { const d = this.shadowRoot.querySelector('dialog'); d.querySelector('dpp-views').passport = it.passport; d.showModal(); }
+  open(it) { const d = this.shadowRoot.querySelector('dialog'), v = d.querySelector('dpp-views'); v.source = it; v.passport = it.passport; d.showModal(); }
   async renderBody() {
     const shown = this.visible(), t = this.#terms, langs = userLangs();
     const body = this.body; body.replaceChildren();
@@ -363,7 +435,14 @@ class DppCollection extends HTMLElement {
         const prof = this.#profiles[profileIdFor(it.passport)], d = describe(it.passport, prof, t, langs);
         const ul = el('ul');
         for (const path of (prof.summary || []).slice(0, 4)) { const v = pathValue(it.passport, path); if (v != null) ul.append(el('li', {}, el('b', { text: fieldLabel(path.split('.').pop(), t) + ': ' }), textOf(path, v, t, langs))); }
-        grid.append(el('button', { class: 'card', type: 'button', onclick: () => this.open(it) }, el('h4', { text: d.title }), el('div', { class: 'muted', text: d.subtitle }), d.maker ? el('div', { class: 'muted', text: d.maker }) : null, ul));
+        // a few source-only facts (e.g. energy, cells) for passports mapped from another format
+        for (const k of ['Total Energy', 'Energy Storage', 'Cells per Battery', '# of Cells per Battery', 'Number of Cells Per Battery', 'Battery Cell Producer', 'Cell Manufacturer']) {
+          const v = it.raw?.[k]; if (v && !/^(n\/?a|not applicable|not disclosed|no info)$/i.test(v)) ul.append(el('li', {}, el('b', { text: k + ': ' }), v));
+        }
+        const origin = originOf(it);
+        grid.append(el('button', { class: 'card', type: 'button', onclick: () => this.open(it) },
+          el('div', { class: 'badge', text: origin + (it.wave ? ' ' + it.wave : '') }),
+          el('h4', { text: d.title }), el('div', { class: 'muted', text: d.subtitle }), d.maker ? el('div', { class: 'muted', text: d.maker }) : null, ul));
       }
       body.append(grid);
     } else if (this.#mode === 'carousel') {
@@ -441,8 +520,26 @@ class DppCollection extends HTMLElement {
       L.marker(ll.ll, { title: d.title, alt: d.title }).addTo(map).bindPopup(pop);
       status.textContent = `Placed ${++done} of ${shown.length}…`;
     }
+    // where traced materials came from (source data such as the GBA pilots): a dot per country, joined to the factory
+    const byName = new Map(Object.entries(COUNTRIES).map(([a3, [a2, lat, lon]]) => {
+      let n = a3; try { n = new Intl.DisplayNames(['en'], { type: 'region' }).of(a2); } catch {}
+      return [n.toLowerCase(), [lat, lon]];
+    }));
+    let flows = 0;
+    for (const it of shown) {
+      const prov = it.raw?.provenance; if (!prov?.length) continue;
+      const made = it.passport.manufacturingPlace ? await geocode(it.passport.manufacturingPlace) : null;
+      const d = describe(it.passport, this.#profiles[profileIdFor(it.passport)], t, langs);
+      for (const pv of prov) for (const [country, share] of pv.countries || []) {
+        const ll = byName.get(String(country).toLowerCase()); if (!ll) continue;
+        flows++; points.push(ll);
+        L.circleMarker(ll, { radius: 7, color: '#7a3e00', weight: 2, fillOpacity: 0.5 }).addTo(map)
+          .bindPopup(el('div', {}, el('strong', { text: `${pv.material} from ${country}` }), el('br'), `${share} of the traced ${pv.material.toLowerCase()} for ${d.title}`, el('br'), el('button', { text: 'Open passport', onclick: () => this.open(it) })));
+        if (made) L.polyline([ll, made.ll], { color: '#7a3e00', weight: 1.5, opacity: 0.6, dashArray: '4 4' }).addTo(map);
+      }
+    }
     if (points.length) map.fitBounds(points, { padding: [40, 40], maxZoom: 7 });
-    status.textContent = `${points.length} of ${shown.length} passports placed by manufacturing place${approx ? ` (${approx} at country centre)` : ''}. Places found with OpenStreetMap Nominatim.`;
+    status.textContent = `${points.length - flows} of ${shown.length} passports placed by manufacturing place${approx ? ` (${approx} at country centre)` : ''}${flows ? `; ${flows} material source${flows > 1 ? 's' : ''} (brown dots, dashed lines to the factory)` : ''}. Places found with OpenStreetMap Nominatim.`;
   }
   renderSparql() {
     const examples = SPARQL_EXAMPLES;
@@ -450,37 +547,99 @@ class DppCollection extends HTMLElement {
     ta.value = this.lastQuery || examples[0][1];
     const pick = el('select', { 'aria-label': 'Example queries', onchange: (e) => { ta.value = examples[e.target.value][1]; } },
       examples.map(([label], i) => el('option', { value: i, text: label })));
+    const withChecks = el('input', { type: 'checkbox', checked: this.withChecks !== false || null, onchange: (e) => { this.withChecks = e.target.checked; } });
     const out = el('div', { 'aria-live': 'polite' });
     const run = el('button', { class: 'on', text: 'Run query', onclick: async () => {
-      this.lastQuery = ta.value; run.disabled = true; out.replaceChildren(el('p', { class: 'muted', text: 'Loading the query engine (about 31 MB, once) and the passports…' }));
+      this.lastQuery = ta.value; run.disabled = true;
+      const say = (t) => out.replaceChildren(el('p', { class: 'muted', text: t }));
+      say('Loading the query engine (once) and the passports…');
       try {
-        const ds = await this.dataset();
+        const ds = await this.dataset(this.withChecks !== false, (done, total) => say(`Checking passports against the EC rules: ${done} of ${total}…`));
         const t0 = performance.now();
         const res = await ds.query(ta.value);
-        const names = new Map(this.visible().map((it) => [`urn:dpp-collection:passport:${it.n + 1}`,
-          describe(it.passport, this.#profiles[profileIdFor(it.passport)], this.#terms).title]));
-        out.replaceChildren(renderResults(res, this.#terms, names), el('p', { class: 'muted', text: `${(performance.now() - t0).toFixed(0)} ms` }));
+        const names = new Map();
+        for (const it of this.visible()) {
+          const t = describe(it.passport, this.#profiles[profileIdFor(it.passport)], this.#terms).title, n = it.n + 1;
+          for (const [g, what] of [['passport', ''], ['validation', ' (checks)'], ['schemaorg', ' (schema.org)'], ['source-data', ' (source data)']]) names.set(`urn:dpp:${g}:${n}`, t + what);
+        }
+        out.replaceChildren(renderResults(res, this.#terms, names), el('p', { class: 'muted', text: `${Array.isArray(res) ? res.length + ' rows, ' : ''}${(performance.now() - t0).toFixed(0)} ms` }));
       } catch (e) { out.replaceChildren(el('p', { text: 'Query failed: ' + e.message })); }
       finally { run.disabled = false; }
     } });
     this.body.append(el('div', { class: 'sparql' },
-      el('p', { class: 'muted', text: 'Each passport is a named graph (GRAPH ?p). The EC codelists and vocabularies are in the default graph, so labels can be joined in.' }),
-      el('div', { class: 'row' }, el('label', {}, 'Example: ', pick), run), ta, out));
+      el('details', {}, el('summary', { text: 'What is in the data (named graphs)' }), el('ul', {},
+        el('li', {}, el('code', { text: 'urn:dpp:passport:N' }), ' each passport, as EC data'),
+        el('li', {}, el('code', { text: 'urn:dpp:validation:N' }), ' its check against the EC rules: a sh:ValidationReport with sh:result entries (EC error code, field, value, explanation)'),
+        el('li', {}, el('code', { text: 'urn:dpp:schemaorg:N' }), ' the same passport as schema.org, with the pending Digital Product Passport terms'),
+        el('li', {}, el('code', { text: 'urn:dpp:source-data:N' }), ' the source\u2019s own fields, where the passport was mapped from another format (e.g. the GBA pilots)'),
+        el('li', {}, el('code', { text: 'urn:dpp:catalog' }), ' one entry per passport: title, origin, source page, licence, verdict, and links to its graphs'),
+        el('li', {}, 'default graph: the EC vocabularies and codelists (labels, definitions)'))),
+      el('div', { class: 'row' }, el('label', {}, 'Example: ', pick), el('label', {}, withChecks, ' include checks (slower: about a second per passport)'), run), ta, out));
   }
-  // all (currently visible) passports as RDF, one named graph each, plus the EC vocabularies
-  async dataset() {
-    const key = this.visible().map((x) => x.n).join(',');
+  // all (currently visible) passports as RDF, partitioned into named graphs (see renderSparql)
+  async dataset(withChecks = true, onProgress = () => {}) {
+    const key = this.visible().map((x) => x.n).join(',') + (withChecks ? ':checks' : '');
     if (this._ds && this._dsKey === key) return this._ds;
     const F = await loadEngine();
     const { Checker, detectProfile } = await import('../lib/dpp-check.mjs');
     const base = new URL('../ec/1.0.0/', import.meta.url);
     const checker = new Checker(F, async (p) => (await fetch(new URL(p, base))).text());
-    let nq = '';
-    for (const it of this.visible()) {
-      const g = `<urn:dpp-collection:passport:${it.n + 1}>`;
-      const ds = await checker.toRDF(it.passport, detectProfile(it.passport));
-      const nt = await ds.serialize({ format: 'ntriples' });
-      nq += nt.trim().split('\n').filter(Boolean).map((l) => l.replace(/_:/g, `_:p${it.n}_`).replace(/ \.\s*$/, ` ${g} .`)).join('\n') + '\n';
+    const NS = 'https://marketymarks.com/dpp/ns#', SH = 'http://www.w3.org/ns/shacl#', DCT = 'http://purl.org/dc/terms/';
+    const lit = (v) => (typeof v === 'boolean' ? `"${v}"^^<http://www.w3.org/2001/XMLSchema#boolean>` : typeof v === 'number' ? `"${v}"^^<http://www.w3.org/2001/XMLSchema#decimal>` : JSON.stringify(String(v)));
+    const iri = (u) => `<${String(u).replace(/[<>"{}|^`\\\s]/g, encodeURIComponent)}>`;
+    const graphOf = async (ds, g, prefix) => (await ds.serialize({ format: 'ntriples' })).trim().split('\n').filter(Boolean)
+      .map((l) => l.replace(/_:/g, `_:${prefix}_`).replace(/ \.\s*$/, ` <${g}> .`)).join('\n') + '\n';
+    const terms = this.#terms;
+    let nq = '', done = 0;
+    const items = this.visible();
+    for (const it of items) {
+      const n = it.n + 1, gP = `urn:dpp:passport:${n}`, gV = `urn:dpp:validation:${n}`, gS = `urn:dpp:schemaorg:${n}`, gR = `urn:dpp:source-data:${n}`, C = '<urn:dpp:catalog>';
+      const profile = detectProfile(it.passport);
+      nq += await graphOf(await checker.toRDF(it.passport, profile), gP, `p${n}`);
+      const so = toSchemaOrg(it.passport, terms, this.#profiles[profileIdFor(it.passport)], ['en']);
+      nq += await graphOf(await F.jsonldToRdf(JSON.stringify({ ...so, '@context': OFFLINE_CONTEXT })), gS, `s${n}`);
+      const origin = originOf(it);
+      const title = describe(it.passport, this.#profiles[profileIdFor(it.passport)], terms).title;
+      const cat = [[`<${gP}>`, `<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>`, `<http://www.w3.org/ns/dcat#Dataset>`],
+        [`<${gP}>`, `<${DCT}title>`, lit(title)], [`<${gP}>`, `<${NS}origin>`, lit(origin)], [`<${gP}>`, `<${NS}schemaorgView>`, `<${gS}>`]];
+      if (it.source?.url) cat.push([`<${gP}>`, `<${DCT}source>`, iri(it.source.url)]);
+      if (it.source?.retrieved) cat.push([`<${gP}>`, `<${NS}retrieved>`, `"${it.source.retrieved}"^^<http://www.w3.org/2001/XMLSchema#date>`]);
+      cat.push([`<${gP}>`, `<${DCT}license>`, it.source?.licence ? iri(it.source.licence) : lit(origin === 'EC sample' ? 'EUPL-1.2' : origin === 'fictional demo' ? 'fictional data' : 'none stated')]);
+      if (it.wave) cat.push([`<${gP}>`, `<${NS}pilotWave>`, lit(it.wave)]);
+      if (it.raw) {
+        cat.push([`<${gP}>`, `<${NS}sourceData>`, `<${gR}>`]);
+        let k = 0;
+        for (const [name, value] of Object.entries(it.raw)) {
+          if (value == null || typeof value === 'object') continue;
+          const b = `_:r${n}_${k++}`;
+          nq += `<${gP}> <${NS}sourceField> ${b} <${gR}> .\n${b} <${NS}name> ${lit(name)} <${gR}> .\n${b} <${NS}value> ${lit(value)} <${gR}> .\n`;
+        }
+        for (const pv of it.raw.provenance || []) {
+          const b = `_:r${n}_${k++}`;
+          nq += `<${gP}> <${NS}materialProvenance> ${b} <${gR}> .\n${b} <${NS}material> ${lit(pv.material)} <${gR}> .\n`;
+          if (pv.supplyChainMapped) nq += `${b} <${NS}supplyChainMapped> ${lit(pv.supplyChainMapped)} <${gR}> .\n`;
+          for (const [country, share] of pv.countries || []) { const c = `_:r${n}_${k++}`; nq += `${b} <${NS}sourcedFrom> ${c} <${gR}> .\n${c} <${NS}country> ${lit(country)} <${gR}> .\n${c} <${NS}share> ${lit(share)} <${gR}> .\n`; }
+        }
+      }
+      if (withChecks) {
+        const view = it.view || 'pub';
+        const r = await checker.check(it.passport, { view, profile });
+        const rep = `<${gV}#report>`;
+        nq += `${rep} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <${SH}ValidationReport> <${gV}> .\n${rep} <${SH}conforms> ${lit(r.verdict === 'passes')} <${gV}> .\n`;
+        nq += `${rep} <${NS}verdict> ${lit(r.verdict)} <${gV}> .\n${rep} <${NS}view> ${lit(view)} <${gV}> .\n${rep} <${NS}checked> <${gP}> <${gV}> .\n`;
+        r.problems.forEach((pr, k) => {
+          const b = `_:v${n}_${k}`;
+          nq += `${rep} <${SH}result> ${b} <${gV}> .\n${b} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <${SH}ValidationResult> <${gV}> .\n`;
+          if (pr.code) nq += `${b} <${SH}resultMessage> ${lit(pr.code)} <${gV}> .\n`;
+          if (pr.field) nq += `${b} <${SH}resultPath> ${terms.fields[pr.field]?.iri ? `<${terms.fields[pr.field].iri}>` : lit(pr.field)} <${gV}> .\n${b} <${NS}field> ${lit(pr.field)} <${gV}> .\n`;
+          if (pr.value != null) nq += `${b} <${SH}value> ${lit(pr.value)} <${gV}> .\n`;
+          if (pr.explanation) nq += `${b} <${NS}explanation> ${lit(pr.explanation)} <${gV}> .\n`;
+          if (pr.rule) nq += `${b} <${NS}rule> ${lit(pr.rule)} <${gV}> .\n`;
+        });
+        cat.push([`<${gP}>`, `<${NS}validation>`, `<${gV}>`], [`<${gP}>`, `<${NS}verdict>`, lit(r.verdict)], [`<${gP}>`, `<${NS}problemCount>`, lit(r.problems.length)]);
+        onProgress(++done, items.length);
+      }
+      nq += cat.map((t) => `${t.join(' ')} ${C} .`).join('\n') + '\n';
     }
     const ds = await F.datasetMerge(await F.parse(nq, 'nquads'), await checker.vocabularies());
     this._ds = ds; this._dsKey = key;
@@ -514,6 +673,43 @@ SELECT ?material (COUNT(DISTINCT ?passport) AS ?passports) WHERE {
   GRAPH ?passport { ?b bat:criticalRawMaterials ?m }
   ?m skos:prefLabel ?material .
 } GROUP BY ?material ORDER BY DESC(?passports)`],
+  ['Catalogue: every passport, where it came from, verdict', `PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX m: <https://marketymarks.com/dpp/ns#>
+SELECT ?passport ?origin ?verdict ?problems ?source WHERE {
+  GRAPH <urn:dpp:catalog> { ?passport m:origin ?origin . OPTIONAL { ?passport m:verdict ?verdict ; m:problemCount ?problems } OPTIONAL { ?passport dct:source ?source } }
+} ORDER BY ?origin ?passport`],
+  ['Most common problems across all passports', `PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX m: <https://marketymarks.com/dpp/ns#>
+SELECT ?code ?field (COUNT(DISTINCT ?report) AS ?passports) (SAMPLE(?why) AS ?explanation) WHERE {
+  GRAPH ?g { ?report a sh:ValidationReport ; sh:result ?r . ?r sh:resultMessage ?code . OPTIONAL { ?r m:field ?field } OPTIONAL { ?r m:explanation ?why } }
+} GROUP BY ?code ?field ORDER BY DESC(?passports) LIMIT 40`],
+  ['Real pilots (GBA): what is missing for the EC format', `PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX m: <https://marketymarks.com/dpp/ns#>
+SELECT ?field (COUNT(DISTINCT ?passport) AS ?pilots) WHERE {
+  GRAPH <urn:dpp:catalog> { ?passport m:origin "GBA pilot" ; m:validation ?v }
+  GRAPH ?v { ?report sh:result ?r . ?r m:field ?field }
+} GROUP BY ?field ORDER BY DESC(?pilots)`],
+  ['Real pilots (GBA): source fields, e.g. energy and cells', `PREFIX m: <https://marketymarks.com/dpp/ns#>
+SELECT ?passport ?name ?value WHERE {
+  GRAPH ?g { ?passport m:sourceField [ m:name ?name ; m:value ?value ] }
+  FILTER(REGEX(?name, "Energy|Cells|Recycled|Traceability|Country", "i"))
+} ORDER BY ?passport ?name`],
+  ['Real pilots (GBA): where traced materials came from', `PREFIX m: <https://marketymarks.com/dpp/ns#>
+SELECT ?passport ?material ?country ?share WHERE {
+  GRAPH ?g { ?passport m:materialProvenance ?p . ?p m:material ?material . ?p m:sourcedFrom [ m:country ?country ; m:share ?share ] }
+} ORDER BY ?material ?country`],
+  ['schema.org view: products with weight and origin', `PREFIX schema: <https://schema.org/>
+SELECT ?product ?name ?weight ?unit ?country WHERE {
+  GRAPH ?g { ?product a schema:Product ; schema:name ?name .
+    OPTIONAL { ?product schema:weight [ schema:value ?weight ; schema:unitCode ?unit ] }
+    OPTIONAL { ?product schema:countryOfOrigin [ schema:name ?country ] } }
+} ORDER BY DESC(?weight)`],
+  ['schema.org view: pending DPP terms in use', `PREFIX schema: <https://schema.org/>
+SELECT ?term (COUNT(*) AS ?uses) WHERE {
+  GRAPH ?g { ?s ?p ?o }
+  VALUES ?term { schema:hasDigitalProductPassport schema:substanceOfConcern schema:recycledContentPercentage schema:DeclarationOfConformity schema:DigitalProductPassport }
+  FILTER(?p = ?term || ?o = ?term)
+} GROUP BY ?term`],
   ['Text search in multilingual fields', `PREFIX bat: <https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#>
 SELECT ?passport ?field ?text WHERE {
   GRAPH ?passport { ?s ?field ?text FILTER(isLiteral(?text) && lang(?text) != "" && CONTAINS(LCASE(STR(?text)), "water")) }

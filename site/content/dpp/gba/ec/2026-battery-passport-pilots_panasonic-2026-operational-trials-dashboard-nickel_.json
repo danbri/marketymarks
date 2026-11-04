@@ -1,0 +1,30 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/2026-battery-passport-pilots/panasonic-2026-operational-trials-dashboard-nickel/#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:serial:TG125180000HGX",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2026-09-01T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "Tesla"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "Model 3 Standard Range AWD",
+    "serialNumber": "TG125180000HGX"
+  },
+  "manufacturingPlace": {
+    "manufacturingCountry": "USA"
+  },
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 456
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonNCA"
+  ]
+}

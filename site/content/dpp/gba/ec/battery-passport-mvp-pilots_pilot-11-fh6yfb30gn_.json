@@ -1,0 +1,43 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-11-fh6yfb30gn/#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:battery-passport-mvp-pilots_pilot-11-fh6yfb30gn_",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2024-11-01T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/evb/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "Sunwoda"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery",
+  "manufacturingPlace": {
+    "manufacturingCountry": "CHN"
+  },
+  "manufacturingDate": "2024-01",
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 226.5
+  },
+  "batteryCapacity": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+    "value": 104
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLFP"
+  ],
+  "minimalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 210
+  },
+  "nominalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 354
+  },
+  "maximumVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 423
+  }
+}

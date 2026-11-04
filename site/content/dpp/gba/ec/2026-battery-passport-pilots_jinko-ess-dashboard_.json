@@ -1,0 +1,31 @@
+{
+  "digitalProductPassportId": "https://www.globalbattery.org/2026-battery-passport-pilots/jinko-ess-dashboard/#passport",
+  "uniqueProductIdentifier": "urn:gba-pilot:serial:JKE-5015K-2H-LAA",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2026-09-01T00:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/ind/1.0.0"
+  ],
+  "manufacturerIdentification": {
+    "manufacturerName": "Jinko ESS"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#industrialBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "JKE-5015K-2H-LAA",
+    "serialNumber": "JKE-5015K-2H-LAA"
+  },
+  "manufacturingPlace": {
+    "manufacturingCountry": "CHN"
+  },
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 42000
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLFP"
+  ],
+  "expectedLifetimeCycles": 8000
+}

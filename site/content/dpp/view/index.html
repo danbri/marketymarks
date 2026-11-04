@@ -26,8 +26,9 @@ templateEngineOverride: false
 </head>
 <body>
 <header><h1>dpp viewer <span style="font-weight:400;color:var(--muted)">(experimental)</span></h1><a href="../">marketymarks / dpp</a></header>
-<p class="lede">Browse, search and compare battery passports. Field names and codes come from the EC's own vocabularies. The 8 demo passports are fictional.</p>
+<p class="lede">Browse, search and compare battery passports. Field names and codes come from the EC's own vocabularies. The 8 demo passports are fictional; the Global Battery Alliance pilots are real, as published (<a href="../gba/NOTICE.md">notes</a>).</p>
 <div class="src">
+  <button id="add-gba" type="button">Add 21 real pilot passports (Global Battery Alliance)</button>
   <button id="add-ec" type="button">Add the 20 EC sample passports</button>
   <label>Add your own: <input id="files" type="file" accept=".json,application/json" multiple></label>
 </div>
@@ -36,16 +37,25 @@ templateEngineOverride: false
 <script type="module">
 const c = document.getElementById('c');
 await customElements.whenDefined('dpp-collection');
-const add = (more) => { c.passports = [...c.passports, ...more]; };
+const add = (more) => c.addPassports(more);
 document.getElementById('add-ec').addEventListener('click', async (e) => {
   e.target.disabled = true;
   const m = await (await fetch('../ec/1.0.0/manifest.json')).json();
   const files = m.files.filter((f) => f.includes('/tests/conforms/'));
-  add(await Promise.all(files.map(async (f) => (await fetch('../ec/1.0.0/' + f)).json())));
+  add(await Promise.all(files.map(async (f) => {
+    const name = f.split('/').pop().replace('.json', '');
+    return { passport: await (await fetch('../ec/1.0.0/' + f)).json(), origin: 'EC sample',
+      view: (name.match(/^(pub|res1|res2|res3)-/) || [, 'all'])[1], source: { name: 'EC DPP semantic data artifacts 1.0.0, test passport', url: new URL('../ec/1.0.0/' + f, location.href).href } };
+  })));
+});
+document.getElementById('add-gba').addEventListener('click', async (e) => {
+  e.target.disabled = true;
+  const index = await (await fetch('../gba/index.json')).json();
+  add(await Promise.all(index.map(async (x) => ({ ...x, origin: 'GBA pilot', passport: await (await fetch('../gba/' + x.passport)).json() }))));
 });
 document.getElementById('files').addEventListener('change', async (e) => {
   const out = [];
-  for (const f of e.target.files) { try { out.push(JSON.parse(await f.text())); } catch { e.target.insertAdjacentText('afterend', ` ${f.name} is not valid JSON.`); } }
+  for (const f of e.target.files) { try { out.push({ passport: JSON.parse(await f.text()), origin: 'your file', source: { name: f.name } }); } catch { e.target.insertAdjacentText('afterend', ` ${f.name} is not valid JSON.`); } }
   add(out);
 });
 </script>

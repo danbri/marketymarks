@@ -230,6 +230,7 @@ export const PREFIXES = [
   ['dpp:', EC + 'core/vocabs/core-vocabulary#'],
   ['dppcom:', EC + 'core/vocabs/common-vocabulary#'],
   ['bat:', EC + 'product/batteries/vocabs/battery-vocabulary#'],
+  ['schema:', 'https://schema.org/'],
 ];
 export function shortIri(iri) {
   for (const [p, ns] of PREFIXES) if (iri.startsWith(ns)) return p + iri.slice(ns.length);

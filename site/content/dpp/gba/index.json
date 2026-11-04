@@ -1,0 +1,886 @@
+[
+ {
+  "passport": "ec/2026-battery-passport-pilots_calb-2026-operational-trials-dashboard-_1__.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/calb-2026-operational-trials-dashboard-(1)/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "D310F94AA",
+   "Serial Number": "0B5PMC87100091",
+   "Cell Manufacturer": "CALB Group Co., Ltd.",
+   "Battery Manufacturer": "CALB Group Co., Ltd.",
+   "Battery Weight": "685 kg",
+   "Battery Chemistry": "LFP",
+   "Energy Density": "0.136 kWh/kg",
+   "Energy Storage": "93.1 kWh",
+   "Rated Cycles": "712",
+   "Country of Production": "China",
+   "% Recycled Materials": "0%",
+   "Cells per Battery": "212",
+   "Cell Type": "Prismatic",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": "100%",
+     "countries": []
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/2026-battery-passport-pilots_calb-2026-operational-trials-dashboard-_2__.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/calb-2026-operational-trials-dashboard-(2)/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "NBE661",
+   "Serial Number": "000,006,608,256,591",
+   "Cell Manufacturer": "CALB Group Co., Ltd.",
+   "Battery Manufacturer": "Zhejiang ENERGEE Technology Co., Ltd.",
+   "Battery Weight": "390 ± 10 kg",
+   "Battery Chemistry": "NCM",
+   "Energy Density": "0.177 kWh/kg",
+   "Energy Storage": "66 kWh",
+   "Rated Cycles": "1,200",
+   "Country of Production": "China",
+   "% Recycled Materials": "0%",
+   "Cells per Battery": "107",
+   "Cell Type": "Prismatic",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": "100%",
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/2026-battery-passport-pilots_catl-2026-operational-trials-dashboard_.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/catl-2026-operational-trials-dashboard/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "TNO2",
+   "Serial Number": "7G5T0100110",
+   "Cell Manufacturer": "CATL",
+   "Battery Manufacturer": "CATL",
+   "Battery Weight": "1,172 kg",
+   "Battery Chemistry": "LFP",
+   "Energy Density": "0.15 kWh/kg",
+   "Energy Storage": "170 kWh",
+   "Rated Cycles": "7,200",
+   "Country of Production": "China",
+   "% Recycled Materials": "Not Disclosed",
+   "Cells per Battery": "336",
+   "Cell Type": "Prismatic",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": "100%",
+     "countries": [
+      [
+       "Argentina",
+       "100%"
+      ]
+     ]
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/2026-battery-passport-pilots_jinko-ess-dashboard_.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/jinko-ess-dashboard/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "JKE-5015K-2H-LAA",
+   "Serial Number": "JKE-5015K-2H-LAA",
+   "Cell Manufacturer": "REPT",
+   "Battery Manufacturer": "Jinko ESS",
+   "Battery Weight": "42,000 kg",
+   "Battery Chemistry": "LFP",
+   "Energy Density": "0.119 kWh/kg",
+   "Energy Storage": "5,015 kWh",
+   "Rated Cycles": "8,000",
+   "Country of Production": "China",
+   "% Recycled Materials": "0%",
+   "Cells per Battery": "4,992",
+   "Cell Type": "314 Pro",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": "100%",
+     "countries": []
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": "N/A",
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/2026-battery-passport-pilots_panasonic-2026-operational-trials-dashboard-cobalt_.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/panasonic-2026-operational-trials-dashboard-cobalt/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "Model 3 Standard Range AWD",
+   "Serial Number": "TG125180000HGX",
+   "Cell Manufacturer": "Panasonic Energy",
+   "Battery Manufacturer": "Tesla",
+   "Battery Weight": "456 kg",
+   "Battery Chemistry": "NCA",
+   "Energy Density": "0.18 kWh/kg",
+   "Energy Storage": "82 kWh",
+   "Rated Cycles": "Not disclosed",
+   "Country of Production": "USA",
+   "% Recycled Materials": "Not disclosed",
+   "Cells per Battery": "4,416",
+   "Cell Type": "Cylindrical",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": null,
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/2026-battery-passport-pilots_panasonic-2026-operational-trials-dashboard-lithium_.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/panasonic-2026-operational-trials-dashboard-lithium/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "Model 3 Standard Range AWD",
+   "Serial Number": "TG125180000HGX",
+   "Cell Manufacturer": "Panasonic Energy",
+   "Battery Manufacturer": "Tesla",
+   "Battery Weight": "456 kg",
+   "Battery Chemistry": "NCA",
+   "Energy Density": "0.18 kWh/kg",
+   "Energy Storage": "82 kWh",
+   "Rated Cycles": "Not disclosed",
+   "Country of Production": "USA",
+   "% Recycled Materials": "Not disclosed",
+   "Cells per Battery": "4,416",
+   "Cell Type": "Cylindrical",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": null,
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/2026-battery-passport-pilots_panasonic-2026-operational-trials-dashboard-natural-graphite_.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/panasonic-2026-operational-trials-dashboard-natural-graphite/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "Model 3 Standard Range AWD",
+   "Serial Number": "TG125180000HGX",
+   "Cell Manufacturer": "Panasonic Energy",
+   "Battery Manufacturer": "Tesla",
+   "Battery Weight": "456 kg",
+   "Battery Chemistry": "NCA",
+   "Energy Density": "0.18 kWh/kg",
+   "Energy Storage": "82 kWh",
+   "Rated Cycles": "Not disclosed",
+   "Country of Production": "USA",
+   "% Recycled Materials": "Not disclosed",
+   "Cells per Battery": "4,416",
+   "Cell Type": "Cylindrical",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": null,
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/2026-battery-passport-pilots_panasonic-2026-operational-trials-dashboard-nickel_.json",
+  "wave": "2026",
+  "source": {
+   "name": "Global Battery Alliance, 2026 battery passport pilots",
+   "url": "https://www.globalbattery.org/2026-battery-passport-pilots/panasonic-2026-operational-trials-dashboard-nickel/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Model": "Model 3 Standard Range AWD",
+   "Serial Number": "TG125180000HGX",
+   "Cell Manufacturer": "Panasonic Energy",
+   "Battery Manufacturer": "Tesla",
+   "Battery Weight": "456 kg",
+   "Battery Chemistry": "NCA",
+   "Energy Density": "0.18 kWh/kg",
+   "Energy Storage": "82 kWh",
+   "Rated Cycles": "Not disclosed",
+   "Country of Production": "USA",
+   "% Recycled Materials": "Not disclosed",
+   "Cells per Battery": "4,416",
+   "Cell Type": "Cylindrical",
+   "provenance": [
+    {
+     "material": "Lithium",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Natural Graphite",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Cobalt",
+     "supplyChainMapped": null,
+     "countries": []
+    },
+    {
+     "material": "Nickel",
+     "supplyChainMapped": null,
+     "countries": []
+    }
+   ]
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-01-3r3thy534n_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-01-3r3thy534n/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "001PBXXX000002E7F220",
+   "Battery Chemistry": "LFP",
+   "Material Flow Aggregation": "individual battery",
+   "Battery Model": "NEX_NP1_75kwh_BEV",
+   "Battery Cell Type": "prismatic",
+   "Tracing Period Start": "07 Jan 2024",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "114",
+   "Tracing Period End": "11 Jun 2024",
+   "Manufacturing Date": "Jul 2024",
+   "Weight": "535 kg",
+   "Data Collection Assured By": "CATL RCS Global",
+   "EV OEM": "NIO",
+   "Total Energy": "75,06 kWh",
+   "Country of EV Production": "China",
+   "Energy Density": "140,30 Wh/kg",
+   "Traceability": "(2/3) med",
+   "Battery Producer": "CATL",
+   "Rated Capacity": "204,5 Ah",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "not disclosed",
+   "Data Verification Assured By": "TUV Rheinland Botree Recycling",
+   "Battery Cell Producer": "CATL",
+   "Voltage (Min - Nominal - Max)": "228V - 367V - 422V",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-30C° - 60C°",
+   "Verification": "(2/3) med",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-02-g74hvp68db_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-02-g74hvp68db/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "001PBXXX00000BE5J020",
+   "Battery Chemistry": "LFP",
+   "Material Flow Aggregation": "individual battery",
+   "Battery Model": "CATL-Shenxing",
+   "Battery Cell Type": "prismatic",
+   "Tracing Period Start": "07 Mar 2023",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "126",
+   "Tracing Period End": "11 Apr 2024",
+   "Manufacturing Date": "May 2024",
+   "Weight": "564 kg",
+   "Data Collection Assured By": "CATL",
+   "EV OEM": "not applicable",
+   "Total Energy": "84,00 kWh",
+   "Country of EV Production": "not applicable",
+   "Energy Density": "148,94 Wh/kg",
+   "Traceability": "(2/3) med",
+   "Battery Producer": "CATL",
+   "Rated Capacity": "204 Ah",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "not disclosed",
+   "Data Verification Assured By": "TUV Rheinland Botree Recycling",
+   "Battery Cell Producer": "CATL",
+   "Voltage (Min - Nominal - Max)": "252V - 406V - 479V",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-30C° - 60C°",
+   "Verification": "(2/3) med",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only (*) 184 kg refer to the weight of lithium carbonate"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-03-ty57d894hv_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-03-ty57d894hv/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "0EYPBP48A301DNDCT3200030",
+   "Battery Chemistry": "LFP",
+   "Material Flow Aggregation": "individual battery",
+   "Battery Model": "P48",
+   "Battery Cell Type": "blade",
+   "Tracing Period Start": "08 Mar 2023",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "126",
+   "Tracing Period End": "23 Jan 2024",
+   "Manufacturing Date": "Jan 2024",
+   "Weight": "421 kg",
+   "Data Collection Assured By": "Circulor",
+   "EV OEM": "BYD",
+   "Total Energy": "60,00 kWh",
+   "Country of EV Production": "China",
+   "Energy Density": "140,00 Wh/kg",
+   "Traceability": "(2/3) med",
+   "Battery Producer": "FinDreams",
+   "Rated Capacity": "150 Ah",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "3 000 cycles",
+   "Data Verification Assured By": "TÜV Rheinland",
+   "Battery Cell Producer": "FinDreams",
+   "Voltage (Min - Nominal - Max)": "252V - 403V - 473V",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-20C° - 30C°",
+   "Verification": "(2/3) med",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-05-h5idb69fmc_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-05-h5idb69fmc/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "not applicable",
+   "Battery Chemistry": "not applicable",
+   "Material Flow Aggregation": "virtual battery",
+   "Battery Model": "not applicable",
+   "Battery Cell Type": "not applicable",
+   "Tracing Period Start": "10 Jun 2024",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "not applicable",
+   "Tracing Period End": "23 Oct 2024",
+   "Manufacturing Date": "not applicable",
+   "Weight": "not applicable",
+   "Data Collection Assured By": "Glassdome SK C&C",
+   "EV OEM": "not applicable",
+   "Total Energy": "not applicable",
+   "Country of EV Production": "not applicable",
+   "Energy Density": "not applicable",
+   "Traceability": "(1/3) basic",
+   "Battery Producer": "not applicable",
+   "Rated Capacity": "not applicable",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "not applicable",
+   "Expected Lifetime": "not applicable",
+   "Data Verification Assured By": "not involved",
+   "Battery Cell Producer": "Samsung SDI",
+   "Voltage (Min - Nominal - Max)": "not applicable",
+   "Country of Cell Production": "South Korea",
+   "Temperature Range": "not applicable",
+   "Verification": "(0/3) low",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only Pilot specifics: 1) In this particular pilot ESG information has been collected allong the value chain down to cell producer only. The passport is assembled for a \"virtual battery\" based on cell level information only"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-06-th68dv486h_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-06-th68dv486h/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "LGE15S02217",
+   "Battery Chemistry": "NCM",
+   "Material Flow Aggregation": "batch of batteries",
+   "Battery Model": "LGAMEV24-C1",
+   "Battery Cell Type": "pouch",
+   "Tracing Period Start": "01 Jan 2024",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "16",
+   "Tracing Period End": "30 Jun 2024",
+   "Manufacturing Date": "Jun 2024",
+   "Weight": "31,00 kg",
+   "Data Collection Assured By": "Circularise",
+   "EV OEM": "not applicable",
+   "Total Energy": "8,00 kWh",
+   "Country of EV Production": "not applicable",
+   "Energy Density": "247,74 Wh/kg",
+   "Traceability": "(1/3) basic",
+   "Battery Producer": "LG Energy Solution",
+   "Rated Capacity": "262 Ah",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "Poland",
+   "Expected Lifetime": "not disclosed",
+   "Data Verification Assured By": "Ernst & Young",
+   "Battery Cell Producer": "LG Energy Solution",
+   "Voltage (Min - Nominal - Max)": "not disclosed",
+   "Country of Cell Production": "Poland",
+   "Temperature Range": "not disclosed",
+   "Verification": "(2/3) med",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only Pilot specifics: Information on battery production is attributed to module production"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-07-h58fbc3dl0_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-07-h58fbc3dl0/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "0B5PEHT0A1082JE9W000",
+   "Battery Chemistry": "LFP",
+   "Material Flow Aggregation": "individual battery",
+   "Battery Model": "D300N97EA",
+   "Battery Cell Type": "prismatic",
+   "Tracing Period Start": "no info",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "192",
+   "Tracing Period End": "no info",
+   "Manufacturing Date": "Jan 2024",
+   "Weight": "560 kg",
+   "Data Collection Assured By": "Circularise Shenzhen Precise Testing Technology",
+   "EV OEM": "Smart Automobile",
+   "Total Energy": "100 kWh",
+   "Country of EV Production": "China",
+   "Energy Density": "175,00 Wh/kg",
+   "Traceability": "(1/3) basic",
+   "Battery Producer": "CALB",
+   "Rated Capacity": "279 Ah",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "1 500 cycles",
+   "Data Verification Assured By": "no applicable",
+   "Battery Cell Producer": "CALB",
+   "Voltage (Min - Nominal - Max)": "269V - 350V - 418V",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-40C° - 70C°",
+   "Verification": "(0/3) low",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-08-r7gh5gcv20_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-08-r7gh5gcv20/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "56123478490123",
+   "Battery Chemistry": "NCM",
+   "Material Flow Aggregation": "individual battery",
+   "Battery Model": "XCVB654321WERT",
+   "Battery Cell Type": "prismatic",
+   "Tracing Period Start": "20 May 2024",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "12",
+   "Tracing Period End": "20 Sep 2024",
+   "Manufacturing Date": "Sep 2024",
+   "Weight": "13 kg",
+   "Data Collection Assured By": "Nanjing Fuchuang",
+   "EV OEM": "not applicable",
+   "Total Energy": "0,85 kWh",
+   "Country of EV Production": "not applicable",
+   "Energy Density": "64,84 Wh/kg",
+   "Traceability": "(1/3) basic",
+   "Battery Producer": "EVE Power",
+   "Rated Capacity": "19,2 Ah",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "2 400 cycles",
+   "Data Verification Assured By": "Botree",
+   "Battery Cell Producer": "EVE Power",
+   "Voltage (Min - Nominal - Max)": "36V - 44V - 50V",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-30C° - 70C°",
+   "Verification": "(2/3) med",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-09-w4gt7cfs0t_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-09-w4gt7cfs0t/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "no info",
+   "Battery Chemistry": "LFP",
+   "Material Flow Aggregation": "batch of batteries",
+   "Battery Model": "PBH3XD9E50S",
+   "Battery Cell Type": "prismatic",
+   "Tracing Period Start": "01 Jan 2024",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "114",
+   "Tracing Period End": "30 Sep 2024",
+   "Manufacturing Date": "Jul 2024",
+   "Weight": "394 kg",
+   "Data Collection Assured By": "Shenzhen Dianlian Technology",
+   "EV OEM": "SAIC Maxus",
+   "Total Energy": "50,2 kWh",
+   "Country of EV Production": "China",
+   "Energy Density": "131,60 Wh/kg",
+   "Traceability": "(0/3) low",
+   "Battery Producer": "SNAT",
+   "Rated Capacity": "139 Ah",
+   "Interoperability": "(0/3) low",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "2 000 cycles",
+   "Data Verification Assured By": "not applicable",
+   "Battery Cell Producer": "Sunwoda",
+   "Voltage (Min - Nominal - Max)": "285V - 361V - 416V",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-30C° - 65C°",
+   "Verification": "(0/3) low",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-11-fh6yfb30gn_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-11-fh6yfb30gn/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "no info",
+   "Battery Chemistry": "LFP",
+   "Material Flow Aggregation": "individual battery",
+   "Battery Model": "no info",
+   "Battery Cell Type": "prismatic",
+   "Tracing Period Start": "no info",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "110",
+   "Tracing Period End": "no info",
+   "Manufacturing Date": "Jan 2024",
+   "Weight": "226,50 kg",
+   "Data Collection Assured By": "Minviro Shenzhen Precise Testing Technology Minespider",
+   "EV OEM": "Li-Auto",
+   "Total Energy": "30,00 kWh",
+   "Country of EV Production": "China",
+   "Energy Density": "138,00 Wh/kg",
+   "Traceability": "(1/3) basic",
+   "Battery Producer": "Sunwoda",
+   "Rated Capacity": "104 Ah",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "no info",
+   "Data Verification Assured By": "no applicable",
+   "Battery Cell Producer": "Sunwoda",
+   "Voltage (Min - Nominal - Max)": "210V - 354V - 423V",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-35C° - 55C°",
+   "Verification": "(0/3) low",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-mvp-pilots_pilot-13-th68dg56cv_.json",
+  "wave": "2024",
+  "source": {
+   "name": "Global Battery Alliance, 2024 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-mvp-pilots/pilot-13-th68dg56cv/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Serial Number": "no info",
+   "Battery Chemistry": "LFP",
+   "Material Flow Aggregation": "batch of batteries",
+   "Battery Model": "no info",
+   "Battery Cell Type": "prismatic",
+   "Tracing Period Start": "01 Sep 2023",
+   "Battery Status": "Original",
+   "# of Cells per Battery": "not disclosed",
+   "Tracing Period End": "31 Aug 2024",
+   "Manufacturing Date": "not disclosed",
+   "Weight": "not disclosed",
+   "Data Collection Assured By": "Minviro Rise-X",
+   "EV OEM": "Smart",
+   "Total Energy": "51,00 kWh",
+   "Country of EV Production": "China",
+   "Energy Density": "not disclosed",
+   "Traceability": "(1/3) basic",
+   "Battery Producer": "Gotion",
+   "Rated Capacity": "not disclosed",
+   "Interoperability": "(1/3) basic",
+   "Country of Battery Production": "China",
+   "Expected Lifetime": "2 000 cycles",
+   "Data Verification Assured By": "not applicable",
+   "Battery Cell Producer": "Gotion",
+   "Voltage (Min - Nominal - Max)": "not disclosed",
+   "Country of Cell Production": "China",
+   "Temperature Range": "-30C° - 60C°",
+   "Verification": "(0/3) low",
+   "Comments & Disclaimers": "1) Technical parameters do not reflect the major focus of the GBA BP MVP pilots 2) Definitions of traceability, interoperability and verification can be found on the landing page 3) The tracing period data were mainly used for simplified mass balancing to determine suppliers proportions 4) Battery number is limited to 20 symbols only"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-poc-pilots_pilot-1_.json",
+  "wave": "2023",
+  "source": {
+   "name": "Global Battery Alliance, 2023 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-poc-pilots/pilot-1/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Status": "Original",
+   "Manufacturing Date": "8/30/2022",
+   "EV Manufacturer": "Tesla",
+   "Country of EV Assembly": "China",
+   "Battery Producer": "Tesla",
+   "Country of Battery Production": "China",
+   "Battery Cell Producer": "LG Energy Solution",
+   "Country of Cell Production": "China",
+   "Battery Cell Type": "cylindrical",
+   "Chemistry": "NCM-M50",
+   "Number of Cells Per Battery": "4,416",
+   "Weight": "481 kg",
+   "Total Energy": "78.05 kWh",
+   "Energy Density": "0.1622 kWh/kg",
+   "Rated Capacity": "219 Ah",
+   "Expected Lifetime": "1,200 cycles",
+   "Voltage (Min-Nominal-Max)": "357 V DC",
+   "Temperature Range (min-max)": "-30°C to +60°C",
+   "Note": "GBA member"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-poc-pilots_pilot-2_.json",
+  "wave": "2023",
+  "source": {
+   "name": "Global Battery Alliance, 2023 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-poc-pilots/pilot-2/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Status": "Original",
+   "Manufacturing Date": "n/a",
+   "EV Manufacturer": "Audi",
+   "Country of EV Assembly": "Belgium",
+   "Battery Producer": "Audi",
+   "Country of Battery Production": "Belgium",
+   "Battery Cell Producer": "Samsung SDI",
+   "Country of Cell Production": "Hungary",
+   "Battery Cell Type": "prismatic",
+   "Chemistry": "NCA",
+   "Number of Cells Per Battery": "432",
+   "Weight": "728 kg",
+   "Total Energy": "114 kWh",
+   "Energy Density": "0.1570 kWh/kg",
+   "Rated Capacity": "228 Ah",
+   "Expected Lifetime": "not disclosed",
+   "Voltage (Min-Nominal-Max)": "226-397-453 V DC",
+   "Temperature Range (min-max)": "-30°C to +60°C",
+   "Note": "GBA member"
+  }
+ },
+ {
+  "passport": "ec/battery-passport-poc-pilots_pilot-3_.json",
+  "wave": "2023",
+  "source": {
+   "name": "Global Battery Alliance, 2023 battery passport pilots",
+   "url": "https://www.globalbattery.org/battery-passport-poc-pilots/pilot-3/",
+   "retrieved": "2026-11-04",
+   "licence": null
+  },
+  "raw": {
+   "Battery Status": "Original",
+   "Manufacturing Date": "not disclosed",
+   "EV Manufacturer": "Audi",
+   "Country of EV Assembly": "Germany",
+   "Battery Producer": "Audi",
+   "Country of Battery Production": "Germany",
+   "Battery Cell Producer": "CATL",
+   "Country of Cell Production": "China",
+   "Battery Cell Type": "prismatic",
+   "Chemistry": "NCM811",
+   "Number of Cells Per Battery": "180",
+   "Weight": "580 kg",
+   "Total Energy": "100 kWh",
+   "Energy Density": "0.1724 kWh/kg",
+   "Rated Capacity": "151 Ah",
+   "Expected Lifetime": "not disclosed",
+   "Voltage (Min-Nominal-Max)": "450-662-742 V DC",
+   "Temperature Range (min-max)": "-30°C to +60°C",
+   "Note": "GBA member"
+  }
+ }
+]
