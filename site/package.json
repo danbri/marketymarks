@@ -5,9 +5,11 @@
   "scripts": {
     "build": "eleventy",
     "serve": "eleventy --serve",
-    "watch": "eleventy --watch"
+    "watch": "eleventy --watch",
+    "test": "node test/dpp-check.test.mjs"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "@factoidal/core": "^0.29.0"
   }
 }

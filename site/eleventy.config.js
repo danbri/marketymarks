@@ -2,6 +2,9 @@ module.exports = function(eleventyConfig) {
   // Copy static assets
   eleventyConfig.addPassthroughCopy("content/assets");
   eleventyConfig.addPassthroughCopy({ "content/CNAME": "CNAME" });
+  // DPP checker: the EC's files (copied unchanged) and the checker module
+  eleventyConfig.addPassthroughCopy("content/dpp/ec");
+  eleventyConfig.addPassthroughCopy("content/dpp/lib");
 
   // Watch for changes in content
   eleventyConfig.addWatchTarget("content/");

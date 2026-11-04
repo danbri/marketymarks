@@ -1,0 +1,198 @@
+---
+permalink: dpp/check/index.html
+templateEngineOverride: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPP Checker</title>
+<meta name="description" content="Check an EU Digital Product Passport against the European Commission's own rules, in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7fb; --panel: #ffffff; --ink: #1a1a2e; --muted: #5b6475; --line: #e3e6ee;
+    --accent: #6366f1; --accent-ink: #ffffff; --ok: #0f7b4b; --ok-bg: #e6f6ee;
+    --bad: #b42318; --bad-bg: #fdecea; --warn: #8a5a00; --warn-bg: #fff4dc; --code-bg: #f1f3f8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12131a; --panel: #1b1d27; --ink: #e8e9f0; --muted: #a0a6b8; --line: #2c2f3d;
+      --accent: #8b8ef8; --accent-ink: #12131a; --ok: #5fd39a; --ok-bg: #12301f;
+      --bad: #ff8a80; --bad-bg: #3a1714; --warn: #f3c56b; --warn-bg: #33270e; --code-bg: #232634;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12131a; --panel: #1b1d27; --ink: #e8e9f0; --muted: #a0a6b8; --line: #2c2f3d;
+    --accent: #8b8ef8; --accent-ink: #12131a; --ok: #5fd39a; --ok-bg: #12301f;
+    --bad: #ff8a80; --bad-bg: #3a1714; --warn: #f3c56b; --warn-bg: #33270e; --code-bg: #232634;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 48px; }
+  header { padding: 20px 0 8px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  header a { color: var(--muted); text-decoration: none; font-size: .9rem; }
+  h1 { font-size: 1.6rem; font-weight: 700; }
+  h2 { font-size: 1.05rem; margin: 0 0 10px; }
+  .lede { color: var(--muted); max-width: 70ch; margin: 4px 0 16px; }
+  .tag { display: inline-block; font-size: .72rem; font-weight: 600; color: var(--warn); background: var(--warn-bg); padding: 2px 8px; border-radius: 99px; vertical-align: middle; margin-left: 6px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  label { font-size: .85rem; color: var(--muted); }
+  select, button, input[type=file] { font: inherit; font-size: .9rem; }
+  select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); max-width: 100%; }
+  button { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  textarea { width: 100%; min-height: 260px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .8rem; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--code-bg); color: var(--ink); resize: vertical; }
+  textarea.drag { outline: 2px dashed var(--accent); }
+  .status { font-size: .85rem; color: var(--muted); }
+  .verdict { padding: 12px 14px; border-radius: 10px; font-weight: 600; margin-bottom: 12px; }
+  .verdict.passes { background: var(--ok-bg); color: var(--ok); }
+  .verdict.fails { background: var(--bad-bg); color: var(--bad); }
+  .verdict.not-checked { background: var(--warn-bg); color: var(--warn); }
+  .verdict small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; }
+  td code, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .78rem; overflow-wrap: anywhere; }
+  .table-scroll { overflow-x: auto; }
+  ul.notes { margin: 8px 0 0 18px; font-size: .85rem; color: var(--muted); }
+  details { margin-top: 10px; font-size: .85rem; color: var(--muted); }
+  details summary { cursor: pointer; }
+  .ok { color: var(--ok); font-weight: 600; } .bad { color: var(--bad); font-weight: 600; }
+  footer { font-size: .8rem; color: var(--muted); margin-top: 24px; }
+  footer a, .lede a { color: var(--accent); }
+  @media (max-width: 600px) { h1 { font-size: 1.35rem; } th:nth-child(4), td:nth-child(4) { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>DPP Checker <span class="tag">experimental</span></h1>
+    <a href="../">About this work →</a>
+  </header>
+  <p class="lede">Check an EU Digital Product Passport (EC JSON) against the European Commission's own published rules,
+    <a href="../ec/1.0.0/NOTICE.md">release 1.0.0</a>: the same SHACL shapes and codelists the DPP Registry uses.
+    Everything runs in your browser; nothing is uploaded. Batteries are covered (EV, industrial, light means of transport), plus the shared core.</p>
+
+  <div class="panel">
+    <h2>1. Passport</h2>
+    <div class="row" style="margin-bottom:10px">
+      <label for="sample">Start from an EC sample:</label>
+      <select id="sample"><option value="">— choose —</option></select>
+      <label for="file" style="margin-left:auto">or open a file:</label>
+      <input type="file" id="file" accept=".json,application/json">
+    </div>
+    <textarea id="input" spellcheck="false" placeholder='Paste passport JSON here, or drop a .json file. It should include "contentSpecificationIds" so the checker knows which EC rules apply.'></textarea>
+    <div class="row" style="margin-top:10px">
+      <label for="view">Check as:</label>
+      <select id="view"></select>
+      <span class="status" id="profile"></span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>2. Check</h2>
+    <div class="row">
+      <button class="primary" id="run" disabled>Check passport</button>
+      <button id="selftest" disabled>Run self-test</button>
+      <span class="status" id="engine">Loading the checking engine (about 31 MB, once; then cached)…</span>
+    </div>
+  </div>
+
+  <div class="panel" id="out" hidden></div>
+
+  <footer>
+    <p>How it works: the passport JSON is turned into RDF with the EC's JSON-LD contexts, then validated with the EC's SHACL shapes,
+      merged with the EC's SKOS codelists, using <a href="https://www.npmjs.com/package/@factoidal/core">@factoidal/core</a> 0.29.0 (Lean-based, WebAssembly).
+      The self-test feeds it deliberately broken passports that must fail; if any passes, don't trust the results.</p>
+    <p style="margin-top:6px">Not an official EC tool. EC files © European Union, EUPL-1.2. Factoidal is experimental and unreviewed.</p>
+  </footer>
+</div>
+
+<script type="module">
+import { Checker, detectProfile, VIEW_LABELS, SUBGROUP_LABELS } from '../lib/dpp-check.mjs';
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const base = new URL('../ec/1.0.0/', location.href);
+const load = async (p) => { const r = await fetch(new URL(p, base)); if (!r.ok) throw new Error(`could not load ${p} (${r.status})`); return r.text(); };
+
+for (const [k, v] of Object.entries(VIEW_LABELS)) $('view').add(new Option(v, k));
+
+let checker;
+const nameOf = (f) => f.split('/').pop().replace('.json', '');
+const viewOf = (name) => (name.match(/^(pub|res1|res2|res3)-/) || [, 'all'])[1];
+
+function showProfile() {
+  try {
+    const p = detectProfile(JSON.parse($('input').value));
+    $('profile').textContent = p.sub ? `Rules: core + batteries + ${SUBGROUP_LABELS[p.sub]}` : p.product ? 'Rules: core + batteries' : p.ids.length ? 'Rules: core' : 'No contentSpecificationIds: core rules only';
+  } catch { $('profile').textContent = $('input').value.trim() ? 'Not valid JSON yet' : ''; }
+}
+$('input').addEventListener('input', showProfile);
+
+$('sample').addEventListener('change', async (e) => {
+  if (!e.target.value) return;
+  $('input').value = await load(e.target.value);
+  $('view').value = viewOf(nameOf(e.target.value));
+  showProfile();
+});
+async function readFile(f) { $('input').value = await f.text(); showProfile(); }
+$('file').addEventListener('change', (e) => e.target.files[0] && readFile(e.target.files[0]));
+$('input').addEventListener('dragover', (e) => { e.preventDefault(); e.target.classList.add('drag'); });
+$('input').addEventListener('dragleave', (e) => e.target.classList.remove('drag'));
+$('input').addEventListener('drop', (e) => { e.preventDefault(); e.target.classList.remove('drag'); e.dataTransfer.files[0] && readFile(e.dataTransfer.files[0]); });
+
+function busy(on, msg) { $('run').disabled = on; $('selftest').disabled = on; if (msg) $('engine').textContent = msg; }
+
+function render(r) {
+  const head = { passes: 'Passes the EC rules', fails: `Fails: ${r.problems.length} problem${r.problems.length === 1 ? '' : 's'}`, 'not-checked': 'Not checked' }[r.verdict];
+  const rows = r.problems.map((p) => `<tr><td><code>${esc(p.code || '')}</code></td><td>${esc(p.field || (p.nested ? 'a field inside a nested object' : ''))}</td><td>${esc(p.explanation || '')}</td><td><code>${esc(p.value ?? '')}</code></td></tr>`).join('');
+  $('out').innerHTML = `
+    <div class="verdict ${r.verdict}">${head}<small>${esc(VIEW_LABELS[r.view])} · ${r.triples} triples · ${(r.ms / 1000).toFixed(1)} s</small></div>
+    ${rows ? `<div class="table-scroll"><table><thead><tr><th>EC code</th><th>Field</th><th>What the EC rule says</th><th>Value</th></tr></thead><tbody>${rows}</tbody></table></div>` : ''}
+    ${r.notes.length ? `<ul class="notes">${r.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
+    <details><summary>Rule files used</summary><p class="mono">${r.shapeFiles.map(esc).join('<br>')}</p></details>`;
+  $('out').hidden = false;
+}
+
+$('run').addEventListener('click', async () => {
+  let passport;
+  try { passport = JSON.parse($('input').value); } catch (e) { $('out').hidden = false; $('out').innerHTML = `<div class="verdict fails">That isn't valid JSON<small>${esc(e.message)}</small></div>`; return; }
+  busy(true, 'Checking…');
+  try { render(await checker.check(passport, { view: $('view').value })); $('engine').textContent = 'Ready.'; }
+  catch (e) { $('out').hidden = false; $('out').innerHTML = `<div class="verdict not-checked">Could not check this passport<small>${esc(e.message)}</small></div>`; $('engine').textContent = 'Ready.'; }
+  finally { busy(false); }
+});
+
+$('selftest').addEventListener('click', async () => {
+  busy(true, 'Running self-test…');
+  try {
+    const t = await checker.selfTest();
+    const good = t.every((x) => x.ok);
+    $('out').innerHTML = `<div class="verdict ${good ? 'passes' : 'fails'}">${good ? 'Self-test passed: every broken passport was caught' : 'Self-test FAILED: do not trust results on this setup'}</div>
+      <div class="table-scroll"><table><thead><tr><th>Test passport</th><th>Expected</th><th>Got</th><th>EC codes reported</th></tr></thead><tbody>
+      ${t.map((x) => `<tr><td>${esc(x.name)}</td><td>${x.expected}</td><td class="${x.ok ? 'ok' : 'bad'}">${x.got}</td><td><code>${esc(x.codes.join(', '))}</code></td></tr>`).join('')}
+      </tbody></table></div>`;
+    $('out').hidden = false; $('engine').textContent = 'Ready.';
+  } finally { busy(false); }
+});
+
+try {
+  const F = await import('https://cdn.jsdelivr.net/npm/@factoidal/core@0.29.0/browser.js');
+  checker = new Checker(F, load);
+  for (const f of await checker.samples()) $('sample').add(new Option(`${nameOf(f)} (${VIEW_LABELS[viewOf(nameOf(f))]})`, f));
+  await F.parse('<urn:a> <urn:b> <urn:c> .', 'ntriples'); // start the engine now, not on first click
+  await checker.vocabularies();
+  busy(false, 'Ready.');
+} catch (e) {
+  $('engine').textContent = `The checking engine did not load: ${e.message}`;
+}
+</script>
+</body>
+</html>

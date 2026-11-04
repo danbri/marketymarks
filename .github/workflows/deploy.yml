@@ -40,6 +40,10 @@ jobs:
         working-directory: site
         run: npm ci || npm install
 
+      - name: Test the DPP checker (EC samples must pass, broken passports must fail)
+        working-directory: site
+        run: npm test
+
       - name: Build with Eleventy
         working-directory: site
         run: npm run build
