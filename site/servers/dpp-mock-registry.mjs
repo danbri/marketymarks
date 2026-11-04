@@ -5,6 +5,7 @@
 //   POST /api/v1/dpp/submission          (Idempotency-Key required; 1-100 items; 202 + taskId)
 //   GET  /api/v1/tasks, /api/v1/tasks/{id}, /api/v1/tasks/{id}/items
 //   GET  /oauth2/jwks                     (its own test signing key, like the DPP Authentication Service)
+//   POST /oauth2/token                    (client credentials with private_key_jwt, when `clients` are given)
 // For each submitted item it fetches the passport at its unique product identifier, once
 // anonymously and once with an ES384 access token, and checks both with the EC rules
 // (public view and full passport). Registration is atomic: one non-compliant item fails all.
@@ -22,10 +23,47 @@ export const PRODUCT_GROUPS = [{ code: 'BATTERIES', label: 'Batteries', productS
 
 // issuer: from createTestIssuer(); checker: a dpp-check Checker; resolve(upi): URL to fetch it from
 // (default: the UPI itself); org: the verified org-identifier the operator's tokens carry.
+// clients: optional { [clientId]: { jwk } } service accounts (public keys, ES256/384/512). When given,
+// the API requires access tokens issued by /oauth2/token; otherwise any Bearer value is accepted.
 export function createMockRegistry({ issuer, checker, org = 'ORG-TEST-0001', environment = 'acceptance', resolve = (u) => u,
-  fetchImpl = globalThis.fetch, processingDelayMs = 0, maxBodyBytes = 1_000_000 }) {
+  fetchImpl = globalThis.fetch, processingDelayMs = 0, maxBodyBytes = 1_000_000, clients = null }) {
   const tasks = new Map(), idem = new Map();
   const iss = ENVIRONMENTS[environment].issuer;
+  const RESOURCE = `${iss}/resources/dpp/registry`;
+  const seenJti = new Set();
+  const CURVES = { ES256: ['P-256', 'SHA-256', 64], ES384: ['P-384', 'SHA-384', 96], ES512: ['P-521', 'SHA-512', 132] };
+  const b64 = (s) => Uint8Array.from(Buffer.from(s, 'base64url'));
+  const parseJwt = (t) => { const [h, p, sg] = String(t).split('.'); return { h: JSON.parse(Buffer.from(h, 'base64url')), p: JSON.parse(Buffer.from(p, 'base64url')), sig: b64(sg || ''), input: `${h}.${p}` }; };
+  async function verifyWith(jwk, alg, j) {
+    const c = CURVES[alg]; if (!c || j.sig.length !== c[2]) return false;
+    const key = await crypto.subtle.importKey('jwk', { kty: 'EC', crv: c[0], x: jwk.x, y: jwk.y }, { name: 'ECDSA', namedCurve: c[0] }, false, ['verify']);
+    return crypto.subtle.verify({ name: 'ECDSA', hash: c[1] }, key, j.sig, new TextEncoder().encode(j.input));
+  }
+  // service-account token endpoint (Service Account guide, chapter 5)
+  async function tokenEndpoint(form) {
+    const bad = (error, error_description) => ({ status: 400, body: { error, error_description } });
+    if (form.get('grant_type') !== 'client_credentials') return bad('unsupported_grant_type', 'grant_type must be client_credentials');
+    if (form.get('client_assertion_type') !== 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer') return bad('invalid_request', 'client_assertion_type');
+    if (form.get('resource') !== RESOURCE) return bad('invalid_target', `resource must be ${RESOURCE}`);
+    const id = form.get('client_id'), c = clients?.[id];
+    let j; try { j = parseJwt(form.get('client_assertion')); } catch { return { status: 401, body: { error: 'invalid_client', error_description: 'malformed assertion' } }; }
+    const now = Math.floor(Date.now() / 1000), p = j.p;
+    const why = !c ? 'unknown client' : j.h.typ !== 'client-authentication+jwt' ? 'typ' : j.h.kid !== c.kid ? 'kid' : !(await verifyWith(c.jwk, j.h.alg, j)) ? 'signature'
+      : p.iss !== id || p.sub !== id ? 'iss/sub' : p.aud !== iss ? 'aud' : !(p.exp > now && p.iat <= now + 60 && p.exp - p.iat <= 300) ? 'iat/exp'
+      : !p.jti || seenJti.has(p.jti) ? 'jti reused' : null;
+    if (why) return { status: 401, body: { error: 'invalid_client', error_description: why } };
+    seenJti.add(p.jti);
+    const at = await issuer.sign({ iss, sub: id, client_id: id, aud: RESOURCE, scope: form.get('scope') || 'dpp:registry:write', iat: now, exp: now + 900, jti: 'at_' + randomUUID() }, { typ: 'at+jwt' });
+    return { status: 200, body: { access_token: at, token_type: 'Bearer', expires_in: 900, scope: form.get('scope') || 'dpp:registry:write' } };
+  }
+  async function authorized(header) {
+    const m = /^Bearer (\S+)$/i.exec(header || ''); if (!m) return false;
+    if (!clients) return true;
+    try {
+      const j = parseJwt(m[1]); const now = Math.floor(Date.now() / 1000);
+      return j.p.iss === iss && j.p.aud === RESOURCE && j.p.exp > now && clients[j.p.client_id] && await verifyWith(issuer.jwks.keys[0], 'ES384', j);
+    } catch { return false; }
+  }
   const now = () => new Date().toISOString();
   const json = (res, status, body, headers = {}) => { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', ...headers }); res.end(JSON.stringify(body)); };
   const error = (res, status, message, correlationId, extra = {}) => json(res, status, { message, status, correlationId, timestamp: now(), ...extra });
@@ -82,7 +120,7 @@ export function createMockRegistry({ issuer, checker, org = 'ORG-TEST-0001', env
       _ok: !details.length,
     };
   }
-  async function process(task, body) {
+  async function processTask(task, body) {
     await new Promise((r) => setTimeout(r, processingDelayMs));
     task.status = 'PROCESSING';
     task.items = [];
@@ -104,7 +142,11 @@ export function createMockRegistry({ issuer, checker, org = 'ORG-TEST-0001', env
     const correlationId = String(req.headers['x-correlation-id'] || 'corr_' + randomUUID().slice(0, 8)).slice(0, 128);
     try {
       if (req.method === 'GET' && url.pathname === '/oauth2/jwks') return json(res, 200, issuer.jwks, { 'Cache-Control': 'max-age=300' });
-      if (!/^Bearer \S+$/i.test(req.headers.authorization || '')) return error(res, 401, 'Unauthorized', correlationId);
+      if (req.method === 'POST' && url.pathname === '/oauth2/token') {
+        const r = await tokenEndpoint(new URLSearchParams(await readBody(req)));
+        return json(res, r.status, r.body, { 'Cache-Control': 'no-store' });
+      }
+      if (!(await authorized(req.headers.authorization))) return error(res, 401, 'Unauthorized', correlationId);
       if (req.method === 'GET' && url.pathname === '/api/v1/dpp/product-groups') return json(res, 200, PRODUCT_GROUPS);
       if (req.method === 'POST' && url.pathname === '/api/v1/dpp/submission') {
         const key = req.headers['idempotency-key'];
@@ -125,7 +167,7 @@ export function createMockRegistry({ issuer, checker, org = 'ORG-TEST-0001', env
         tasks.set(taskId, task);
         const accepted = { taskId, submittedAt: task.submittedAt, taskType: 'DPP_REGISTRATION', correlationId, estimatedPeriodCompletionTime: 'PT10S' };
         idem.set(key, { raw, accepted });
-        process(task, body).catch((e) => { task.status = 'ERROR'; task.completedAt = now(); task.outcome = { outcomeMessage: { code: 'TECHNICAL_ERROR', message: e.message } }; });
+        processTask(task, body).catch((e) => { task.status = 'ERROR'; task.completedAt = now(); task.outcome = { outcomeMessage: { code: 'TECHNICAL_ERROR', message: e.message } }; });
         return json(res, 202, accepted, { Location: `/api/v1/tasks/${taskId}` });
       }
       if (req.method === 'GET' && url.pathname === '/api/v1/tasks') {
@@ -145,6 +187,7 @@ export function createMockRegistry({ issuer, checker, org = 'ORG-TEST-0001', env
       }
       return error(res, 404, 'Not found', correlationId);
     } catch (e) {
+      if (!e.status && process.env.DPP_MOCK_DEBUG) console.error(e);
       return error(res, e.status || 500, e.status === 413 ? 'Payload too large' : 'Technical error', correlationId);
     }
   };

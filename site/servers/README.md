@@ -34,7 +34,7 @@ It is for testing your systems without EU Login or the EC Acceptance environment
 - submission (`Idempotency-Key`, 1–100 items, `202` with a task);
 - tasks, task detail and per-item results.
 
-It also publishes its own test signing key at `/oauth2/jwks`.
+It also publishes its own test signing key at `/oauth2/jwks`. Given `clients` (service-account public keys), it runs `/oauth2/token`: client credentials with `private_key_jwt`, checking signature, `typ`, iss/sub, aud, lifetime and `jti` reuse as the Service Account guide describes. Its API then accepts only the tokens it issued.
 
 For each item it fetches the passport twice:
 - anonymously, then checks the result against the EC public-view rules;
@@ -55,3 +55,13 @@ It is not the real Registry: there is no EU Login, no organisation verification 
   - a granularity mismatch;
   - a token for another organisation (the host returns 403);
 - the paged task list.
+
+## The client: `content/dpp/lib/dpp-registry-client.mjs`
+
+`createRegistryClient()` is for an operator's service account. It follows the EC Service Account and API Integration guides:
+- **Token:** a fresh `private_key_jwt` client assertion for each token request; the access token is reused until shortly before it expires.
+- **Submission:** submitted with an `Idempotency-Key`.
+- **Polling:** tasks are polled at Fibonacci intervals (1, 1, 2 … 55 s), then every 60 s.
+- **Retries:** `Retry-After` and bounded backoff with jitter. Only GETs and keyed POSTs are retried.
+
+It uses WebCrypto only. `test/dpp-registry-client.test.mjs` runs it against the mock registry and the host.

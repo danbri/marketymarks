@@ -7,7 +7,7 @@
     "serve": "eleventy --serve",
     "watch": "eleventy --watch",
     "test": "node test/dpp-model.test.mjs && node test/dpp-auth.test.mjs && node test/dpp-check.test.mjs",
-    "test:servers": "node test/dpp-servers.test.mjs"
+    "test:servers": "node test/dpp-servers.test.mjs && node test/dpp-registry-client.test.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
