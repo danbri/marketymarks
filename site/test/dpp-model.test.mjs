@@ -20,6 +20,9 @@ const checks = [
   ['restricted field hidden from public', M.visibleTo('detailedComposition', 'pub', terms), false],
   ['unknown field hidden from public', M.visibleTo('totallyUnknownField', 'pub', terms), false],
   ['short IRI', M.shortIri(`${EC}product/batteries/vocabs/battery-vocabulary#batteryWeight`), 'bat:batteryWeight'],
+  ['plain summary', M.summarySentences(JSON.parse(await readFile(new URL('../content/dpp/demo/demo-004.json', import.meta.url), 'utf8')),
+    JSON.parse(await readFile(new URL('../content/dpp/components/profiles/batteries.json', import.meta.url), 'utf8')), terms, langs)[0],
+    'A light means of transport battery made by Velocità Moto S.r.l. (fictional) in Turin, Italy, in May 2026.'],
 ];
 let bad = 0;
 for (const [name, got, want] of checks) {

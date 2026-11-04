@@ -1,33 +1,134 @@
 {
   "id": "batteries",
   "appliesTo": "https://repository.product-passport.ec.europa.eu/product/batteries/",
-  "title": ["batteryIdentification.modelIdentifier", "manufacturerIdentification.manufacturerTradeName", "manufacturerIdentification.manufacturerName"],
-  "subtitle": ["batteryCategory", "batteryChemistry"],
-  "summary": ["batteryCapacity", "batteryWeight", "nominalVoltage", "expectedLifetimeCycles", "manufacturingDate", "manufacturingPlace"],
+  "title": [
+    "batteryIdentification.modelIdentifier",
+    "manufacturerIdentification.manufacturerTradeName",
+    "manufacturerIdentification.manufacturerName"
+  ],
+  "subtitle": [
+    "batteryCategory",
+    "batteryChemistry"
+  ],
+  "summary": [
+    "batteryCapacity",
+    "batteryWeight",
+    "nominalVoltage",
+    "expectedLifetimeCycles",
+    "manufacturingDate",
+    "manufacturingPlace"
+  ],
   "groups": [
-    { "id": "product", "title": "Product and maker",
-      "fields": ["batteryCategory", "batteryIdentification", "manufacturerIdentification", "manufacturerPostalAddress",
-                 "manufacturerContactDetails", "manufacturingPlace", "manufacturingDate", "batteryWeight",
-                 "commercialWarrantyPeriod", "euDeclarationOfConformity", "batteryStatus"] },
-    { "id": "materials", "title": "Materials and safety",
-      "fields": ["batteryChemistry", "criticalRawMaterials", "hazardousSubstances", "renewableContentShare",
-                 "chemicalSymbol", "separateCollectionSymbol", "extinguishingAgent", "detailedComposition", "safetyMeasures"] },
-    { "id": "performance", "title": "Performance and lifetime",
-      "fields": ["batteryCapacity", "ratedCapacity", "minimalVoltage", "nominalVoltage", "maximumVoltage",
-                 "originalPowerCapability", "powerLimit", "powerCapability", "internalCellResistance", "internalPackResistance",
-                 "internalResistance", "expectedLifetimeCycles", "expectedLifetimeCyclesRest", "expectedLifetimeYears",
-                 "cycleLifeReferenceTest", "cycleLifeChargeCRate", "cycleLifeDischargeCRate", "capacityExhaustionThreshold",
-                 "initialRoundTripEnergyEfficiency", "roundTripEfficiencyAtHalfCycleLife", "roundTripEnergyEfficiency",
-                 "notInUseTemperatureRange"] },
-    { "id": "health", "title": "State of health (in use)",
-      "fields": ["stateOfCertifiedEnergy", "remainingCapacity", "capacityFade", "remainingPowerCapability", "powerFade",
-                 "remainingRoundTripEfficiency", "roundTripEnergyEfficiencyFade", "internalResistanceIncrease", "ohmicResistance",
-                 "selfDischargingRateSet", "numberOfChargingCycles", "numberOfDischargingCycles", "negativeEvents",
-                 "environmentalConditionHistogramSet", "stateOfChargeHistogram"] },
-    { "id": "endoflife", "title": "Repair, reuse and recycling",
-      "fields": ["wasteBatteryPreventionManagementInfo", "dismantlingInformation", "sparePartReplacementDetails", "complianceTestReportResults"] },
-    { "id": "passport", "title": "About this passport",
-      "fields": ["digitalProductPassportId", "uniqueProductIdentifier", "granularity", "dppStatus", "lastUpdate",
-                 "registrantIdentity", "contentSpecificationIds"] }
+    {
+      "id": "product",
+      "title": "Product and maker",
+      "fields": [
+        "batteryCategory",
+        "batteryIdentification",
+        "manufacturerIdentification",
+        "manufacturerPostalAddress",
+        "manufacturerContactDetails",
+        "manufacturingPlace",
+        "manufacturingDate",
+        "batteryWeight",
+        "commercialWarrantyPeriod",
+        "euDeclarationOfConformity",
+        "batteryStatus"
+      ]
+    },
+    {
+      "id": "materials",
+      "title": "Materials and safety",
+      "fields": [
+        "batteryChemistry",
+        "criticalRawMaterials",
+        "hazardousSubstances",
+        "renewableContentShare",
+        "chemicalSymbol",
+        "separateCollectionSymbol",
+        "extinguishingAgent",
+        "detailedComposition",
+        "safetyMeasures"
+      ]
+    },
+    {
+      "id": "performance",
+      "title": "Performance and lifetime",
+      "fields": [
+        "batteryCapacity",
+        "ratedCapacity",
+        "minimalVoltage",
+        "nominalVoltage",
+        "maximumVoltage",
+        "originalPowerCapability",
+        "powerLimit",
+        "powerCapability",
+        "internalCellResistance",
+        "internalPackResistance",
+        "internalResistance",
+        "expectedLifetimeCycles",
+        "expectedLifetimeCyclesRest",
+        "expectedLifetimeYears",
+        "cycleLifeReferenceTest",
+        "cycleLifeChargeCRate",
+        "cycleLifeDischargeCRate",
+        "capacityExhaustionThreshold",
+        "initialRoundTripEnergyEfficiency",
+        "roundTripEfficiencyAtHalfCycleLife",
+        "roundTripEnergyEfficiency",
+        "notInUseTemperatureRange"
+      ]
+    },
+    {
+      "id": "health",
+      "title": "State of health (in use)",
+      "fields": [
+        "stateOfCertifiedEnergy",
+        "remainingCapacity",
+        "capacityFade",
+        "remainingPowerCapability",
+        "powerFade",
+        "remainingRoundTripEfficiency",
+        "roundTripEnergyEfficiencyFade",
+        "internalResistanceIncrease",
+        "ohmicResistance",
+        "selfDischargingRateSet",
+        "numberOfChargingCycles",
+        "numberOfDischargingCycles",
+        "negativeEvents",
+        "environmentalConditionHistogramSet",
+        "stateOfChargeHistogram"
+      ]
+    },
+    {
+      "id": "endoflife",
+      "title": "Repair, reuse and recycling",
+      "fields": [
+        "wasteBatteryPreventionManagementInfo",
+        "dismantlingInformation",
+        "sparePartReplacementDetails",
+        "complianceTestReportResults"
+      ]
+    },
+    {
+      "id": "passport",
+      "title": "About this passport",
+      "fields": [
+        "digitalProductPassportId",
+        "uniqueProductIdentifier",
+        "granularity",
+        "dppStatus",
+        "lastUpdate",
+        "registrantIdentity",
+        "contentSpecificationIds"
+      ]
+    }
+  ],
+  "sentences": [
+    "{batteryCategory|long|a} made by {manufacturerIdentification.manufacturerName} in {manufacturingPlace.manufacturingCity}, {manufacturingPlace.manufacturingCountry}, in {manufacturingDate}.",
+    "Chemistry: {batteryChemistry|long}.",
+    "It stores {batteryCapacity} at {nominalVoltage|value} and weighs {batteryWeight}.",
+    "It is expected to last about {expectedLifetimeCycles} charge cycles.",
+    "{renewableContentShare} of its content is renewable."
   ]
 }

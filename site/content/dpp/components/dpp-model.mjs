@@ -218,3 +218,28 @@ export function shortIri(iri) {
   const m = /\/vocabs\/([^/#]+)#(.+)$/.exec(iri);
   return m ? `${m[1]}:${m[2]}` : iri;
 }
+
+// Plain-English summary from the profile's sentence templates. {path} is replaced by the
+// value as text; modifiers: |long (code label without its short form, e.g. "Electric vehicle
+// battery"), |a (adds "A"/"An"), |value (a quantity without its range). A sentence with any
+// missing value is left out.
+export function summarySentences(passport, profile, terms, langs = userLangs()) {
+  const out = [];
+  for (const tpl of profile?.sentences || []) {
+    let missing = false;
+    const text = tpl.replace(/\{([^}|]+)((?:\|[a-z]+)*)\}/g, (m, path, mods) => {
+      const v = pathValue(passport, path);
+      if (v == null || v === '' || (Array.isArray(v) && !v.length)) { missing = true; return ''; }
+      const flags = mods.split('|').filter(Boolean);
+      const key = path.split('.').pop();
+      let t;
+      if (flags.includes('value') && v && typeof v === 'object' && 'value' in v) t = formatQuantity({ unit: v.unit, value: v.value }, terms, langs);
+      else t = textOf(key, v, terms, langs);
+      if (flags.includes('long')) t = t.split(', ').map((x) => (x.includes(' - ') ? x.split(' - ').slice(1).join(' - ') : x)).join(', ');
+      if (flags.includes('a')) t = (/^[aeiou]/i.test(t) ? 'An ' : 'A ') + t.charAt(0).toLowerCase() + t.slice(1);
+      return t;
+    });
+    if (!missing) out.push(text.charAt(0).toUpperCase() + text.slice(1));
+  }
+  return out;
+}

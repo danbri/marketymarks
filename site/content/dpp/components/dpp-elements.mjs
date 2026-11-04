@@ -12,7 +12,7 @@
 import {
   loadTerms, loadProfile, profileIdFor, subgroupOf, classify, textOf, fieldLabel, accessOf, ACCESS_LABELS,
   pickLang, userLangs, codeLabel, countryName, formatDate, formatQuantity, formatRange, describe, orderedKeys,
-  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES,
+  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences,
 } from './dpp-model.mjs';
 import { loadEngine } from './engine.mjs';
 
@@ -33,6 +33,7 @@ input[type=search], select, textarea { background: var(--bg); border: 1px solid 
 h2 { font-size: 1.15rem; margin: 0; }
 h3 { font-size: 1rem; margin: 1.2rem 0 .4rem; padding-bottom: .2rem; border-bottom: 1px solid var(--line); }
 .head { margin-bottom: .6rem; }
+.plain { margin: .4rem 0 .6rem; max-width: 60ch; }
 .sub { color: var(--muted); }
 .summary { display: flex; flex-wrap: wrap; gap: .4rem .6rem; margin: .6rem 0; padding: 0; list-style: none; }
 .summary li { background: var(--soft); padding: .15rem .5rem; }
@@ -161,7 +162,8 @@ class DppPassport extends HTMLElement {
       const v = pathValue(p, path); if (v == null) continue;
       chips.append(el('li', {}, el('b', { text: fieldLabel(path.split('.').pop(), terms) + ': ' }), textOf(path, v, terms, langs)));
     }
-    root.append(head, chips);
+    const plain = summarySentences(p, profile, terms, langs);
+    root.append(head, plain.length ? el('p', { class: 'plain', part: 'plain' }, plain.join(' ')) : null, chips);
     if (audience !== 'all') {
       const hidden = Object.keys(full).length - Object.keys(p).length;
       root.append(el('p', { class: 'muted', text: `Shown as seen by: ${AUDIENCES.find(([k]) => k === audience)?.[1] || audience}.${hidden ? ` ${hidden} top-level field${hidden > 1 ? 's' : ''} hidden.` : ''}` }));
@@ -275,10 +277,12 @@ const COLL_CSS = `
 mark { background: #ffe066; color: #111; }
 .tablewrap { overflow: auto; max-height: 75vh; border: 1px solid var(--line); }
 table { border-collapse: collapse; font-size: 13px; }
-th, td { border-bottom: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; min-width: 9rem; max-width: 22rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; min-width: 7rem; max-width: 14rem; }
 thead th { position: sticky; top: 0; background: var(--bg); z-index: 1; }
 tbody th { position: sticky; left: 0; background: var(--bg); color: var(--muted); font-weight: 400; min-width: 13rem; }
 tr.diff td { background: var(--soft); }
+td { overflow-wrap: anywhere; }
+td .bar { display: block; height: 4px; background: var(--ink); margin-top: 3px; }
 .carousel { display: grid; grid-template-columns: auto 1fr auto; gap: .6rem; align-items: start; }
 .dots { text-align: center; color: var(--muted); margin-top: .6rem; }
 #map { height: 60vh; min-height: 320px; border: 1px solid var(--line); }
@@ -395,7 +399,14 @@ class DppCollection extends HTMLElement {
       const differs = new Set(vals).size > 1;
       if (this.#onlyDiff && !differs) continue;
       const label = path.split('.').map((k) => fieldLabel(k, t)).join(' › ');
-      tb.append(el('tr', { class: differs ? 'diff' : null }, el('th', { scope: 'row', text: label }), vals.map((v) => el('td', { text: v || '—' }))));
+      // numeric rows in one unit get a bar, scaled to the largest value in the row
+      const raw = shown.map((it) => pathValue(it.passport, path));
+      const nums = raw.map((r) => (typeof r === 'number' ? r : r && typeof r === 'object' && typeof r.value === 'number' ? r.value : null));
+      const units = new Set(raw.map((r) => (r && typeof r === 'object' ? r.unit : null)));
+      const max = Math.max(...nums.filter((n) => n != null && n >= 0));
+      const bars = differs && units.size === 1 && nums.every((n) => n != null && n >= 0) && max > 0;
+      tb.append(el('tr', { class: differs ? 'diff' : null }, el('th', { scope: 'row', text: label }), vals.map((v, i) => el('td', {}, v || '—',
+        bars ? el('span', { class: 'bar', 'aria-hidden': 'true', style: `width:${Math.max(2, Math.round((nums[i] / max) * 100))}%` }) : null))));
     }
     this.body.append(el('p', {}, toggle, el('span', { class: 'muted', text: '  Shaded rows differ between passports.' })),
       el('div', { class: 'tablewrap' }, el('table', {}, el('thead', {}, head), tb)));
