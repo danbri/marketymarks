@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ title }}</title>
 <style>
-  :root { --bg: #fff; --ink: #111; --muted: #777; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #888; } }
+  :root { --bg: #fff; --ink: #111; --muted: #555; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #b3b3b3; } }
   html { background: var(--bg); color: var(--ink); }
   body { font: 17px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; max-width: 38rem; margin: 18vh auto 4rem; padding: 0 16px; }
   a { color: inherit; text-underline-offset: 3px; }
   p { margin: 0 0 1rem; }
+  /* colours meet WCAG 2.2 AAA contrast (7:1) for text in both themes */
   .muted { color: var(--muted); }
   {{ extraStyle | safe }}
 </style>

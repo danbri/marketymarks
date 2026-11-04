@@ -10,9 +10,11 @@ templateEngineOverride: false
 <title>DPP Checker</title>
 <meta name="description" content="Check an EU Digital Product Passport against the European Commission's own rules, in your browser.">
 <style>
-  :root { --bg: #fff; --ink: #111; --muted: #777; --line: #ddd; --code-bg: #f6f6f6;
-          --ok: #0a6b3d; --bad: #a3200f; --warn: #7a5200; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #888; --line: #333; --code-bg: #1a1a1a;
+  /* text colours meet WCAG 2.2 AAA (7:1) on their backgrounds in both themes;
+     --edge (input borders) meets the 3:1 minimum for UI components */
+  :root { --bg: #fff; --ink: #111; --muted: #555; --line: #ddd; --edge: #767676; --code-bg: #fafafa;
+          --ok: #075a32; --bad: #a3200f; --warn: #614100; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #b3b3b3; --line: #333; --edge: #8a8a8a; --code-bg: #1a1a1a;
           --ok: #6fd3a0; --bad: #ff8a7a; --warn: #e8c060; } }
   * { box-sizing: border-box; }
   html { background: var(--bg); color: var(--ink); }
@@ -27,11 +29,12 @@ templateEngineOverride: false
   .panel { border-top: 1px solid var(--line); padding: 1rem 0; }
   .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   select, button, input[type=file] { font: inherit; }
-  select { padding: 4px 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); max-width: 100%; }
+  select { padding: 4px 6px; border: 1px solid var(--edge); background: var(--bg); color: var(--ink); max-width: 100%; }
   button { padding: 5px 12px; border: 1px solid var(--ink); background: var(--bg); color: var(--ink); cursor: pointer; }
   button.primary { background: var(--ink); color: var(--bg); }
   button:disabled { opacity: .4; cursor: not-allowed; }
-  textarea { width: 100%; min-height: 260px; font: 12px/1.5 ui-monospace, Menlo, monospace; padding: 8px; border: 1px solid var(--line); background: var(--code-bg); color: var(--ink); resize: vertical; }
+  textarea { width: 100%; min-height: 260px; font: 12px/1.5 ui-monospace, Menlo, monospace; padding: 8px; border: 1px solid var(--edge); background: var(--code-bg); color: var(--ink); resize: vertical; }
+  textarea::placeholder { color: var(--muted); opacity: 1; }
   textarea.drag { outline: 1px dashed var(--ink); }
   .verdict { font-weight: 700; margin-bottom: .75rem; }
   .verdict.passes { color: var(--ok); } .verdict.fails { color: var(--bad); } .verdict.not-checked { color: var(--warn); }
