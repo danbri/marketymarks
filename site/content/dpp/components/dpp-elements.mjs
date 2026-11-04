@@ -12,7 +12,7 @@
 import {
   loadTerms, loadProfile, profileIdFor, subgroupOf, classify, textOf, fieldLabel, accessOf, ACCESS_LABELS,
   pickLang, userLangs, codeLabel, countryName, formatDate, formatQuantity, formatRange, describe, orderedKeys,
-  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences, loadCrosswalk, fieldOf, codeOf,
+  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences, loadCrosswalk, fieldOf, codeOf, loadShapeTree, missingRequired,
 } from './dpp-model.mjs';
 import { loadEngine } from './engine.mjs';
 import { toSchemaOrg, PENDING, OFFLINE_CONTEXT } from './dpp-schemaorg.mjs';
@@ -49,6 +49,9 @@ dd ul { margin: 0; padding-left: 1.1rem; }
 .note ul { margin: .2rem 0 0; padding-left: 1.1rem; } .note code { font: inherit; overflow-wrap: anywhere; }
 .restricted { font-size: .75em; border: 1px solid var(--edge); padding: 0 .3rem; margin-left: .3rem; color: var(--muted); }
 details.other > summary { cursor: pointer; color: var(--muted); }
+details.missing { margin: .6rem 0; border-left: 3px solid var(--edge); padding-left: .6rem; }
+details.missing > summary { cursor: pointer; font-weight: 700; }
+details.missing ul { margin: .3rem 0 0; padding-left: 1.1rem; }
 @media (max-width: 600px) { dl, dl dl { grid-template-columns: 1fr; } dd { margin-bottom: .4rem; } }
 `;
 let sheet;
@@ -175,6 +178,18 @@ class DppPassport extends HTMLElement {
     if (audience !== 'all') {
       const hidden = Object.keys(full).length - Object.keys(p).length;
       root.append(el('p', { class: 'muted', text: `Shown as seen by: ${AUDIENCES.find(([k]) => k === audience)?.[1] || audience}.${hidden ? ` ${hidden} top-level field${hidden > 1 ? 's' : ''} hidden.` : ''}` }));
+    }
+    // shape-driven: what the EC rules require for this battery type and view, but the passport lacks
+    const sub = subgroupOf(full);
+    if (sub) {
+      const view = audience === 'all' ? 'pub' : audience;
+      const missing = missingRequired(p, await loadShapeTree(view, sub));
+      if (missing.length) {
+        const name = (path) => path.split(' | ').map((one) => one.split('.').map((k) => fieldLabel(k, terms)).join(' › ')).join(' or ');
+        root.append(el('details', { class: 'missing', part: 'missing' },
+          el('summary', { text: `Missing ${missing.length} field${missing.length > 1 ? 's' : ''} the EC rules require (${AUDIENCES.find(([k]) => k === view)?.[1] || view})` }),
+          el('ul', {}, missing.map((m) => el('li', { text: name(m) })))));
+      }
     }
     const used = new Set();
     for (const g of profile.groups || []) {

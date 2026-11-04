@@ -267,3 +267,34 @@ export function summarySentences(passport, profile, terms, langs = userLangs()) 
   }
   return out;
 }
+
+// --- shape-driven checks ---------------------------------------------------------
+const shapeTrees = new Map();
+// the shape tree for a battery subgroup and view (see lib/dpp-shapes.mjs)
+export function loadShapeTree(view, sub) {
+  const k = `${view}-${sub}`;
+  if (!shapeTrees.has(k)) shapeTrees.set(k, fetch(new URL(`shapes/ec-1.0.0-${k}.json${V}`, HERE)).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+  return shapeTrees.get(k);
+}
+// Fields the shape requires that the passport lacks, as paths ('batteryWeight',
+// 'manufacturingPlace.manufacturingCountry'). Nested requirements count only when the parent
+// is present. An "at least one of" group is reported as 'a | b | c'.
+export function missingRequired(passport, tree) {
+  const out = [];
+  const empty = (v) => v == null || v === '' || (Array.isArray(v) && !v.length);
+  const walk = (obj, node, prefix) => {
+    for (const [k, p] of Object.entries(node.props || {})) {
+      const v = obj[k], path = prefix + k;
+      const needed = p.min > 0 || (p.qualified || []).some((q) => (q.min ?? 0) > 0);
+      if (empty(v)) { if (needed) out.push(path); continue; }
+      if (p.node) for (const x of [].concat(v)) if (x && typeof x === 'object') walk(x, p.node, path + '.');
+    }
+    for (const group of node.anyOf || []) {
+      // met if any alternative has all its required fields; an alternative requiring nothing is always met
+      const needs = group.map((alt) => Object.entries(alt.props || {}).filter(([, p]) => p.min > 0).map(([k]) => k));
+      if (needs.every((keys) => keys.some((k) => empty(obj[k])))) out.push([...new Set(needs.flat())].map((k) => prefix + k).join(' | '));
+    }
+  };
+  walk(passport || {}, tree?.root || {}, '');
+  return out;
+}
