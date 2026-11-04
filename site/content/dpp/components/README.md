@@ -23,6 +23,8 @@ Data can be passed in three ways:
 <dpp-collection src="/dpp/demo/index.json"></dpp-collection>
 ```
 
+Audiences: `<dpp-passport audience="pub">` shows only what that audience may see. The values are `all`, `pub`, `res1`, `res2` and `res3`, and access levels come from the EC vocabulary's `dct:accessRights`. `<dpp-views>` has an "As seen by" menu that applies to all three tabs. The test suite checks that no restricted field leaks into any audience's view of the EC samples.
+
 Theming uses CSS custom properties: `--dpp-bg`, `--dpp-ink`, `--dpp-muted`, `--dpp-line`, `--dpp-soft`, `--dpp-edge` and `--dpp-font`. The defaults meet WCAG 2.2 AAA text contrast in light and dark mode.
 
 ## Files

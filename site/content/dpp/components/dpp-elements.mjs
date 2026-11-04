@@ -12,8 +12,9 @@
 import {
   loadTerms, loadProfile, profileIdFor, subgroupOf, classify, textOf, fieldLabel, accessOf, ACCESS_LABELS,
   pickLang, userLangs, codeLabel, countryName, formatDate, formatQuantity, formatRange, describe, orderedKeys,
-  pathValue, shortIri, COUNTRIES,
+  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES,
 } from './dpp-model.mjs';
+import { loadEngine } from './engine.mjs';
 
 const CSS = `
 :host { --bg: var(--dpp-bg, #fff); --ink: var(--dpp-ink, #111); --muted: var(--dpp-muted, #555); --line: var(--dpp-line, #ddd);
@@ -129,7 +130,7 @@ function renderFields(obj, keys, terms, langs) {
 
 // ---- <dpp-passport> ------------------------------------------------------------
 class DppPassport extends HTMLElement {
-  static observedAttributes = ['src', 'lang'];
+  static observedAttributes = ['src', 'lang', 'audience'];
   #passport = null;
   constructor() { super(); this.attachShadow({ mode: 'open' }); styles(this.shadowRoot); }
   get passport() { return this.#passport; }
@@ -145,9 +146,11 @@ class DppPassport extends HTMLElement {
     }
   }
   async render() {
-    const p = this.#passport; if (!p) return;
+    const full = this.#passport; if (!full) return;
     const langs = this.getAttribute('lang') ? [this.getAttribute('lang')] : userLangs();
-    const [terms, profile] = await Promise.all([loadTerms(), loadProfile(profileIdFor(p))]);
+    const [terms, profile] = await Promise.all([loadTerms(), loadProfile(profileIdFor(full))]);
+    const audience = this.getAttribute('audience') || 'all';
+    const p = viewFor(full, audience, terms);
     const d = describe(p, profile, terms, langs);
     const root = this.shadowRoot; root.replaceChildren();
     const head = el('div', { class: 'head', part: 'head' }, el('h2', { text: d.title }),
@@ -159,6 +162,10 @@ class DppPassport extends HTMLElement {
       chips.append(el('li', {}, el('b', { text: fieldLabel(path.split('.').pop(), terms) + ': ' }), textOf(path, v, terms, langs)));
     }
     root.append(head, chips);
+    if (audience !== 'all') {
+      const hidden = Object.keys(full).length - Object.keys(p).length;
+      root.append(el('p', { class: 'muted', text: `Shown as seen by: ${AUDIENCES.find(([k]) => k === audience)?.[1] || audience}.${hidden ? ` ${hidden} top-level field${hidden > 1 ? 's' : ''} hidden.` : ''}` }));
+    }
     const used = new Set();
     for (const g of profile.groups || []) {
       const keys = g.fields.filter((k) => k in p);
@@ -234,15 +241,20 @@ class DppViews extends HTMLElement {
   set passport(p) { this.#passport = p; this.render(); }
   get passport() { return this.#passport; }
   async attributeChangedCallback() { if (this.getAttribute('src')) this.passport = await fetchJson(this.getAttribute('src')); }
-  render() {
-    const p = this.#passport; if (!p) return;
+  async render() {
+    const full = this.#passport; if (!full) return;
+    // every tab shows only what the chosen audience may see
+    const p = viewFor(full, this.audience || 'all', await loadTerms());
     const tabs = [['readable', 'Readable'], ['structured', 'Structured'], ['json', 'JSON']];
     const bar = el('div', { role: 'tablist' }, tabs.map(([id, label]) => el('button', {
       role: 'tab', 'aria-selected': String(id === this.#tab), class: id === this.#tab ? 'on' : null, text: label,
       onclick: () => { this.#tab = id; this.render(); },
     })));
+    const aud = el('select', { 'aria-label': 'Show the passport as seen by', onchange: (e) => { this.audience = e.target.value; this.render(); } },
+      AUDIENCES.map(([k, label]) => el('option', { value: k, selected: k === (this.audience || 'all') || null, text: 'As seen by: ' + label })));
+    bar.append(aud);
     let body;
-    if (this.#tab === 'readable') { body = el('dpp-passport'); body.passport = p; }
+    if (this.#tab === 'readable') { body = el('dpp-passport', { audience: this.audience || 'all' }); body.passport = full; } // it filters, and says how much it hid
     else if (this.#tab === 'structured') { body = el('dpp-structured'); body.passport = p; }
     else body = el('pre', { text: JSON.stringify(p, null, 2) });
     this.shadowRoot.replaceChildren(bar, el('div', { role: 'tabpanel' }, body));
@@ -441,7 +453,7 @@ class DppCollection extends HTMLElement {
   async dataset() {
     const key = this.visible().map((x) => x.n).join(',');
     if (this._ds && this._dsKey === key) return this._ds;
-    const F = await import('https://cdn.jsdelivr.net/npm/@factoidal/core@0.30.0/browser.js');
+    const F = await loadEngine();
     const { Checker, detectProfile } = await import('../lib/dpp-check.mjs');
     const base = new URL('../ec/1.0.0/', import.meta.url);
     const checker = new Checker(F, async (p) => (await fetch(new URL(p, base))).text());

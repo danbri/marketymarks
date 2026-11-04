@@ -40,6 +40,10 @@ jobs:
         working-directory: site
         run: npm ci || npm install
 
+      - name: Verify npm registry signatures and provenance of installed packages
+        working-directory: site
+        run: npm audit signatures
+
       - name: Test the DPP checker (EC samples must pass, broken passports must fail)
         working-directory: site
         run: npm test

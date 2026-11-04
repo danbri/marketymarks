@@ -1,0 +1,11 @@
+{
+  "id": "core",
+  "appliesTo": "https://repository.product-passport.ec.europa.eu/core/",
+  "title": ["uniqueProductIdentifier", "digitalProductPassportId"],
+  "subtitle": ["granularity", "dppStatus"],
+  "summary": ["lastUpdate"],
+  "groups": [
+    { "id": "passport", "title": "About this passport",
+      "fields": ["digitalProductPassportId", "uniqueProductIdentifier", "granularity", "dppStatus", "lastUpdate", "contentSpecificationIds"] }
+  ]
+}

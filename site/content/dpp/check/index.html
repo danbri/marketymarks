@@ -106,6 +106,7 @@ templateEngineOverride: false
 
 <script type="module">
 import { Checker, detectProfile, VIEW_LABELS, SUBGROUP_LABELS } from '../lib/dpp-check.mjs';
+import { loadEngine } from '../components/engine.mjs';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -177,7 +178,7 @@ $('selftest').addEventListener('click', async () => {
 });
 
 try {
-  const F = await import('https://cdn.jsdelivr.net/npm/@factoidal/core@0.30.0/browser.js');
+  const F = await loadEngine();
   checker = new Checker(F, load);
   for (const f of await checker.samples()) $('sample').add(new Option(`${nameOf(f)} (${VIEW_LABELS[viewOf(nameOf(f))]})`, f));
   await F.parse('<urn:a> <urn:b> <urn:c> .', 'ntriples'); // start the engine now, not on first click

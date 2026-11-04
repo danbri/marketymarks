@@ -4,14 +4,19 @@
 // No RDF engine is needed here.
 
 const HERE = new URL('./', import.meta.url);
+// carry this module's ?v= build id onto the JSON it fetches, so caches stay consistent
+const V = new URL(import.meta.url).search;
 export const EC = 'https://repository.product-passport.ec.europa.eu/';
 
 let termsPromise, profiles = new Map();
-export function loadTerms(url = new URL('ec-1.0.0-terms.json', HERE)) {
+export function loadTerms(url = new URL('ec-1.0.0-terms.json' + V, HERE)) {
   return (termsPromise ??= fetch(url).then((r) => r.json()));
 }
 export function loadProfile(id) {
-  if (!profiles.has(id)) profiles.set(id, fetch(new URL(`profiles/${id}.json`, HERE)).then((r) => r.json()));
+  if (!profiles.has(id)) profiles.set(id, fetch(new URL(`profiles/${id}.json${V}`, HERE))
+    .then((r) => (r.ok ? r.json() : null)).catch(() => null)
+    // no profile for this product group yet: show every field in one plain group
+    .then((p) => p || { id, title: ['uniqueProductIdentifier', 'digitalProductPassportId'], subtitle: [], summary: [], groups: [] }));
   return profiles.get(id);
 }
 export function profileIdFor(passport) {
@@ -154,6 +159,30 @@ export const ACCESS_LABELS = {
   res2: 'Restricted: notified bodies, market surveillance, the Commission',
   res3: 'Restricted: people with a legitimate interest (individual battery)',
 };
+
+// May this audience see the field? audience: 'all' | 'pub' | 'res1' | 'res2' | 'res3'.
+// Public fields are visible to everyone; restricted fields only to their own levels;
+// fields the vocabulary doesn't know are shown only in 'all'.
+export function visibleTo(key, audience, terms) {
+  if (!audience || audience === 'all') return true;
+  const a = terms?.fields[key]?.access;
+  if (!a || !a.length) return false;
+  return a.includes('pub') || a.includes(audience);
+}
+export const AUDIENCES = [
+  ['all', 'Everything in the file'],
+  ['pub', 'The public'],
+  ['res1', 'Legitimate interest, notified bodies, market surveillance, Commission'],
+  ['res2', 'Notified bodies, market surveillance, Commission'],
+  ['res3', 'Legitimate interest (individual battery)'],
+];
+// a copy of the passport with only the fields this audience may see (nested records too)
+export function viewFor(passport, audience, terms) {
+  if (!audience || audience === 'all') return passport;
+  const strip = (o) => Object.fromEntries(Object.entries(o).filter(([k]) => visibleTo(k, audience, terms))
+    .map(([k, v]) => [k, v && typeof v === 'object' && !Array.isArray(v) && classify(k, v, terms) === 'record' ? strip(v) : v]));
+  return strip(passport);
+}
 
 // a field path like 'batteryIdentification.modelIdentifier' -> value
 export function pathValue(obj, path) {
