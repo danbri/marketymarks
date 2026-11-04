@@ -11,6 +11,7 @@ const checks = [
   ['percent has no space', M.textOf('renewableContentShare', { unit: unit('percent'), value: 12.5 }, terms, langs), '12.5%'],
   ['code label', M.textOf('batteryCategory', `${EC}product/batteries/vocabs/battery-category#industrialBattery`, terms, langs).startsWith('IND'), true],
   ['country name', M.textOf('manufacturingCountry', 'ESP', terms, langs), 'Spain'],
+  ['POSIX locale falls back to English', M.textOf('manufacturingCountry', 'FRA', terms, ['C.UTF-8']) + ' ' + M.textOf('manufacturingDate', '2026-10', terms, ['C']), 'France October 2026'],
   ['year-month date', M.textOf('manufacturingDate', '2026-03', terms, langs), 'March 2026'],
   ['language pick: same language', M.pickLang({ 'de-DE': 'Wasser', 'en-IE': 'water' }, ['en-GB']).text, 'water'],
   ['language pick: fallback English', M.pickLang({ 'de-DE': 'Wasser', 'en-IE': 'water' }, ['ja']).text, 'water'],

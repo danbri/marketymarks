@@ -35,6 +35,15 @@ export function subgroupOf(passport) {
 
 // --- languages -------------------------------------------------------------
 const LANG_TAG = /^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/;
+// keep only valid BCP 47 tags (a POSIX locale such as "C" or "C.UTF-8" would make Intl throw); English as the fallback
+export function cleanLangs(langs) {
+  const out = [];
+  for (const l of [].concat(langs || [])) {
+    const tag = String(l).split('.')[0].replace('_', '-');
+    try { if (tag && tag !== 'C' && tag !== 'POSIX') out.push(...Intl.getCanonicalLocales(tag)); } catch {}
+  }
+  return out.length ? out : ['en'];
+}
 export const userLangs = () => (typeof navigator !== 'undefined' && navigator.languages?.length ? navigator.languages : ['en']).map((l) => l.toLowerCase());
 export function isLangMap(v) {
   return v && typeof v === 'object' && !Array.isArray(v) && Object.keys(v).length > 0 &&
@@ -68,7 +77,7 @@ export const COUNTRIES = {
 export function countryName(alpha3, langs = userLangs()) {
   const c = COUNTRIES[String(alpha3).toUpperCase()];
   if (!c) return alpha3;
-  try { return new Intl.DisplayNames(langs, { type: 'region' }).of(c[0]) || alpha3; } catch { return alpha3; }
+  try { return new Intl.DisplayNames(cleanLangs(langs), { type: 'region' }).of(c[0]) || alpha3; } catch { return alpha3; }
 }
 
 // --- value classification ------------------------------------------------------
@@ -96,7 +105,7 @@ export function classify(key, v, terms) {
   return 'record';
 }
 
-const numberFmt = (n, langs) => { try { return new Intl.NumberFormat(langs, { maximumFractionDigits: 6 }).format(n); } catch { return String(n); } };
+const numberFmt = (n, langs) => { try { return new Intl.NumberFormat(cleanLangs(langs), { maximumFractionDigits: 6 }).format(n); } catch { return String(n); } };
 export function unitSymbol(iri, terms) {
   const c = terms?.codes[iri];
   return c ? (c.symbol || c.label) : String(iri).replace(/.*[#/]/, '');
@@ -106,6 +115,7 @@ export function codeLabel(iri, terms) {
   return c ? c.label : String(iri).replace(/.*[#/]/, '');
 }
 export function formatDate(v, langs = userLangs()) {
+  langs = cleanLangs(langs);
   try {
     if (YEAR_MONTH.test(v)) return new Intl.DateTimeFormat(langs, { year: 'numeric', month: 'long' }).format(new Date(v + '-01T00:00:00Z'));
     if (DATE.test(v)) return new Intl.DateTimeFormat(langs, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(v + 'T00:00:00Z'));
