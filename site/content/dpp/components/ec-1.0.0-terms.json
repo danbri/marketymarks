@@ -1,0 +1,2009 @@
+{
+ "release": "1.0.0",
+ "fields": {
+  "observedCharacteristic": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#observedCharacteristic",
+   "label": "Observed characteristic",
+   "definition": "The characteristic, property, or condition described.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "binRangeUnit": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#binRangeUnit",
+   "label": "Bin range unit",
+   "definition": "The unit of measurement used for the values defining the histogram bin intervals on the X-axis.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "binValueUnit": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#binValueUnit",
+   "label": "Bin value unit",
+   "definition": "The unit of measurement of the quantity represented by the histogram bin values on the Y-axis.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "bin": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#bin",
+   "label": "Bin",
+   "definition": "A bucket within a histogram representing either a value interval or a category and its associated quantity.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "lowerBound": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#lowerBound",
+   "label": "Lower bound",
+   "definition": "The lower limit of a numerical interval represented by a histogram bin or applicable range.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "upperBound": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#upperBound",
+   "label": "Upper bound",
+   "definition": "The upper limit of a numerical interval represented by a histogram bin or applicable range.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "binValue": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#binValue",
+   "label": "Bin value",
+   "definition": "The value associated with a histogram bin, represented on the histogram's Y-axis.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "valueRange": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#valueRange",
+   "label": "Value range",
+   "definition": "Range of values (contains lowerbound and upperbound)",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "value": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#value",
+   "label": "Value",
+   "definition": "Value associated with a measurement.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "unit": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#unit",
+   "label": "Unit",
+   "definition": "Unit in which a value or range is expressed.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "recordedTime": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/common-vocabulary#recordedTime",
+   "label": "Recorded time",
+   "definition": "Time when the value was recorded (timestamp).",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "digitalProductPassportId": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#digitalProductPassportId",
+   "label": "digitalProductPassportId",
+   "definition": "Identifier of an instance of the digital product passport.",
+   "legal": null,
+   "source": "http://data.europa.eu/eli/reg_impl/2026/1778/oj",
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "uniqueProductIdentifier": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#uniqueProductIdentifier",
+   "label": "uniqueProductIdentifier",
+   "definition": "Unique character string that identifies a product.",
+   "legal": null,
+   "source": "http://data.europa.eu/eli/reg_impl/2026/1778/oj",
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "granularity": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#granularity",
+   "label": "granularity",
+   "definition": "The level at which a unique product identifier applies, such as model level, batch level or item level.",
+   "legal": null,
+   "source": "http://data.europa.eu/eli/reg_impl/2026/1778/oj",
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "dppStatus": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#dppStatus",
+   "label": "dppStatus",
+   "definition": "The current lifecycle status of a digital product passport.",
+   "legal": null,
+   "source": "http://data.europa.eu/eli/reg_impl/2026/1778/oj",
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "lastUpdate": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#lastUpdate",
+   "label": "lastUpdate",
+   "definition": "Date and time at which a digital product passport was most recently modified or updated.",
+   "legal": null,
+   "source": "http://data.europa.eu/eli/reg_impl/2026/1778/oj",
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "contentSpecificationIds": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#contentSpecificationIds",
+   "label": "contentSpecificationIds",
+   "definition": "Identifiers of content specifications, schemas or data models that govern the structure of the digital product passport content.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "resourceTitle": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#resourceTitle",
+   "label": "resourceTitle",
+   "definition": "Human-readable title assigned to a digital resource.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "contentType": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#contentType",
+   "label": "contentType",
+   "definition": "Media type or format of a digital resource.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "url": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#url",
+   "label": "url",
+   "definition": "Uniform Resource Locator providing electronic access to a digital resource.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "language": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#language",
+   "label": "language",
+   "definition": "Language in which information associated is expressed.",
+   "legal": null,
+   "source": null,
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "DigitalProductPassport": {
+   "iri": "https://repository.product-passport.ec.europa.eu/core/vocabs/core-vocabulary#DigitalProductPassport",
+   "label": "DigitalProductPassport",
+   "definition": "A set of data specific to a product that includes the information specified in the applicable delegated act adopted pursuant to Article 4 and that is accessible via electronic means through a data carrier in accordance with Chapter III - Regulation (EU) 2024/1781;",
+   "legal": null,
+   "source": "http://data.europa.eu/eli/reg/2024/1781/2024-06-28",
+   "parent": null,
+   "access": [],
+   "applies": null
+  },
+  "registrantIdentity": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#registrantIdentity",
+   "label": "Identity of who is registering and/or is responsible for the battery passport",
+   "definition": "Identity of who is registering and/or is responsible for the battery passport [name]",
+   "legal": "Regulation (EU) 2023/1542 - Article 77 (3) - as defined in Article 77 (4)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturerIdentification": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerIdentification",
+   "label": "Manufacturer identification",
+   "definition": "Manufacturer name, registered trade name or registered trademark [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturerName": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerName",
+   "label": "Manufacturer name",
+   "definition": "Manufacturer name, registered trade name or registered trademark [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1 - as defined in Article 3 (1) (33)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturerIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturerTradeName": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerTradeName",
+   "label": "Manufacturer registered trade name",
+   "definition": "Manufacturer name, registered trade name or registered trademark [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturerIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturerTrademark": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerTrademark",
+   "label": "Manufacturer registered trademark",
+   "definition": "Manufacturer name, registered trade name or registered trademark [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturerIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturerPostalAddress": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerPostalAddress",
+   "label": "Manufacturer postal address",
+   "definition": "Manufacturer single contact postal address",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturerContactDetails": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerContactDetails",
+   "label": "Manufacturer contact details",
+   "definition": "If available, manufacturer web and email address [both optional]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": null
+  },
+  "manufacturerWebsite": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerWebsite",
+   "label": "Manufacturer website",
+   "definition": "If available, manufacturer web and email address [both optional]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturerContactDetails",
+   "access": [
+    "pub"
+   ],
+   "applies": null
+  },
+  "manufacturerEmail": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturerEmail",
+   "label": "Manufacturer email address",
+   "definition": "If available, manufacturer web and email address [both optional]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 1",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturerContactDetails",
+   "access": [
+    "pub"
+   ],
+   "applies": null
+  },
+  "batteryCategory": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batteryCategory",
+   "label": "Battery category",
+   "definition": "Battery category [3-code list]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 2 - as defined in Article 3 (1) (11)  (13) and (14)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "batteryIdentification": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batteryIdentification",
+   "label": "Battery identification",
+   "definition": "Model identification and batch or serial number, or product number or another element allowing their identification [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 2",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "modelIdentifier": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#modelIdentifier",
+   "label": "Model identifier",
+   "definition": "Model identification and batch or serial number, or product number or another element allowing their identification [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 2",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "batteryIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "batchNumber": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batchNumber",
+   "label": "Batch number",
+   "definition": "Model identification and batch or serial number, or product number or another element allowing their identification [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 2",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "batteryIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "serialNumber": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#serialNumber",
+   "label": "Serial number",
+   "definition": "Model identification and batch or serial number, or product number or another element allowing their identification [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 2",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "batteryIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "productNumber": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#productNumber",
+   "label": "Product number",
+   "definition": "Model identification and batch or serial number, or product number or another element allowing their identification [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 2",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "batteryIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "otherIdentificationElement": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#otherIdentificationElement",
+   "label": "Other identification element",
+   "definition": "Model identification and batch or serial number, or product number or another element allowing their identification [at least one of]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 2",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "batteryIdentification",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturingPlace": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturingPlace",
+   "label": "Place of manufacture",
+   "definition": "The place of manufacture (geographical location of a battery manufacturing plant) [town, region, country/jurisdiction]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 3",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturingCity": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturingCity",
+   "label": "Town/city of manufacture",
+   "definition": "The place of manufacture (geographical location of a battery manufacturing plant) [town, region, country/jurisdiction]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 3",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturingPlace",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturingRegion": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturingRegion",
+   "label": "Region of manufacture",
+   "definition": "The place of manufacture (geographical location of a battery manufacturing plant) [town, region, country/jurisdiction]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 3",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturingPlace",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturingCountry": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturingCountry",
+   "label": "Country of manufacture",
+   "definition": "The place of manufacture (geographical location of a battery manufacturing plant) [town, region, country/jurisdiction]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 3",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "manufacturingPlace",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "manufacturingDate": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#manufacturingDate",
+   "label": "Date of manufacturing",
+   "definition": "The date of manufacturing [month and year]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 4",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "batteryWeight": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batteryWeight",
+   "label": "Battery weight",
+   "definition": "The weight [unit kg]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 5",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "batteryCapacity": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batteryCapacity",
+   "label": "Battery capacity",
+   "definition": "The capacity [unit Ah]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 6",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "batteryChemistry": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batteryChemistry",
+   "label": "Battery chemistry",
+   "definition": "The chemistry [code list]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 7",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "hazardousSubstances": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#hazardousSubstances",
+   "label": "Hazardous substances present in the battery, other than mercury, cadmium or lead",
+   "definition": "The hazardous substances present in the battery, other than mercury, cadmium or lead [free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 8 - as defined in Article 3 (1) (52)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "extinguishingAgent": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#extinguishingAgent",
+   "label": "Usable extinguishing agent",
+   "definition": "Usable extinguishing agent [free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 9",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "criticalRawMaterials": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#criticalRawMaterials",
+   "label": "Critical raw materials present in the battery",
+   "definition": "Critical raw materials present in the battery in a concentration of more than 0,1 % weight by weight [code list]",
+   "legal": "Regulation (EU) 2023/1542 - Annex VI Part A 10 - as defined in List of raw materials in Annex X (1)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "renewableContentShare": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#renewableContentShare",
+   "label": "Renewable content share",
+   "definition": "The share of renewable content [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (f)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "minimalVoltage": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#minimalVoltage",
+   "label": "Minimal voltage",
+   "definition": "Minimal voltage, with temperature range when relevant [unit V, optional unit °C]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (h)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "nominalVoltage": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#nominalVoltage",
+   "label": "Nominal voltage",
+   "definition": "Nominal voltage, with temperature range when relevant [unit V, optional unit °C]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (h)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "maximumVoltage": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#maximumVoltage",
+   "label": "Maximum voltage",
+   "definition": "Maximum voltage, with temperature range when relevant [unit V, optional unit °C]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (h)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "originalPowerCapability": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#originalPowerCapability",
+   "label": "Original power capability",
+   "definition": "Original power capability [unit W]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (i) - as defined in Annex IV (3) for “power” of the batteries in scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "powerLimit": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#powerLimit",
+   "label": "Power limit",
+   "definition": "Power limits, with temperature range when relevant [unit W, optionally min_T °C … max_T °C]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (i) - as defined in Annex IV (3) for “power” of the batteries in scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "expectedLifetimeCycles": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#expectedLifetimeCycles",
+   "label": "Expected battery lifetime in cycles",
+   "definition": "Expected battery lifetime expressed in cycles [in number]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (j) - as defined in Article 3 (1) (59) for “lifetime”",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "cycleLifeReferenceTest": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#cycleLifeReferenceTest",
+   "label": "Reference test used for expected battery lifetime expressed in cycles",
+   "definition": "Reference test used for expected battery lifetime expressed in cycles [free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (j) - as defined in Article 3 (1) (59) for “lifetime”",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "capacityExhaustionThreshold": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#capacityExhaustionThreshold",
+   "label": "Capacity threshold for exhaustion",
+   "definition": "Capacity threshold for exhaustion [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (k)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": null
+  },
+  "notInUseTemperatureRange": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#notInUseTemperatureRange",
+   "label": "Temperature range the battery can withstand when not in use",
+   "definition": "Temperature range the battery can withstand when not in use (reference test) [min_T °C … max_T °C + free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (l)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "notInUseTemperatureRangeTest": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#notInUseTemperatureRangeTest",
+   "label": "Reference test for the temperature range the battery can withstand when not in use",
+   "definition": "Temperature range the battery can withstand when not in use (reference test) [min_T °C … max_T °C + free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (l)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "notInUseTemperatureRange",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "commercialWarrantyPeriod": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#commercialWarrantyPeriod",
+   "label": "Period for which the commercial warranty for the calendar life applies",
+   "definition": "Period for which the commercial warranty for the calendar life applies [months]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (m)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": null
+  },
+  "initialRoundTripEnergyEfficiency": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#initialRoundTripEnergyEfficiency",
+   "label": "Initial round-trip energy efficiency",
+   "definition": "Initial round trip energy efficiency [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (n)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "roundTripEfficiencyAtHalfCycleLife": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#roundTripEfficiencyAtHalfCycleLife",
+   "label": "Round-trip energy efficiency at 50% of cycle life",
+   "definition": "Round trip energy efficiency at 50 % of cycle-life [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (n) - as defined in Annex II 2 (e) for life cycle for the calculation of carbon footprint",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "internalCellResistance": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#internalCellResistance",
+   "label": "Internal battery cell resistance",
+   "definition": "Internal battery cell resistance [unit Ω]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (o)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "internalPackResistance": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#internalPackResistance",
+   "label": "Internal battery pack resistance",
+   "definition": "Internal battery pack resistance [unit Ω]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (o)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "cycleLifeChargeCRate": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#cycleLifeChargeCRate",
+   "label": "Charge C-rate of relevant cycle-life test",
+   "definition": "Charge C-rate of relevant cycle-life test [number]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (p)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "cycleLifeDischargeCRate": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#cycleLifeDischargeCRate",
+   "label": "Discharge C-rate used of relevant cycle-life test",
+   "definition": "Discharge C-rate of relevant cycle-life test [number]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (p)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Optional",
+    "lmt": "Optional",
+    "ind": "Optional"
+   }
+  },
+  "separateCollectionSymbol": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#separateCollectionSymbol",
+   "label": "Separate collection symbol",
+   "definition": "The marking requirements laid down in Article 13(4) [Yes/No]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (q) - Art. 13 (4) - Annex VI Part B",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "chemicalSymbol": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#chemicalSymbol",
+   "label": "Chemical symbol",
+   "definition": "The marking requirements laid down in Article 13(5) [code list ]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (q) - Art. 13 (5)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": null
+  },
+  "euDeclarationOfConformity": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#euDeclarationOfConformity",
+   "label": "EU declaration of conformity",
+   "definition": "The EU declaration of conformity referred to in Article 18 [a web link]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (r) ",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "wasteBatteryPreventionManagementInfo": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#wasteBatteryPreventionManagementInfo",
+   "label": "Waste battery prevention and management information",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "endUserRoleInWastePrevention": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#endUserRoleInWastePrevention",
+   "label": "Role of end-users in waste prevention",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "endUserRoleInSeparateCollection": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#endUserRoleInSeparateCollection",
+   "label": "Role of end-users in separate collection of waste batteries",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "separateCollectionPoints": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#separateCollectionPoints",
+   "label": "Information on separate collection points",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "takeBackCollectionPoints": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#takeBackCollectionPoints",
+   "label": "Information on take-back and collection points",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "preparationForReuseFacilities": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#preparationForReuseFacilities",
+   "label": "Information on preparation for reuse facilities",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "preparationForRepurposingFacilities": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#preparationForRepurposingFacilities",
+   "label": "Information on preparation-for-repurposing facilities",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "wasteBatteryTreatmentFacilities": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#wasteBatteryTreatmentFacilities",
+   "label": "Information on treatment facilities for waste batteries",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "wasteBatterySafetyInstructions": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#wasteBatterySafetyInstructions",
+   "label": "Safety instructions for handling waste batteries",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "batteryLabelSymbolMeaning": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batteryLabelSymbolMeaning",
+   "label": "Meaning of the labels and symbols on batteries",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "batterySubstancesImpact": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batterySubstancesImpact",
+   "label": "Impact of substances present in batteries on the environment and on human health or the safety of persons",
+   "definition": "The information regarding the prevention and management of waste batteries laid down in Article 74(1), points (a) to (f) [multiple free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 1 (s)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "wasteBatteryPreventionManagementInfo",
+   "access": [
+    "pub"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "detailedComposition": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#detailedComposition",
+   "label": "Detailed composition",
+   "definition": "Detailed composition, including materials used in the cathode, anode and electrolyte [free text]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 2 (a)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res1"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "sparePartReplacementDetails": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#sparePartReplacementDetails",
+   "label": "Part numbers for components and contact details of sources for replacement spares",
+   "definition": "Part numbers for components and contact details of sources for replacement spares [a web link] ",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 2 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res1"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "dismantlingInformation": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#dismantlingInformation",
+   "label": "Dismantling information",
+   "definition": "Dismantling information, including at least: \n- exploded diagrams of the battery system/pack showing the location of battery cells, \n- disassembly sequences, \n- type and number of fastening techniques to be unlocked, \n- tools required for disassembly, \n- warnings if risk of damaging parts exist, \n- amount of cells used and layout \n[a web link]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 2 (c)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res1"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "safetyMeasures": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#safetyMeasures",
+   "label": "Safety measures",
+   "definition": "Safety measures [a web link]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 2 (d)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res1"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "complianceTestReportResults": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#complianceTestReportResults",
+   "label": "Results of test reports proving compliance",
+   "definition": "Results of test reports proving compliance with the requirements laid down in this Regulation or any delegated or implementing act adopted pursuant to this Regulation [a web link]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 3",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res2"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "ratedCapacity": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#ratedCapacity",
+   "label": "Rated capacity",
+   "definition": "Rated capacity (Ah)",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Annex IV (1) for the batteries in the scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "capacityFade": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#capacityFade",
+   "label": "Capacity fade",
+   "definition": "Capacity fade [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Annex III B (1) and Annex IV (2) for the batteries in the scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "powerCapability": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#powerCapability",
+   "label": "Power capability",
+   "definition": "Power [unit W]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Annex IV (3) for the batteries in the scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "powerFade": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#powerFade",
+   "label": "Power fade",
+   "definition": "Power fade [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Annex IV (4) for the batteries in the scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "internalResistance": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#internalResistance",
+   "label": "Internal resistance",
+   "definition": "Internal resistance [unit Ω]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Annex IV (5) for the batteries in the scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "internalResistanceIncrease": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#internalResistanceIncrease",
+   "label": "Internal resistance increase",
+   "definition": "Internal resistance increase [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "roundTripEnergyEfficiency": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#roundTripEnergyEfficiency",
+   "label": "Energy round trip efficiency",
+   "definition": "Where applicable, energy round trip efficiency [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Annex IV (6) for the batteries in the scope of the Annex",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "roundTripEnergyEfficiencyFade": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#roundTripEnergyEfficiencyFade",
+   "label": "Energy round trip efficiency fade",
+   "definition": "Where applicable, energy round trip efficiency fade [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "expectedLifetimeCyclesRest": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#expectedLifetimeCyclesRest",
+   "label": "Expected lifetime of the battery under the reference conditions in cycles",
+   "definition": "The expected lifetime of the battery under the reference conditions for which it has been designed, in terms of cycles, except for non-cycle applications [number]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Art 3 (1) (59) for lifetime",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "expectedLifetimeYears": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#expectedLifetimeYears",
+   "label": "Expected lifetime of the battery in years",
+   "definition": "The expected lifetime of the battery under the reference conditions for which it has been designed [years]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (a) - as defined in Art 3 (1) (59) for lifetime",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Only"
+   }
+  },
+  "stateOfCertifiedEnergy": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#stateOfCertifiedEnergy",
+   "label": "State of certified energy (SOCE)",
+   "definition": "Information on the state of health of the battery pursuant to Article 14: state of certified energy (SOCE) [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "remainingCapacity": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#remainingCapacity",
+   "label": "Remaining capacity",
+   "definition": "Information on the state of health of the battery pursuant to Article 14: remaining capacity [unit Ah]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "remainingPowerCapability": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#remainingPowerCapability",
+   "label": "Remaining power capability",
+   "definition": "Information on the state of health of the battery pursuant to Article 14: where possible, the remaining power capability [unit W]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "remainingRoundTripEfficiency": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#remainingRoundTripEfficiency",
+   "label": "Remaining round-trip efficiency",
+   "definition": "Information on the state of health of the battery pursuant to Article 14: where possible, the remaining round-trip efficiency [%]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "selfDischargingRateSet": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#selfDischargingRateSet",
+   "label": "Self-discharging rate set",
+   "definition": "Information on the state of health of the battery pursuant to Article 14: where possible, the evolution of self-discharging rates [timestamp, decrease % per year]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "selfDischargingRate": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#selfDischargingRate",
+   "label": "Self-discharging rates",
+   "definition": "Information on the state of health of the battery pursuant to Article 14: where possible, the evolution of self-discharging rates [timestamp, decrease % per year]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "selfDischargingRateSet",
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "ohmicResistance": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#ohmicResistance",
+   "label": "Ohmic resistance",
+   "definition": "Information on the state of health of the battery pursuant to Article 14: where possible, the ohmic resistance [unit Ω]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (b)",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "batteryStatus": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#batteryStatus",
+   "label": "Battery status",
+   "definition": "Information on the status of the battery, defined as ‘original’, ‘repurposed’, ‘re-used’, ‘remanufactured’ or ‘waste’ [code list]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (c) - as defined in Article 3 (1) (32) for “remanufacturing” and 3 (2) (2)(a) for “waste”",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": {
+    "evb": "Mandatory",
+    "lmt": "Mandatory",
+    "ind": "Mandatory"
+   }
+  },
+  "numberOfChargingCycles": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#numberOfChargingCycles",
+   "label": "Number of charging cycles",
+   "definition": "The number of charging cycles [number]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (d) ",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "numberOfDischargingCycles": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#numberOfDischargingCycles",
+   "label": "Number of discharging cycles",
+   "definition": "The number of discharging cycles [number]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (d) ",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "negativeEvents": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#negativeEvents",
+   "label": "Negative events",
+   "definition": "Negative events, such as accidents [multiple free texts]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (d) ",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "environmentalConditionHistogramSet": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#environmentalConditionHistogramSet",
+   "label": "Periodically recorded information on the operating environmental conditions",
+   "definition": "Periodically recorded information on the operating environmental conditions, including temperature [code list, histogram, related units]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (d) ",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "environmentalConditionHistogram": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#environmentalConditionHistogram",
+   "label": "Environmental Condition Histogram",
+   "definition": "Periodically recorded information on the operating environmental conditions, including temperature [code list, histogram, related units]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (d) ",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": "environmentalConditionHistogramSet",
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  },
+  "stateOfChargeHistogram": {
+   "iri": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-vocabulary#stateOfChargeHistogram",
+   "label": "Periodically recorded state of charge (SoC)",
+   "definition": "Periodically recorded information on the state of charge [histogram, %]",
+   "legal": "Regulation (EU) 2023/1542 - Annex XIII 4 (d) ",
+   "source": "http://data.europa.eu/eli/reg/2023/1542/2026-08-13",
+   "parent": null,
+   "access": [
+    "res3"
+   ],
+   "applies": null
+  }
+ },
+ "codes": {
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#antimony": {
+   "label": "Antimony",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#arsenic": {
+   "label": "Arsenic",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#bauxiteAluminaAluminium": {
+   "label": "Bauxite/alumina/aluminium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#baryte": {
+   "label": "Baryte",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#beryllium": {
+   "label": "Beryllium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#bismuth": {
+   "label": "Bismuth",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#boron": {
+   "label": "Boron",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#cobalt": {
+   "label": "Cobalt",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#cokingCoal": {
+   "label": "Coking coal",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#copper": {
+   "label": "Copper",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#feldspar": {
+   "label": "Feldspar",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#fluorspar": {
+   "label": "Fluorspar",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#gallium": {
+   "label": "Gallium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#germanium": {
+   "label": "Germanium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#hafnium": {
+   "label": "Hafnium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#helium": {
+   "label": "Helium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#heavyRareEarthElements": {
+   "label": "Heavy rare earth elements",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#lightRareEarthElements": {
+   "label": "Light rare earth elements",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#lithium": {
+   "label": "Lithium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#magnesium": {
+   "label": "Magnesium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#manganese": {
+   "label": "Manganese",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#graphite": {
+   "label": "Graphite",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#nickelBatteryGrade": {
+   "label": "Nickel – battery grade",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#niobium": {
+   "label": "Niobium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#phosphateRock": {
+   "label": "Phosphate rock",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#phosphorus": {
+   "label": "Phosphorus",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#platinumGroupMetals": {
+   "label": "Platinum group metals",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#scandium": {
+   "label": "Scandium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#siliconMetal": {
+   "label": "Silicon metal",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#strontium": {
+   "label": "Strontium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#tantalum": {
+   "label": "Tantalum",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#titaniumMetal": {
+   "label": "Titanium metal",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#tungsten": {
+   "label": "Tungsten",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#vanadium": {
+   "label": "Vanadium",
+   "symbol": null,
+   "definition": null,
+   "scheme": "critical-raw-material"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#model": {
+   "label": "Model",
+   "symbol": null,
+   "definition": null,
+   "scheme": "granularity-level"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#batch": {
+   "label": "Batch",
+   "symbol": null,
+   "definition": null,
+   "scheme": "granularity-level"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item": {
+   "label": "Item",
+   "symbol": null,
+   "definition": null,
+   "scheme": "granularity-level"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/information-type#publicType": {
+   "label": "Public type information",
+   "symbol": null,
+   "definition": "Publicly accessible information",
+   "scheme": "information-type"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/information-type#restrictedType": {
+   "label": "Restricted type information",
+   "symbol": null,
+   "definition": "Restricted information",
+   "scheme": "information-type"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus": {
+   "label": "Valid status",
+   "symbol": null,
+   "definition": null,
+   "scheme": "instance-status"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#invalidStatus": {
+   "label": "Invalid status",
+   "symbol": null,
+   "definition": null,
+   "scheme": "instance-status"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram": {
+   "label": "Kilogram",
+   "symbol": "kg",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#gram": {
+   "label": "Gram",
+   "symbol": "g",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour": {
+   "label": "Ampere hour",
+   "symbol": "Ah",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour": {
+   "label": "Milliampere hour",
+   "symbol": "mAh",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent": {
+   "label": "Percent",
+   "symbol": "%",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt": {
+   "label": "Volt",
+   "symbol": "V",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius": {
+   "label": "Degree Celsius",
+   "symbol": "°C",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt": {
+   "label": "Watt",
+   "symbol": "W",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm": {
+   "label": "Ohm",
+   "symbol": "Ω",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#reciprocalHour": {
+   "label": "Reciprocal hour",
+   "symbol": "h-1",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#hour": {
+   "label": "Hour",
+   "symbol": "h",
+   "definition": null,
+   "scheme": "measurement-unit"
+  },
+  "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature": {
+   "label": "Temperature",
+   "symbol": null,
+   "definition": null,
+   "scheme": "observed-characteristic"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#electricVehicleBattery": {
+   "label": "EVB - Electric vehicle battery",
+   "symbol": "EVB",
+   "definition": null,
+   "scheme": "battery-category"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#lightMeansOfTransportBattery": {
+   "label": "LMT - Light means of transport battery",
+   "symbol": "LMT",
+   "definition": null,
+   "scheme": "battery-category"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#industrialBattery": {
+   "label": "IND - Industrial battery >2kWh",
+   "symbol": "IND",
+   "definition": null,
+   "scheme": "battery-category"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemical-symbol#cadmiumSymbol": {
+   "label": "Cadmium symbol",
+   "symbol": "Cd symbol",
+   "definition": null,
+   "scheme": "battery-chemical-symbol"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemical-symbol#leadSymbol": {
+   "label": "Lead symbol",
+   "symbol": "Pb symbol",
+   "definition": null,
+   "scheme": "battery-chemical-symbol"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemical-symbol#noneSymbol": {
+   "label": "Symbol - none",
+   "symbol": null,
+   "definition": null,
+   "scheme": "battery-chemical-symbol"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#leadAcid": {
+   "label": "Pb - Lead-acid",
+   "symbol": "Lead-acid",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#nickelCadmium": {
+   "label": "Ni-Cd - Nickel-cadmium",
+   "symbol": "Nickel-cadmium",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#nickelMetalHydride": {
+   "label": "Ni-MH - Nickel-metal hydride",
+   "symbol": "Nickel-metal hydride",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonNMC": {
+   "label": "Li-ion NMC - Lithium ion NMC",
+   "symbol": "Lithium-ion NMC",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLFP": {
+   "label": "Li-ion LFP - Lithium ion LFP",
+   "symbol": "Lithium-ion LFP",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLMO": {
+   "label": "Li-ion LMO - Lithium ion LMO",
+   "symbol": "Lithium-ion LMO",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonLCO": {
+   "label": "Li-ion LCO - Lithium ion LCO",
+   "symbol": "Lithium-ion LCO",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumIonNCA": {
+   "label": "Li-ion NCA - Lithium ion NCA",
+   "symbol": "Lithium-ion NCA",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#lithiumMetal": {
+   "label": "Li-metal - Lithium metal",
+   "symbol": "Lithium metal",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#sodiumIon": {
+   "label": "Na-ion - Sodium-ion",
+   "symbol": "Sodium-ion",
+   "definition": null,
+   "scheme": "battery-chemistry"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-information-type#batteryRestrictedType1": {
+   "label": "Battery DPP restricted information type 1",
+   "symbol": null,
+   "definition": "Restricted: Only to persons with legitimate interests, notified bodies, market surveillance authorities and the Commission.",
+   "scheme": "battery-information-type"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-information-type#batteryRestrictedType2": {
+   "label": "Battery DPP restricted information type 2",
+   "symbol": null,
+   "definition": "Restricted: Only to notified bodies, market surveillance authorities and the Commission.",
+   "scheme": "battery-information-type"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-information-type#batteryRestrictedType3": {
+   "label": "Battery DPP restricted information type 3",
+   "symbol": null,
+   "definition": "Restricted: Only to persons with legitimate interest (individual battery).",
+   "scheme": "battery-information-type"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#original": {
+   "label": "Original",
+   "symbol": null,
+   "definition": null,
+   "scheme": "battery-status"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#reused": {
+   "label": "Reused",
+   "symbol": null,
+   "definition": null,
+   "scheme": "battery-status"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#repurposed": {
+   "label": "Repurposed",
+   "symbol": null,
+   "definition": null,
+   "scheme": "battery-status"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#remanufactured": {
+   "label": "Remanufactured",
+   "symbol": null,
+   "definition": null,
+   "scheme": "battery-status"
+  },
+  "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#waste": {
+   "label": "Waste",
+   "symbol": null,
+   "definition": null,
+   "scheme": "battery-status"
+  }
+ }
+}

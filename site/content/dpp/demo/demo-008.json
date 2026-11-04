@@ -1,0 +1,183 @@
+{
+  "digitalProductPassportId": "https://www.example.org/dpp/demo-008",
+  "uniqueProductIdentifier": "https://www.example.org/demo-008",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2026-02-15T09:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/ind/1.0.0"
+  ],
+  "registrantIdentity": "urn:uuid:3f1c7a52-8d4e-4b1a-9c2e-5a6b7d8e9f01",
+  "manufacturerIdentification": {
+    "manufacturerName": "Atlantic Grid Ltd (fictional)",
+    "manufacturerTradeName": "AtlanticGrid",
+    "manufacturerTrademark": "AtlanticGrid(R)"
+  },
+  "manufacturerPostalAddress": "Cork, IRL (fictional address)",
+  "manufacturerContactDetails": {
+    "manufacturerWebsite": "https://www.example.com",
+    "manufacturerEmail": "mailto:info@example.com"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#industrialBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "AG-Pb 12",
+    "batchNumber": "DEMO-008-B1"
+  },
+  "manufacturingPlace": {
+    "manufacturingCity": "Cork",
+    "manufacturingRegion": "Munster",
+    "manufacturingCountry": "IRL"
+  },
+  "manufacturingDate": "2026-02",
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 62
+  },
+  "batteryCapacity": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+    "value": 100
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#leadAcid"
+  ],
+  "hazardousSubstances": [
+    "Lead",
+    "Sulphuric acid"
+  ],
+  "extinguishingAgent": {
+    "en-IE": "Large quantities of water"
+  },
+  "criticalRawMaterials": [
+    "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#antimony"
+  ],
+  "renewableContentShare": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent",
+    "value": 40
+  },
+  "minimalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 10,
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "nominalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 12,
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "maximumVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 10,
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "originalPowerCapability": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt",
+    "value": 150
+  },
+  "powerLimit": [
+    {
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt",
+      "value": 150,
+      "valueRange": {
+        "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+        "lowerBound": 10,
+        "upperBound": 10,
+        "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+      }
+    }
+  ],
+  "notInUseTemperatureRange": {
+    "notInUseTemperatureRangeTest": {
+      "en-IE": "IEC 62660-1, storage between -20 C and 45 C"
+    },
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "commercialWarrantyPeriod": 24,
+  "internalCellResistance": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm",
+    "value": 0.9
+  },
+  "internalPackResistance": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm",
+    "value": 45
+  },
+  "separateCollectionSymbol": true,
+  "chemicalSymbol": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemical-symbol#leadSymbol"
+  ],
+  "euDeclarationOfConformity": {
+    "resourceTitle": "EU declaration of conformity file",
+    "contentType": "application/pdf",
+    "url": "https://example.com/docs/eu-doc-0001.pdf",
+    "language": "en-GB"
+  },
+  "wasteBatteryPreventionManagementInfo": {
+    "endUserRoleInWastePrevention": {
+      "en-IE": "End users should avoid mechanical damage and follow the usage instructions."
+    },
+    "endUserRoleInSeparateCollection": {
+      "en-IE": "End users must not dispose of batteries as unsorted municipal waste."
+    },
+    "separateCollectionPoints": {
+      "en-IE": "https://example.com/collection-points"
+    },
+    "takeBackCollectionPoints": {
+      "en-IE": "Return to any authorised dealer free of charge."
+    },
+    "preparationForReuseFacilities": {
+      "en-IE": "Authorised facility: Iberia Reuse Centre, Zaragoza."
+    },
+    "preparationForRepurposingFacilities": {
+      "en-IE": "Authorised facility: Iberia Second-Life Hub, Valencia."
+    },
+    "wasteBatteryTreatmentFacilities": {
+      "en-IE": "Authorised recycling plant: Recycla Ibérica, Bilbao."
+    },
+    "wasteBatterySafetyInstructions": {
+      "en-IE": "Store damaged batteries in a dry, ventilated, non-flammable container."
+    },
+    "batteryLabelSymbolMeaning": {
+      "en-IE": "The crossed-out wheelie bin symbol indicates separate collection is required."
+    },
+    "batterySubstancesImpact": {
+      "en-IE": "Improper disposal may release electrolyte and heavy metals into soil and water."
+    }
+  },
+  "expectedLifetimeCycles": 800,
+  "cycleLifeReferenceTest": {
+    "en-IE": "Test sample"
+  },
+  "initialRoundTripEnergyEfficiency": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent",
+    "value": 45
+  },
+  "roundTripEfficiencyAtHalfCycleLife": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent",
+    "value": 45
+  },
+  "cycleLifeChargeCRate": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#reciprocalHour",
+    "value": 45
+  }
+}

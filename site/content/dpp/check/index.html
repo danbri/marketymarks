@@ -52,6 +52,7 @@ templateEngineOverride: false
   footer p { margin: 0 0 .5rem; }
   @media (max-width: 600px) { th:nth-child(4), td:nth-child(4) { display: none; } }
 </style>
+<script type="module" src="../components/dpp-elements.mjs"></script>
 </head>
 <body>
 <div class="wrap">
@@ -139,14 +140,16 @@ $('input').addEventListener('drop', (e) => { e.preventDefault(); e.target.classL
 
 function busy(on, msg) { $('run').disabled = on; $('selftest').disabled = on; if (msg) $('engine').textContent = msg; }
 
-function render(r) {
+function render(r, passport) {
   const head = { passes: 'Passes the EC rules', fails: `Fails: ${r.problems.length} problem${r.problems.length === 1 ? '' : 's'}`, 'not-checked': 'Not checked' }[r.verdict];
   const rows = r.problems.map((p) => `<tr><td><code>${esc(p.code || '')}</code></td><td>${esc(p.field || (p.nested ? 'a field inside a nested object' : ''))}</td><td>${esc(p.explanation || '')}</td><td><code>${esc(p.value ?? '')}</code></td></tr>`).join('');
   $('out').innerHTML = `
     <div class="verdict ${r.verdict}">${head}<small>${esc(VIEW_LABELS[r.view])} · ${r.triples} triples · ${(r.ms / 1000).toFixed(1)} s</small></div>
     ${rows ? `<div class="table-scroll"><table><thead><tr><th>EC code</th><th>Field</th><th>What the EC rule says</th><th>Value</th></tr></thead><tbody>${rows}</tbody></table></div>` : ''}
     ${r.notes.length ? `<ul class="notes">${r.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
-    <details><summary>Rule files used</summary><p class="mono">${r.shapeFiles.map(esc).join('<br>')}</p></details>`;
+    <details><summary>Rule files used</summary><p class="mono">${r.shapeFiles.map(esc).join('<br>')}</p></details>
+    <h2 style="margin-top:1.2rem">The passport</h2>`;
+  const v = document.createElement('dpp-views'); v.passport = passport; $('out').append(v);
   $('out').hidden = false;
 }
 
@@ -154,7 +157,7 @@ $('run').addEventListener('click', async () => {
   let passport;
   try { passport = JSON.parse($('input').value); } catch (e) { $('out').hidden = false; $('out').innerHTML = `<div class="verdict fails">That isn't valid JSON<small>${esc(e.message)}</small></div>`; return; }
   busy(true, 'Checking…');
-  try { render(await checker.check(passport, { view: $('view').value })); $('engine').textContent = 'Ready.'; }
+  try { render(await checker.check(passport, { view: $('view').value }), passport); $('engine').textContent = 'Ready.'; }
   catch (e) { $('out').hidden = false; $('out').innerHTML = `<div class="verdict not-checked">Could not check this passport<small>${esc(e.message)}</small></div>`; $('engine').textContent = 'Ready.'; }
   finally { busy(false); }
 });

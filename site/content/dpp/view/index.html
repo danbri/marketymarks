@@ -1,0 +1,53 @@
+---
+permalink: dpp/view/index.html
+templateEngineOverride: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPP Viewer</title>
+<style>
+  :root { --bg: #fff; --ink: #111; --muted: #555; --line: #ddd; --edge: #767676; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #b3b3b3; --line: #333; --edge: #8a8a8a; } }
+  html { background: var(--bg); color: var(--ink); }
+  body { font: 15px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; max-width: 72rem; margin: 3rem auto 4rem; padding: 0 16px; }
+  a { color: inherit; text-underline-offset: 3px; }
+  header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; }
+  h1 { font-size: 1rem; margin: 0; }
+  header a, .lede, .src { color: var(--muted); }
+  .src { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; margin: 0 0 1.2rem; }
+  .src button, .src input { font: inherit; }
+  .src button { background: var(--bg); color: var(--ink); border: 1px solid var(--ink); padding: 3px 10px; cursor: pointer; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+<script type="module" src="../components/dpp-elements.mjs"></script>
+</head>
+<body>
+<header><h1>dpp viewer <span style="font-weight:400;color:var(--muted)">(experimental)</span></h1><a href="../">marketymarks / dpp</a></header>
+<p class="lede">Browse, search and compare battery passports. Field names and codes come from the EC's own vocabularies. The 8 demo passports are fictional.</p>
+<div class="src">
+  <button id="add-ec" type="button">Add the 20 EC sample passports</button>
+  <label>Add your own: <input id="files" type="file" accept=".json,application/json" multiple></label>
+</div>
+<dpp-collection id="c" src="../demo/index.json"></dpp-collection>
+<footer>Search runs in your browser. SPARQL loads a query engine (about 31 MB, once). Maps use OpenStreetMap; place names are looked up with OpenStreetMap Nominatim. Not an official EC tool.</footer>
+<script type="module">
+const c = document.getElementById('c');
+await customElements.whenDefined('dpp-collection');
+const add = (more) => { c.passports = [...c.passports, ...more]; };
+document.getElementById('add-ec').addEventListener('click', async (e) => {
+  e.target.disabled = true;
+  const m = await (await fetch('../ec/1.0.0/manifest.json')).json();
+  const files = m.files.filter((f) => f.includes('/tests/conforms/'));
+  add(await Promise.all(files.map(async (f) => (await fetch('../ec/1.0.0/' + f)).json())));
+});
+document.getElementById('files').addEventListener('change', async (e) => {
+  const out = [];
+  for (const f of e.target.files) { try { out.push(JSON.parse(await f.text())); } catch { e.target.insertAdjacentText('afterend', ` ${f.name} is not valid JSON.`); } }
+  add(out);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+{
+  "digitalProductPassportId": "https://www.example.org/dpp/demo-007",
+  "uniqueProductIdentifier": "https://www.example.org/demo-007",
+  "granularity": "https://repository.product-passport.ec.europa.eu/core/vocabs/granularity-level#item",
+  "dppStatus": "https://repository.product-passport.ec.europa.eu/core/vocabs/instance-status#validStatus",
+  "lastUpdate": "2026-08-15T09:00:00Z",
+  "contentSpecificationIds": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/core/1.0.0",
+    "https://repository.product-passport.ec.europa.eu/product/batteries/subgroup/ind/1.0.0"
+  ],
+  "registrantIdentity": "urn:uuid:3f1c7a52-8d4e-4b1a-9c2e-5a6b7d8e9f01",
+  "manufacturerIdentification": {
+    "manufacturerName": "Danubius Storage Kft. (fictional)",
+    "manufacturerTradeName": "Danubius",
+    "manufacturerTrademark": "Danubius(R)"
+  },
+  "manufacturerPostalAddress": "Győr, HUN (fictional address)",
+  "manufacturerContactDetails": {
+    "manufacturerWebsite": "https://www.example.com",
+    "manufacturerEmail": "mailto:info@example.com"
+  },
+  "batteryCategory": "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-category#industrialBattery",
+  "batteryIdentification": {
+    "modelIdentifier": "DS-SI 120 Sodium",
+    "batchNumber": "DEMO-007-B1"
+  },
+  "manufacturingPlace": {
+    "manufacturingCity": "Győr",
+    "manufacturingRegion": "Győr-Moson-Sopron",
+    "manufacturingCountry": "HUN"
+  },
+  "manufacturingDate": "2026-08",
+  "batteryWeight": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#kilogram",
+    "value": 900
+  },
+  "batteryCapacity": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+    "value": 160
+  },
+  "batteryChemistry": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemistry#sodiumIon"
+  ],
+  "hazardousSubstances": [
+    "Lithium"
+  ],
+  "extinguishingAgent": {
+    "en-IE": "Large quantities of water; dry chemical powder (Class D) for small fires",
+    "hu-HU": "Nagy mennyiségű víz"
+  },
+  "criticalRawMaterials": [
+    "https://repository.product-passport.ec.europa.eu/core/vocabs/critical-raw-material#manganese"
+  ],
+  "renewableContentShare": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent",
+    "value": 30
+  },
+  "minimalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 10,
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "nominalVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 512,
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "maximumVoltage": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#volt",
+    "value": 10,
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "originalPowerCapability": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt",
+    "value": 150
+  },
+  "powerLimit": [
+    {
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt",
+      "value": 150,
+      "valueRange": {
+        "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+        "lowerBound": 10,
+        "upperBound": 10,
+        "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+      }
+    }
+  ],
+  "notInUseTemperatureRange": {
+    "notInUseTemperatureRangeTest": {
+      "en-IE": "IEC 62660-1, storage between -20 C and 45 C"
+    },
+    "valueRange": {
+      "observedCharacteristic": "https://repository.product-passport.ec.europa.eu/core/vocabs/observed-characteristic#temperature",
+      "lowerBound": 10,
+      "upperBound": 10,
+      "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#degreeCelsius"
+    }
+  },
+  "commercialWarrantyPeriod": 24,
+  "internalCellResistance": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm",
+    "value": 0.9
+  },
+  "internalPackResistance": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm",
+    "value": 45
+  },
+  "separateCollectionSymbol": true,
+  "chemicalSymbol": [
+    "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-chemical-symbol#noneSymbol"
+  ],
+  "euDeclarationOfConformity": {
+    "resourceTitle": "EU declaration of conformity file",
+    "contentType": "application/pdf",
+    "url": "https://example.com/docs/eu-doc-0001.pdf",
+    "language": "en-GB"
+  },
+  "wasteBatteryPreventionManagementInfo": {
+    "endUserRoleInWastePrevention": {
+      "en-IE": "End users should avoid mechanical damage and follow the usage instructions."
+    },
+    "endUserRoleInSeparateCollection": {
+      "en-IE": "End users must not dispose of batteries as unsorted municipal waste."
+    },
+    "separateCollectionPoints": {
+      "en-IE": "https://example.com/collection-points"
+    },
+    "takeBackCollectionPoints": {
+      "en-IE": "Return to any authorised dealer free of charge."
+    },
+    "preparationForReuseFacilities": {
+      "en-IE": "Authorised facility: Iberia Reuse Centre, Zaragoza."
+    },
+    "preparationForRepurposingFacilities": {
+      "en-IE": "Authorised facility: Iberia Second-Life Hub, Valencia."
+    },
+    "wasteBatteryTreatmentFacilities": {
+      "en-IE": "Authorised recycling plant: Recycla Ibérica, Bilbao."
+    },
+    "wasteBatterySafetyInstructions": {
+      "en-IE": "Store damaged batteries in a dry, ventilated, non-flammable container."
+    },
+    "batteryLabelSymbolMeaning": {
+      "en-IE": "The crossed-out wheelie bin symbol indicates separate collection is required."
+    },
+    "batterySubstancesImpact": {
+      "en-IE": "Improper disposal may release electrolyte and heavy metals into soil and water."
+    }
+  },
+  "expectedLifetimeCycles": 5000,
+  "cycleLifeReferenceTest": {
+    "en-IE": "Test sample"
+  },
+  "initialRoundTripEnergyEfficiency": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent",
+    "value": 45
+  },
+  "roundTripEfficiencyAtHalfCycleLife": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent",
+    "value": 45
+  },
+  "cycleLifeChargeCRate": {
+    "unit": "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#reciprocalHour",
+    "value": 45
+  }
+}

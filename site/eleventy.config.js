@@ -5,6 +5,8 @@ module.exports = function(eleventyConfig) {
   // DPP checker: the EC's files (copied unchanged) and the checker module
   eleventyConfig.addPassthroughCopy("content/dpp/ec");
   eleventyConfig.addPassthroughCopy("content/dpp/lib");
+  eleventyConfig.addPassthroughCopy("content/dpp/components");
+  eleventyConfig.addPassthroughCopy("content/dpp/demo");
 
   // Watch for changes in content
   eleventyConfig.addWatchTarget("content/");
