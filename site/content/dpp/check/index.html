@@ -9,71 +9,52 @@ templateEngineOverride: false
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DPP Checker</title>
 <meta name="description" content="Check an EU Digital Product Passport against the European Commission's own rules, in your browser.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f6f7fb; --panel: #ffffff; --ink: #1a1a2e; --muted: #5b6475; --line: #e3e6ee;
-    --accent: #6366f1; --accent-ink: #ffffff; --ok: #0f7b4b; --ok-bg: #e6f6ee;
-    --bad: #b42318; --bad-bg: #fdecea; --warn: #8a5a00; --warn-bg: #fff4dc; --code-bg: #f1f3f8;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #12131a; --panel: #1b1d27; --ink: #e8e9f0; --muted: #a0a6b8; --line: #2c2f3d;
-      --accent: #8b8ef8; --accent-ink: #12131a; --ok: #5fd39a; --ok-bg: #12301f;
-      --bad: #ff8a80; --bad-bg: #3a1714; --warn: #f3c56b; --warn-bg: #33270e; --code-bg: #232634;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #12131a; --panel: #1b1d27; --ink: #e8e9f0; --muted: #a0a6b8; --line: #2c2f3d;
-    --accent: #8b8ef8; --accent-ink: #12131a; --ok: #5fd39a; --ok-bg: #12301f;
-    --bad: #ff8a80; --bad-bg: #3a1714; --warn: #f3c56b; --warn-bg: #33270e; --code-bg: #232634;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 48px; }
-  header { padding: 20px 0 8px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  header a { color: var(--muted); text-decoration: none; font-size: .9rem; }
-  h1 { font-size: 1.6rem; font-weight: 700; }
-  h2 { font-size: 1.05rem; margin: 0 0 10px; }
-  .lede { color: var(--muted); max-width: 70ch; margin: 4px 0 16px; }
-  .tag { display: inline-block; font-size: .72rem; font-weight: 600; color: var(--warn); background: var(--warn-bg); padding: 2px 8px; border-radius: 99px; vertical-align: middle; margin-left: 6px; }
-  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  :root { --bg: #fff; --ink: #111; --muted: #777; --line: #ddd; --code-bg: #f6f6f6;
+          --ok: #0a6b3d; --bad: #a3200f; --warn: #7a5200; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #888; --line: #333; --code-bg: #1a1a1a;
+          --ok: #6fd3a0; --bad: #ff8a7a; --warn: #e8c060; } }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--ink); }
+  body { font: 15px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; max-width: 60rem; margin: 3rem auto 4rem; padding: 0 16px; }
+  a { color: inherit; text-underline-offset: 3px; }
+  h1, h2 { font-size: 1rem; font-weight: 700; margin: 0 0 .75rem; }
+  header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; }
+  header a { color: var(--muted); }
+  .lede, .status, label, footer, .notes, details { color: var(--muted); }
+  .lede { margin: 0 0 1.5rem; }
+  .tag { font-weight: 400; color: var(--muted); }
+  .panel { border-top: 1px solid var(--line); padding: 1rem 0; }
   .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-  label { font-size: .85rem; color: var(--muted); }
-  select, button, input[type=file] { font: inherit; font-size: .9rem; }
-  select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); max-width: 100%; }
-  button { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
-  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
-  button:disabled { opacity: .5; cursor: not-allowed; }
-  textarea { width: 100%; min-height: 260px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .8rem; padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--code-bg); color: var(--ink); resize: vertical; }
-  textarea.drag { outline: 2px dashed var(--accent); }
-  .status { font-size: .85rem; color: var(--muted); }
-  .verdict { padding: 12px 14px; border-radius: 10px; font-weight: 600; margin-bottom: 12px; }
-  .verdict.passes { background: var(--ok-bg); color: var(--ok); }
-  .verdict.fails { background: var(--bad-bg); color: var(--bad); }
-  .verdict.not-checked { background: var(--warn-bg); color: var(--warn); }
-  .verdict small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
-  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { color: var(--muted); font-weight: 500; }
-  td code, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .78rem; overflow-wrap: anywhere; }
+  select, button, input[type=file] { font: inherit; }
+  select { padding: 4px 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); max-width: 100%; }
+  button { padding: 5px 12px; border: 1px solid var(--ink); background: var(--bg); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--ink); color: var(--bg); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  textarea { width: 100%; min-height: 260px; font: 12px/1.5 ui-monospace, Menlo, monospace; padding: 8px; border: 1px solid var(--line); background: var(--code-bg); color: var(--ink); resize: vertical; }
+  textarea.drag { outline: 1px dashed var(--ink); }
+  .verdict { font-weight: 700; margin-bottom: .75rem; }
+  .verdict.passes { color: var(--ok); } .verdict.fails { color: var(--bad); } .verdict.not-checked { color: var(--warn); }
+  .verdict small { display: block; font-weight: 400; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 400; }
+  td code, .mono { font: inherit; overflow-wrap: anywhere; }
+  td:first-child code { white-space: nowrap; }
   .table-scroll { overflow-x: auto; }
-  ul.notes { margin: 8px 0 0 18px; font-size: .85rem; color: var(--muted); }
-  details { margin-top: 10px; font-size: .85rem; color: var(--muted); }
-  details summary { cursor: pointer; }
-  .ok { color: var(--ok); font-weight: 600; } .bad { color: var(--bad); font-weight: 600; }
-  footer { font-size: .8rem; color: var(--muted); margin-top: 24px; }
-  footer a, .lede a { color: var(--accent); }
-  @media (max-width: 600px) { h1 { font-size: 1.35rem; } th:nth-child(4), td:nth-child(4) { display: none; } }
+  ul.notes { margin: .5rem 0 0 1.2rem; padding: 0; }
+  details { margin-top: .75rem; } details summary { cursor: pointer; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); }
+  footer { font-size: 13px; margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  footer p { margin: 0 0 .5rem; }
+  @media (max-width: 600px) { th:nth-child(4), td:nth-child(4) { display: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>DPP Checker <span class="tag">experimental</span></h1>
-    <a href="../">About this work →</a>
+    <h1>dpp checker <span class="tag">(experimental)</span></h1>
+    <a href="../">marketymarks / dpp</a>
   </header>
   <p class="lede">Check an EU Digital Product Passport (EC JSON) against the European Commission's own published rules,
     <a href="../ec/1.0.0/NOTICE.md">release 1.0.0</a>: the same SHACL shapes and codelists the DPP Registry uses.
