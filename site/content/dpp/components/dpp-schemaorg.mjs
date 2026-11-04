@@ -4,7 +4,7 @@
 // substanceOfConcern, recycledContentPercentage, importer, authorizedRepresentative.
 // Units use UN/CEFACT common codes, as schema.org's unitCode expects.
 
-import { textOf, codeLabel, countryName, pickLang, isLangMap, fieldLabel, describe, classify } from './dpp-model.mjs';
+import { textOf, codeLabel, countryName, pickLang, isLangMap, fieldLabel, describe, classify, fieldOf, codeOf } from './dpp-model.mjs';
 
 export const PENDING = new Set(['DigitalProductPassport', 'hasDigitalProductPassport', 'DeclarationOfConformity',
   'EnvironmentalProductDeclaration', 'substanceOfConcern', 'recycledContentPercentage', 'importer', 'authorizedRepresentative']);
@@ -16,7 +16,7 @@ const qv = (q, terms) => {
   const o = { '@type': 'QuantitativeValue', value: q.value };
   const u = local(q.unit);
   if (UNIT_CODES[u]) o.unitCode = UNIT_CODES[u];
-  o.unitText = terms?.codes[q.unit]?.symbol || terms?.codes[q.unit]?.label || u;
+  o.unitText = codeOf(terms, q.unit)?.symbol || codeOf(terms, q.unit)?.label || u;
   if (q.valueRange) {
     if (q.valueRange.lowerBound != null) o.minValue = q.valueRange.lowerBound;
     if (q.valueRange.upperBound != null) o.maxValue = q.valueRange.upperBound;
@@ -62,7 +62,7 @@ export function toSchemaOrg(p, terms, profile, langs = ['en']) {
   const extra = [];
   for (const [k, v] of Object.entries(p)) {
     if (DIRECT.has(k) || v == null) continue;
-    const kind = classify(k, v, terms), iri = terms?.fields[k]?.iri;
+    const kind = classify(k, v, terms), iri = fieldOf(terms, k)?.iri;
     const pv = { '@type': 'PropertyValue', name: fieldLabel(k, terms) };
     if (iri) pv.propertyID = iri;
     if (kind === 'quantity') Object.assign(pv, (({ '@type': _, ...rest }) => rest)(qv(v, terms)));
