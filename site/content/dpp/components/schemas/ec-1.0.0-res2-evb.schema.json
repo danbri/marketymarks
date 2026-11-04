@@ -1,0 +1,237 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://marketymarks.com/dpp/components/schemas/ec-1.0.0-res2-evb.schema.json",
+ "title": "EC DPP 1.0.0 batteries/evb (res2)",
+ "description": "Compiled from the EC SHACL shapes. Valid here should mean the EC SHACL rules accept the passport.",
+ "type": "object",
+ "properties": {
+  "contentSpecificationIds": {
+   "type": "array",
+   "items": {},
+   "allOf": [
+    {
+     "contains": {
+      "type": "string",
+      "pattern": "^https://repository\\.product-passport\\.ec\\.europa\\.eu/product/batteries/\\d+\\.\\d+\\.\\d+$"
+     },
+     "minContains": 1,
+     "maxContains": 1
+    },
+    {
+     "contains": {
+      "type": "string",
+      "pattern": "^https://repository\\.product-passport\\.ec\\.europa\\.eu/product/batteries/subgroup/evb/\\d+\\.\\d+\\.\\d+$"
+     },
+     "minContains": 1,
+     "maxContains": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-MSG-009"
+   ]
+  },
+  "complianceTestReportResults": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "contentType": {
+       "anyOf": [
+        {
+         "type": [
+          "string",
+          "number",
+          "boolean"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": [
+           "string",
+           "number",
+           "boolean"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ]
+      },
+      "url": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": "string"
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ]
+      },
+      "resourceTitle": {
+       "anyOf": [
+        {
+         "type": [
+          "string",
+          "number",
+          "boolean"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": [
+           "string",
+           "number",
+           "boolean"
+          ]
+         },
+         "maxItems": 1
+        }
+       ]
+      },
+      "language": {
+       "anyOf": [
+        {
+         "type": [
+          "string",
+          "number",
+          "boolean"
+         ],
+         "pattern": "^[A-Za-z]{2}-[A-Za-z]{2}$"
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": [
+           "string",
+           "number",
+           "boolean"
+          ],
+          "pattern": "^[A-Za-z]{2}-[A-Za-z]{2}$"
+         },
+         "maxItems": 1
+        }
+       ]
+      }
+     },
+     "required": [
+      "contentType",
+      "url"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "contentType": {
+        "anyOf": [
+         {
+          "type": [
+           "string",
+           "number",
+           "boolean"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": [
+            "string",
+            "number",
+            "boolean"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ]
+       },
+       "url": {
+        "anyOf": [
+         {
+          "type": "string"
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ]
+       },
+       "resourceTitle": {
+        "anyOf": [
+         {
+          "type": [
+           "string",
+           "number",
+           "boolean"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": [
+            "string",
+            "number",
+            "boolean"
+           ]
+          },
+          "maxItems": 1
+         }
+        ]
+       },
+       "language": {
+        "anyOf": [
+         {
+          "type": [
+           "string",
+           "number",
+           "boolean"
+          ],
+          "pattern": "^[A-Za-z]{2}-[A-Za-z]{2}$"
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": [
+            "string",
+            "number",
+            "boolean"
+           ],
+           "pattern": "^[A-Za-z]{2}-[A-Za-z]{2}$"
+          },
+          "maxItems": 1
+         }
+        ]
+       }
+      },
+      "required": [
+       "contentType",
+       "url"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-063"
+   ]
+  }
+ },
+ "required": [
+  "complianceTestReportResults",
+  "contentSpecificationIds"
+ ],
+ "x-dpp-gaps": []
+}

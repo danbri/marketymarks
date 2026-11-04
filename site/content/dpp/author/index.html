@@ -1,0 +1,47 @@
+---
+permalink: dpp/author/index.html
+templateEngineOverride: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPP Authoring</title>
+<style>
+  :root { --bg: #fff; --ink: #111; --muted: #555; --line: #ddd; --edge: #767676; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #b3b3b3; --line: #333; --edge: #8a8a8a; } }
+  html { background: var(--bg); color: var(--ink); }
+  body { font: 15px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; max-width: 64rem; margin: 3rem auto 4rem; padding: 0 16px; }
+  a { color: inherit; text-underline-offset: 3px; }
+  header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; }
+  h1 { font-size: 1rem; margin: 0; }
+  header a, .lede, label, footer { color: var(--muted); }
+  .bar { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; margin: 0 0 1.2rem; }
+  select, button { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--edge); padding: 3px 6px; }
+  button { border-color: var(--ink); cursor: pointer; }
+  footer { font-size: 13px; margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+<script type="module" src="../components/dpp-form.mjs"></script>
+</head>
+<body>
+<header><h1>dpp authoring <span style="font-weight:400;color:var(--muted)">(experimental)</span></h1><a href="../">marketymarks / dpp</a></header>
+<p class="lede">Fill in a battery passport. The form is generated from the EC's own rules (SHACL shapes, release 1.0.0): it asks for what the rules require for the battery type and view you choose, offers the EC code lists and units, and can check the result. Nothing leaves your browser.</p>
+<div class="bar">
+  <label>Battery type <select id="sub"><option value="evb">Electric vehicle</option><option value="ind">Industrial</option><option value="lmt">Light means of transport</option></select></label>
+  <label>View <select id="view"><option value="pub">Public</option><option value="all">Full passport</option><option value="res1">Restricted 1</option><option value="res2">Restricted 2</option><option value="res3">Restricted 3</option></select></label>
+  <button id="demo" type="button">Start from a demo passport</button>
+  <button id="clear" type="button">Start empty</button>
+</div>
+<dpp-form id="f" sub="evb" view="pub"></dpp-form>
+<footer>The form follows the EC shapes; the check uses the same rules as the checker. Not an official EC tool.</footer>
+<script type="module">
+const f = document.getElementById('f');
+const DEMO = { evb: '../demo/demo-001.json', lmt: '../demo/demo-004.json', ind: '../demo/demo-006.json' };
+document.getElementById('sub').addEventListener('change', (e) => { f.passport = {}; f.setAttribute('sub', e.target.value); });
+document.getElementById('view').addEventListener('change', (e) => f.setAttribute('view', e.target.value));
+document.getElementById('demo').addEventListener('click', async () => { f.passport = await (await fetch(DEMO[document.getElementById('sub').value])).json(); });
+document.getElementById('clear').addEventListener('click', () => { f.passport = {}; });
+</script>
+</body>
+</html>

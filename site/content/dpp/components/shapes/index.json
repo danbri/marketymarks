@@ -1,0 +1,122 @@
+[
+ {
+  "view": "all",
+  "sub": "evb",
+  "shapes": "shapes/ec-1.0.0-all-evb.json",
+  "schema": "schemas/ec-1.0.0-all-evb.schema.json",
+  "fields": 68,
+  "gaps": []
+ },
+ {
+  "view": "pub",
+  "sub": "evb",
+  "shapes": "shapes/ec-1.0.0-pub-evb.json",
+  "schema": "schemas/ec-1.0.0-pub-evb.schema.json",
+  "fields": 41,
+  "gaps": []
+ },
+ {
+  "view": "res1",
+  "sub": "evb",
+  "shapes": "shapes/ec-1.0.0-res1-evb.json",
+  "schema": "schemas/ec-1.0.0-res1-evb.schema.json",
+  "fields": 5,
+  "gaps": []
+ },
+ {
+  "view": "res2",
+  "sub": "evb",
+  "shapes": "shapes/ec-1.0.0-res2-evb.json",
+  "schema": "schemas/ec-1.0.0-res2-evb.schema.json",
+  "fields": 2,
+  "gaps": []
+ },
+ {
+  "view": "res3",
+  "sub": "evb",
+  "shapes": "shapes/ec-1.0.0-res3-evb.json",
+  "schema": "schemas/ec-1.0.0-res3-evb.schema.json",
+  "fields": 23,
+  "gaps": []
+ },
+ {
+  "view": "all",
+  "sub": "ind",
+  "shapes": "shapes/ec-1.0.0-all-ind.json",
+  "schema": "schemas/ec-1.0.0-all-ind.schema.json",
+  "fields": 68,
+  "gaps": []
+ },
+ {
+  "view": "pub",
+  "sub": "ind",
+  "shapes": "shapes/ec-1.0.0-pub-ind.json",
+  "schema": "schemas/ec-1.0.0-pub-ind.schema.json",
+  "fields": 41,
+  "gaps": []
+ },
+ {
+  "view": "res1",
+  "sub": "ind",
+  "shapes": "shapes/ec-1.0.0-res1-ind.json",
+  "schema": "schemas/ec-1.0.0-res1-ind.schema.json",
+  "fields": 5,
+  "gaps": []
+ },
+ {
+  "view": "res2",
+  "sub": "ind",
+  "shapes": "shapes/ec-1.0.0-res2-ind.json",
+  "schema": "schemas/ec-1.0.0-res2-ind.schema.json",
+  "fields": 2,
+  "gaps": []
+ },
+ {
+  "view": "res3",
+  "sub": "ind",
+  "shapes": "shapes/ec-1.0.0-res3-ind.json",
+  "schema": "schemas/ec-1.0.0-res3-ind.schema.json",
+  "fields": 23,
+  "gaps": []
+ },
+ {
+  "view": "all",
+  "sub": "lmt",
+  "shapes": "shapes/ec-1.0.0-all-lmt.json",
+  "schema": "schemas/ec-1.0.0-all-lmt.schema.json",
+  "fields": 68,
+  "gaps": []
+ },
+ {
+  "view": "pub",
+  "sub": "lmt",
+  "shapes": "shapes/ec-1.0.0-pub-lmt.json",
+  "schema": "schemas/ec-1.0.0-pub-lmt.schema.json",
+  "fields": 41,
+  "gaps": []
+ },
+ {
+  "view": "res1",
+  "sub": "lmt",
+  "shapes": "shapes/ec-1.0.0-res1-lmt.json",
+  "schema": "schemas/ec-1.0.0-res1-lmt.schema.json",
+  "fields": 5,
+  "gaps": []
+ },
+ {
+  "view": "res2",
+  "sub": "lmt",
+  "shapes": "shapes/ec-1.0.0-res2-lmt.json",
+  "schema": "schemas/ec-1.0.0-res2-lmt.schema.json",
+  "fields": 2,
+  "gaps": []
+ },
+ {
+  "view": "res3",
+  "sub": "lmt",
+  "shapes": "shapes/ec-1.0.0-res3-lmt.json",
+  "schema": "schemas/ec-1.0.0-res3-lmt.schema.json",
+  "fields": 23,
+  "gaps": []
+ }
+]

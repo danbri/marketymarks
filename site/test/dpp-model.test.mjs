@@ -20,6 +20,7 @@ const checks = [
   ['public field visible to public', M.visibleTo('batteryCapacity', 'pub', terms), true],
   ['restricted field hidden from public', M.visibleTo('detailedComposition', 'pub', terms), false],
   ['unknown field hidden from public', M.visibleTo('totallyUnknownField', 'pub', terms), false],
+  ['Object.prototype names are unknown fields', ['constructor', '__proto__', 'toString', 'hasOwnProperty'].some((k) => M.visibleTo(k, 'pub', terms)), false],
   ['short IRI', M.shortIri(`${EC}product/batteries/vocabs/battery-vocabulary#batteryWeight`), 'bat:batteryWeight'],
   ['plain summary', M.summarySentences(JSON.parse(await readFile(new URL('../content/dpp/demo/demo-004.json', import.meta.url), 'utf8')),
     JSON.parse(await readFile(new URL('../content/dpp/components/profiles/batteries.json', import.meta.url), 'utf8')), terms, langs)[0],

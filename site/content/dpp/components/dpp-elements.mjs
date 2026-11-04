@@ -12,7 +12,7 @@
 import {
   loadTerms, loadProfile, profileIdFor, subgroupOf, classify, textOf, fieldLabel, accessOf, ACCESS_LABELS,
   pickLang, userLangs, codeLabel, countryName, formatDate, formatQuantity, formatRange, describe, orderedKeys,
-  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences, loadCrosswalk,
+  pathValue, shortIri, COUNTRIES, viewFor, AUDIENCES, summarySentences, loadCrosswalk, fieldOf, codeOf,
 } from './dpp-model.mjs';
 import { loadEngine } from './engine.mjs';
 import { toSchemaOrg, PENDING, OFFLINE_CONTEXT } from './dpp-schemaorg.mjs';
@@ -82,7 +82,7 @@ function renderValue(key, v, terms, langs) {
     case 'date': return el('time', { datetime: v, text: formatDate(v, langs) });
     case 'country': return el('span', { title: v, text: countryName(v, langs) });
     case 'code': {
-      const c = terms.codes[v];
+      const c = codeOf(terms, v);
       return el('span', { title: [c?.definition, v].filter(Boolean).join('\n'), text: codeLabel(v, terms) });
     }
     case 'link': {
@@ -113,7 +113,7 @@ function renderFields(obj, keys, terms, langs) {
   const dl = el('dl');
   for (const k of keys) {
     if (!(k in obj)) continue;
-    const f = terms.fields[k];
+    const f = fieldOf(terms, k);
     const access = accessOf(k, terms);
     const dt = el('dt', {}, fieldLabel(k, terms));
     if (Array.isArray(access) && access.length) dt.append(el('span', { class: 'restricted', title: access.map((a) => ACCESS_LABELS[a]).join('\n'), text: 'restricted' }));
@@ -209,7 +209,7 @@ class DppStructured extends HTMLElement {
     const rows = [];
     let hue = 210;
     const nextHue = () => (hue = (hue + 137.508) % 360);
-    const iriOf = (k) => terms.fields[k]?.iri ? shortIri(terms.fields[k].iri) : k;
+    const iriOf = (k) => fieldOf(terms, k)?.iri ? shortIri(fieldOf(terms, k).iri) : k;
     const row = (level, color, pred, obj, lang, top) => {
       const bar = el('div', { class: 'bar', style: `width:${level * 24}px;border-right:3px solid hsl(${color} 55% 55%)` });
       rows.push(el('div', { class: 'row' + (top ? ' top' : '') }, el('div', { class: 'pred' }, bar, el('div', { text: pred })),
@@ -225,7 +225,7 @@ class DppStructured extends HTMLElement {
             row(level, color, iriOf(k), '');
             walk(x, level + 1, nextHue());
           } else {
-            const s = typeof x === 'string' && terms.codes[x] ? shortIri(x) : String(x);
+            const s = typeof x === 'string' && codeOf(terms, x) ? shortIri(x) : String(x);
             row(level, color, iriOf(k), s);
           }
         }
@@ -631,7 +631,7 @@ class DppCollection extends HTMLElement {
           const b = `_:v${n}_${k}`;
           nq += `${rep} <${SH}result> ${b} <${gV}> .\n${b} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <${SH}ValidationResult> <${gV}> .\n`;
           if (pr.code) nq += `${b} <${SH}resultMessage> ${lit(pr.code)} <${gV}> .\n`;
-          if (pr.field) nq += `${b} <${SH}resultPath> ${terms.fields[pr.field]?.iri ? `<${terms.fields[pr.field].iri}>` : lit(pr.field)} <${gV}> .\n${b} <${NS}field> ${lit(pr.field)} <${gV}> .\n`;
+          if (pr.field) nq += `${b} <${SH}resultPath> ${fieldOf(terms, pr.field)?.iri ? `<${fieldOf(terms, pr.field).iri}>` : lit(pr.field)} <${gV}> .\n${b} <${NS}field> ${lit(pr.field)} <${gV}> .\n`;
           if (pr.value != null) nq += `${b} <${SH}value> ${lit(pr.value)} <${gV}> .\n`;
           if (pr.explanation) nq += `${b} <${NS}explanation> ${lit(pr.explanation)} <${gV}> .\n`;
           if (pr.rule) nq += `${b} <${NS}rule> ${lit(pr.rule)} <${gV}> .\n`;
@@ -724,7 +724,7 @@ function renderResults(res, terms, names = new Map()) {
   const vars = [...res[0].keys()];
   const show = (term) => {
     if (!term) return '';
-    if (term.termType === 'NamedNode') return names.get(term.value) || (terms.codes[term.value] ? terms.codes[term.value].label : shortIri(term.value));
+    if (term.termType === 'NamedNode') return names.get(term.value) || (codeOf(terms, term.value) ? codeOf(terms, term.value).label : shortIri(term.value));
     if (term.datatype && NUMERIC.test(term.datatype.value || term.datatype)) { const n = Number(term.value); if (Number.isFinite(n)) return new Intl.NumberFormat(userLangs(), { maximumFractionDigits: 6 }).format(n); }
     if (/^[A-Z]{3}$/.test(term.value) && COUNTRIES[term.value]) return `${countryName(term.value)} (${term.value})`;
     return term.value + (term.language && !/^en\b/i.test(term.language) ? ` @${term.language}` : '');
@@ -782,7 +782,7 @@ class DppCrosswalk extends HTMLElement {
     const q = el('input', { type: 'search', placeholder: 'Filter fields (any words)', 'aria-label': 'Filter fields' });
     const only = el('select', { 'aria-label': 'Match filter' }, ['all matches', 'exact only', 'no counterpart somewhere'].map((t, i) => el('option', { value: i, text: t })));
     const tb = el('tbody'), count = el('span', { class: 'count', 'aria-live': 'polite' });
-    const rows = Object.keys(xw.fields).concat(Object.keys(terms.fields).filter((k) => !(k in xw.fields) && terms.fields[k].iri.includes('battery-vocabulary')))
+    const rows = Object.keys(xw.fields).concat(Object.keys(terms.fields).filter((k) => !(k in xw.fields) && fieldOf(terms, k).iri.includes('battery-vocabulary')))
       .map((k) => ({ k, label: fieldLabel(k, terms), m: xw.fields[k] || {} }));
     const draw = () => {
       const words = q.value.toLowerCase().split(/\s+/).filter(Boolean);

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MarketyMarks static site built with Eleventy",
   "scripts": {
-    "build": "node tools/build-dpp-terms.mjs && eleventy && node tools/copy-engine.mjs && node tools/stamp-assets.mjs",
+    "build": "node tools/build-dpp-terms.mjs && node tools/build-dpp-shapes.mjs && eleventy && node tools/copy-engine.mjs && node tools/stamp-assets.mjs",
     "serve": "eleventy --serve",
     "watch": "eleventy --watch",
     "test": "node test/dpp-model.test.mjs && node test/dpp-auth.test.mjs && node test/dpp-check.test.mjs && node test/dpp-vc.test.mjs && node test/dpp-cli.test.mjs && node test/dpp-schemaorg.test.mjs",

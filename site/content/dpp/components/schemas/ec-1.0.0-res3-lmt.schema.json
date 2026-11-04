@@ -1,0 +1,4206 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://marketymarks.com/dpp/components/schemas/ec-1.0.0-res3-lmt.schema.json",
+ "title": "EC DPP 1.0.0 batteries/lmt (res3)",
+ "description": "Compiled from the EC SHACL shapes. Valid here should mean the EC SHACL rules accept the passport.",
+ "type": "object",
+ "properties": {
+  "contentSpecificationIds": {
+   "type": "array",
+   "items": {},
+   "allOf": [
+    {
+     "contains": {
+      "type": "string",
+      "pattern": "^https://repository\\.product-passport\\.ec\\.europa\\.eu/product/batteries/\\d+\\.\\d+\\.\\d+$"
+     },
+     "minContains": 1,
+     "maxContains": 1
+    },
+    {
+     "contains": {
+      "type": "string",
+      "pattern": "^https://repository\\.product-passport\\.ec\\.europa\\.eu/product/batteries/subgroup/lmt/\\d+\\.\\d+\\.\\d+$"
+     },
+     "minContains": 1,
+     "maxContains": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-MSG-009"
+   ]
+  },
+  "roundTripEnergyEfficiency": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-070"
+   ]
+  },
+  "roundTripEnergyEfficiencyFade": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-071"
+   ]
+  },
+  "batteryStatus": {
+   "anyOf": [
+    {
+     "enum": [
+      "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#original",
+      "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#remanufactured",
+      "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#repurposed",
+      "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#reused",
+      "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#waste"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "enum": [
+       "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#original",
+       "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#remanufactured",
+       "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#repurposed",
+       "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#reused",
+       "https://repository.product-passport.ec.europa.eu/product/batteries/vocabs/battery-status#waste"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-082"
+   ]
+  },
+  "numberOfChargingCycles": {
+   "anyOf": [
+    {
+     "anyOf": [
+      {
+       "type": "string",
+       "pattern": "^(\\+?\\d+|-0+)$"
+      },
+      {
+       "type": "integer",
+       "minimum": 0
+      }
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(\\+?\\d+|-0+)$"
+       },
+       {
+        "type": "integer",
+        "minimum": 0
+       }
+      ]
+     }
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-083"
+   ]
+  },
+  "numberOfDischargingCycles": {
+   "anyOf": [
+    {
+     "anyOf": [
+      {
+       "type": "string",
+       "pattern": "^(\\+?\\d+|-0+)$"
+      },
+      {
+       "type": "integer",
+       "minimum": 0
+      }
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(\\+?\\d+|-0+)$"
+       },
+       {
+        "type": "integer",
+        "minimum": 0
+       }
+      ]
+     }
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-084"
+   ]
+  },
+  "negativeEvents": {
+   "type": "object",
+   "propertyNames": {
+    "pattern": "^[A-Za-z]{2}-[A-Za-z]{2}$"
+   },
+   "additionalProperties": {
+    "type": "string"
+   },
+   "x-ec-codes": [
+    "SEM-BAT-MSG-085",
+    "SEM-COM-MSG-012"
+   ]
+  },
+  "environmentalConditionHistogramSet": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "environmentalConditionHistogram": {
+       "anyOf": [
+        {
+         "type": "object",
+         "properties": {
+          "binRangeUnit": {
+           "anyOf": [
+            {
+             "type": "string",
+             "minLength": 1
+            },
+            {
+             "type": "array",
+             "items": {
+              "type": "string",
+              "minLength": 1
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-002"
+           ]
+          },
+          "binValueUnit": {
+           "anyOf": [
+            {
+             "type": "string",
+             "minLength": 1
+            },
+            {
+             "type": "array",
+             "items": {
+              "type": "string",
+              "minLength": 1
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-003"
+           ]
+          },
+          "bin": {
+           "anyOf": [
+            {
+             "type": "object",
+             "properties": {
+              "lowerBound": {
+               "anyOf": [
+                {
+                 "anyOf": [
+                  {
+                   "type": "string",
+                   "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                  },
+                  {
+                   "type": "number"
+                  }
+                 ]
+                },
+                {
+                 "type": "array",
+                 "items": {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 "minItems": 1,
+                 "maxItems": 1
+                }
+               ],
+               "x-ec-codes": [
+                "SEM-COM-MSG-005"
+               ]
+              },
+              "upperBound": {
+               "anyOf": [
+                {
+                 "anyOf": [
+                  {
+                   "type": "string",
+                   "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                  },
+                  {
+                   "type": "number"
+                  }
+                 ]
+                },
+                {
+                 "type": "array",
+                 "items": {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 "minItems": 1,
+                 "maxItems": 1
+                }
+               ],
+               "x-ec-codes": [
+                "SEM-COM-MSG-006"
+               ]
+              },
+              "binValue": {
+               "anyOf": [
+                {
+                 "anyOf": [
+                  {
+                   "type": "string",
+                   "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                  },
+                  {
+                   "type": "number"
+                  }
+                 ]
+                },
+                {
+                 "type": "array",
+                 "items": {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 "minItems": 1,
+                 "maxItems": 1
+                }
+               ],
+               "x-ec-codes": [
+                "SEM-COM-MSG-007"
+               ]
+              }
+             },
+             "required": [
+              "binValue",
+              "lowerBound",
+              "upperBound"
+             ]
+            },
+            {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "lowerBound": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-005"
+                ]
+               },
+               "upperBound": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-006"
+                ]
+               },
+               "binValue": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-007"
+                ]
+               }
+              },
+              "required": [
+               "binValue",
+               "lowerBound",
+               "upperBound"
+              ]
+             },
+             "minItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-004"
+           ]
+          },
+          "observedCharacteristic": {
+           "anyOf": [
+            {
+             "type": "string",
+             "minLength": 1
+            },
+            {
+             "type": "array",
+             "items": {
+              "type": "string",
+              "minLength": 1
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-001"
+           ]
+          }
+         },
+         "required": [
+          "bin",
+          "binRangeUnit",
+          "binValueUnit",
+          "observedCharacteristic"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "properties": {
+           "binRangeUnit": {
+            "anyOf": [
+             {
+              "type": "string",
+              "minLength": 1
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "string",
+               "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-002"
+            ]
+           },
+           "binValueUnit": {
+            "anyOf": [
+             {
+              "type": "string",
+              "minLength": 1
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "string",
+               "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-003"
+            ]
+           },
+           "bin": {
+            "anyOf": [
+             {
+              "type": "object",
+              "properties": {
+               "lowerBound": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-005"
+                ]
+               },
+               "upperBound": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-006"
+                ]
+               },
+               "binValue": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-007"
+                ]
+               }
+              },
+              "required": [
+               "binValue",
+               "lowerBound",
+               "upperBound"
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "lowerBound": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-005"
+                 ]
+                },
+                "upperBound": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-006"
+                 ]
+                },
+                "binValue": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-007"
+                 ]
+                }
+               },
+               "required": [
+                "binValue",
+                "lowerBound",
+                "upperBound"
+               ]
+              },
+              "minItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-004"
+            ]
+           },
+           "observedCharacteristic": {
+            "anyOf": [
+             {
+              "type": "string",
+              "minLength": 1
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "string",
+               "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-001"
+            ]
+           }
+          },
+          "required": [
+           "bin",
+           "binRangeUnit",
+           "binValueUnit",
+           "observedCharacteristic"
+          ]
+         },
+         "minItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-BAT-MSG-087"
+       ]
+      }
+     },
+     "required": [
+      "environmentalConditionHistogram"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "environmentalConditionHistogram": {
+        "anyOf": [
+         {
+          "type": "object",
+          "properties": {
+           "binRangeUnit": {
+            "anyOf": [
+             {
+              "type": "string",
+              "minLength": 1
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "string",
+               "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-002"
+            ]
+           },
+           "binValueUnit": {
+            "anyOf": [
+             {
+              "type": "string",
+              "minLength": 1
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "string",
+               "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-003"
+            ]
+           },
+           "bin": {
+            "anyOf": [
+             {
+              "type": "object",
+              "properties": {
+               "lowerBound": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-005"
+                ]
+               },
+               "upperBound": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-006"
+                ]
+               },
+               "binValue": {
+                "anyOf": [
+                 {
+                  "anyOf": [
+                   {
+                    "type": "string",
+                    "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                   },
+                   {
+                    "type": "number"
+                   }
+                  ]
+                 },
+                 {
+                  "type": "array",
+                  "items": {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                 }
+                ],
+                "x-ec-codes": [
+                 "SEM-COM-MSG-007"
+                ]
+               }
+              },
+              "required": [
+               "binValue",
+               "lowerBound",
+               "upperBound"
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "lowerBound": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-005"
+                 ]
+                },
+                "upperBound": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-006"
+                 ]
+                },
+                "binValue": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-007"
+                 ]
+                }
+               },
+               "required": [
+                "binValue",
+                "lowerBound",
+                "upperBound"
+               ]
+              },
+              "minItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-004"
+            ]
+           },
+           "observedCharacteristic": {
+            "anyOf": [
+             {
+              "type": "string",
+              "minLength": 1
+             },
+             {
+              "type": "array",
+              "items": {
+               "type": "string",
+               "minLength": 1
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-001"
+            ]
+           }
+          },
+          "required": [
+           "bin",
+           "binRangeUnit",
+           "binValueUnit",
+           "observedCharacteristic"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "binRangeUnit": {
+             "anyOf": [
+              {
+               "type": "string",
+               "minLength": 1
+              },
+              {
+               "type": "array",
+               "items": {
+                "type": "string",
+                "minLength": 1
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-002"
+             ]
+            },
+            "binValueUnit": {
+             "anyOf": [
+              {
+               "type": "string",
+               "minLength": 1
+              },
+              {
+               "type": "array",
+               "items": {
+                "type": "string",
+                "minLength": 1
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-003"
+             ]
+            },
+            "bin": {
+             "anyOf": [
+              {
+               "type": "object",
+               "properties": {
+                "lowerBound": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-005"
+                 ]
+                },
+                "upperBound": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-006"
+                 ]
+                },
+                "binValue": {
+                 "anyOf": [
+                  {
+                   "anyOf": [
+                    {
+                     "type": "string",
+                     "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                    },
+                    {
+                     "type": "number"
+                    }
+                   ]
+                  },
+                  {
+                   "type": "array",
+                   "items": {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   "minItems": 1,
+                   "maxItems": 1
+                  }
+                 ],
+                 "x-ec-codes": [
+                  "SEM-COM-MSG-007"
+                 ]
+                }
+               },
+               "required": [
+                "binValue",
+                "lowerBound",
+                "upperBound"
+               ]
+              },
+              {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "lowerBound": {
+                  "anyOf": [
+                   {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   {
+                    "type": "array",
+                    "items": {
+                     "anyOf": [
+                      {
+                       "type": "string",
+                       "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                      },
+                      {
+                       "type": "number"
+                      }
+                     ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
+                   }
+                  ],
+                  "x-ec-codes": [
+                   "SEM-COM-MSG-005"
+                  ]
+                 },
+                 "upperBound": {
+                  "anyOf": [
+                   {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   {
+                    "type": "array",
+                    "items": {
+                     "anyOf": [
+                      {
+                       "type": "string",
+                       "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                      },
+                      {
+                       "type": "number"
+                      }
+                     ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
+                   }
+                  ],
+                  "x-ec-codes": [
+                   "SEM-COM-MSG-006"
+                  ]
+                 },
+                 "binValue": {
+                  "anyOf": [
+                   {
+                    "anyOf": [
+                     {
+                      "type": "string",
+                      "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                     },
+                     {
+                      "type": "number"
+                     }
+                    ]
+                   },
+                   {
+                    "type": "array",
+                    "items": {
+                     "anyOf": [
+                      {
+                       "type": "string",
+                       "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                      },
+                      {
+                       "type": "number"
+                      }
+                     ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
+                   }
+                  ],
+                  "x-ec-codes": [
+                   "SEM-COM-MSG-007"
+                  ]
+                 }
+                },
+                "required": [
+                 "binValue",
+                 "lowerBound",
+                 "upperBound"
+                ]
+               },
+               "minItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-004"
+             ]
+            },
+            "observedCharacteristic": {
+             "anyOf": [
+              {
+               "type": "string",
+               "minLength": 1
+              },
+              {
+               "type": "array",
+               "items": {
+                "type": "string",
+                "minLength": 1
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-001"
+             ]
+            }
+           },
+           "required": [
+            "bin",
+            "binRangeUnit",
+            "binValueUnit",
+            "observedCharacteristic"
+           ]
+          },
+          "minItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-BAT-MSG-087"
+        ]
+       }
+      },
+      "required": [
+       "environmentalConditionHistogram"
+      ]
+     },
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-086"
+   ]
+  },
+  "stateOfChargeHistogram": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "binRangeUnit": {
+       "anyOf": [
+        {
+         "type": "string",
+         "minLength": 1
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": "string",
+          "minLength": 1
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-002"
+       ]
+      },
+      "binValueUnit": {
+       "anyOf": [
+        {
+         "type": "string",
+         "minLength": 1
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": "string",
+          "minLength": 1
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-003"
+       ]
+      },
+      "bin": {
+       "anyOf": [
+        {
+         "type": "object",
+         "properties": {
+          "lowerBound": {
+           "anyOf": [
+            {
+             "anyOf": [
+              {
+               "type": "string",
+               "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+              },
+              {
+               "type": "number"
+              }
+             ]
+            },
+            {
+             "type": "array",
+             "items": {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-005"
+           ]
+          },
+          "upperBound": {
+           "anyOf": [
+            {
+             "anyOf": [
+              {
+               "type": "string",
+               "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+              },
+              {
+               "type": "number"
+              }
+             ]
+            },
+            {
+             "type": "array",
+             "items": {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-006"
+           ]
+          },
+          "binValue": {
+           "anyOf": [
+            {
+             "anyOf": [
+              {
+               "type": "string",
+               "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+              },
+              {
+               "type": "number"
+              }
+             ]
+            },
+            {
+             "type": "array",
+             "items": {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-007"
+           ]
+          }
+         },
+         "required": [
+          "binValue",
+          "lowerBound",
+          "upperBound"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "properties": {
+           "lowerBound": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-005"
+            ]
+           },
+           "upperBound": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-006"
+            ]
+           },
+           "binValue": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-007"
+            ]
+           }
+          },
+          "required": [
+           "binValue",
+           "lowerBound",
+           "upperBound"
+          ]
+         },
+         "minItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-004"
+       ]
+      }
+     },
+     "required": [
+      "bin",
+      "binRangeUnit",
+      "binValueUnit"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "binRangeUnit": {
+        "anyOf": [
+         {
+          "type": "string",
+          "minLength": 1
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-002"
+        ]
+       },
+       "binValueUnit": {
+        "anyOf": [
+         {
+          "type": "string",
+          "minLength": 1
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-003"
+        ]
+       },
+       "bin": {
+        "anyOf": [
+         {
+          "type": "object",
+          "properties": {
+           "lowerBound": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-005"
+            ]
+           },
+           "upperBound": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-006"
+            ]
+           },
+           "binValue": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-007"
+            ]
+           }
+          },
+          "required": [
+           "binValue",
+           "lowerBound",
+           "upperBound"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "lowerBound": {
+             "anyOf": [
+              {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              {
+               "type": "array",
+               "items": {
+                "anyOf": [
+                 {
+                  "type": "string",
+                  "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                 },
+                 {
+                  "type": "number"
+                 }
+                ]
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-005"
+             ]
+            },
+            "upperBound": {
+             "anyOf": [
+              {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              {
+               "type": "array",
+               "items": {
+                "anyOf": [
+                 {
+                  "type": "string",
+                  "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                 },
+                 {
+                  "type": "number"
+                 }
+                ]
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-006"
+             ]
+            },
+            "binValue": {
+             "anyOf": [
+              {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              {
+               "type": "array",
+               "items": {
+                "anyOf": [
+                 {
+                  "type": "string",
+                  "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                 },
+                 {
+                  "type": "number"
+                 }
+                ]
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-007"
+             ]
+            }
+           },
+           "required": [
+            "binValue",
+            "lowerBound",
+            "upperBound"
+           ]
+          },
+          "minItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-004"
+        ]
+       }
+      },
+      "required": [
+       "bin",
+       "binRangeUnit",
+       "binValueUnit"
+      ]
+     }
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-088"
+   ]
+  },
+  "expectedLifetimeCyclesRest": {
+   "anyOf": [
+    {
+     "anyOf": [
+      {
+       "type": "string",
+       "pattern": "^\\+?0*[1-9]\\d*$"
+      },
+      {
+       "type": "integer",
+       "minimum": 1
+      }
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^\\+?0*[1-9]\\d*$"
+       },
+       {
+        "type": "integer",
+        "minimum": 1
+       }
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-072"
+   ]
+  },
+  "expectedLifetimeYears": {
+   "anyOf": [
+    {
+     "anyOf": [
+      {
+       "type": "string",
+       "pattern": "^\\+?0*[1-9]\\d*$"
+      },
+      {
+       "type": "integer",
+       "minimum": 1
+      }
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^\\+?0*[1-9]\\d*$"
+       },
+       {
+        "type": "integer",
+        "minimum": 1
+       }
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-073"
+   ]
+  },
+  "ratedCapacity": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ],
+     "allOf": [
+      {
+       "anyOf": [
+        {
+         "properties": {}
+        },
+        {
+         "properties": {}
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ],
+      "allOf": [
+       {
+        "anyOf": [
+         {
+          "properties": {}
+         },
+         {
+          "properties": {}
+         }
+        ]
+       }
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-064"
+   ]
+  },
+  "capacityFade": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-065"
+   ]
+  },
+  "powerCapability": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-066"
+   ]
+  },
+  "powerFade": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-067"
+   ]
+  },
+  "internalResistance": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-068"
+   ]
+  },
+  "internalResistanceIncrease": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-069"
+   ]
+  },
+  "stateOfCertifiedEnergy": {
+   "type": "array",
+   "items": {},
+   "maxItems": 0,
+   "x-ec-codes": [
+    "SEM-BAT-MSG-074"
+   ]
+  },
+  "remainingCapacity": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ],
+     "allOf": [
+      {
+       "anyOf": [
+        {
+         "properties": {}
+        },
+        {
+         "properties": {}
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ampereHour",
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#milliampereHour"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ],
+      "allOf": [
+       {
+        "anyOf": [
+         {
+          "properties": {}
+         },
+         {
+          "properties": {}
+         }
+        ]
+       }
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-075"
+   ]
+  },
+  "remainingPowerCapability": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#watt"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-076"
+   ]
+  },
+  "remainingRoundTripEfficiency": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-077"
+   ]
+  },
+  "selfDischargingRateSet": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "selfDischargingRate": {
+       "anyOf": [
+        {
+         "type": "object",
+         "properties": {
+          "unit": {
+           "anyOf": [
+            {
+             "enum": [
+              "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+             ]
+            },
+            {
+             "type": "array",
+             "items": {
+              "enum": [
+               "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+              ]
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-010"
+           ]
+          },
+          "value": {
+           "anyOf": [
+            {
+             "anyOf": [
+              {
+               "type": "string",
+               "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+              },
+              {
+               "type": "number"
+              }
+             ]
+            },
+            {
+             "type": "array",
+             "items": {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             "minItems": 1,
+             "maxItems": 1
+            }
+           ],
+           "x-ec-codes": [
+            "SEM-COM-MSG-009"
+           ]
+          }
+         },
+         "required": [
+          "unit",
+          "value"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "properties": {
+           "unit": {
+            "anyOf": [
+             {
+              "enum": [
+               "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "enum": [
+                "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-010"
+            ]
+           },
+           "value": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-009"
+            ]
+           }
+          },
+          "required": [
+           "unit",
+           "value"
+          ]
+         },
+         "minItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-BAT-MSG-080"
+       ]
+      },
+      "recordedTime": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^-?\\d{4,}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+        },
+        {
+         "type": "array",
+         "items": {
+          "type": "string",
+          "pattern": "^-?\\d{4,}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-011"
+       ]
+      }
+     },
+     "required": [
+      "recordedTime",
+      "selfDischargingRate"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "selfDischargingRate": {
+        "anyOf": [
+         {
+          "type": "object",
+          "properties": {
+           "unit": {
+            "anyOf": [
+             {
+              "enum": [
+               "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "enum": [
+                "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-010"
+            ]
+           },
+           "value": {
+            "anyOf": [
+             {
+              "anyOf": [
+               {
+                "type": "string",
+                "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+               },
+               {
+                "type": "number"
+               }
+              ]
+             },
+             {
+              "type": "array",
+              "items": {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              "minItems": 1,
+              "maxItems": 1
+             }
+            ],
+            "x-ec-codes": [
+             "SEM-COM-MSG-009"
+            ]
+           }
+          },
+          "required": [
+           "unit",
+           "value"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "unit": {
+             "anyOf": [
+              {
+               "enum": [
+                "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+               ]
+              },
+              {
+               "type": "array",
+               "items": {
+                "enum": [
+                 "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#percent"
+                ]
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-010"
+             ]
+            },
+            "value": {
+             "anyOf": [
+              {
+               "anyOf": [
+                {
+                 "type": "string",
+                 "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                },
+                {
+                 "type": "number"
+                }
+               ]
+              },
+              {
+               "type": "array",
+               "items": {
+                "anyOf": [
+                 {
+                  "type": "string",
+                  "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+                 },
+                 {
+                  "type": "number"
+                 }
+                ]
+               },
+               "minItems": 1,
+               "maxItems": 1
+              }
+             ],
+             "x-ec-codes": [
+              "SEM-COM-MSG-009"
+             ]
+            }
+           },
+           "required": [
+            "unit",
+            "value"
+           ]
+          },
+          "minItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-BAT-MSG-080"
+        ]
+       },
+       "recordedTime": {
+        "anyOf": [
+         {
+          "type": "string",
+          "pattern": "^-?\\d{4,}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+         },
+         {
+          "type": "array",
+          "items": {
+           "type": "string",
+           "pattern": "^-?\\d{4,}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})?$"
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-011"
+        ]
+       }
+      },
+      "required": [
+       "recordedTime",
+       "selfDischargingRate"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-078"
+   ]
+  },
+  "ohmicResistance": {
+   "anyOf": [
+    {
+     "type": "object",
+     "properties": {
+      "unit": {
+       "anyOf": [
+        {
+         "enum": [
+          "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-010"
+       ]
+      },
+      "value": {
+       "anyOf": [
+        {
+         "anyOf": [
+          {
+           "type": "string",
+           "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+          },
+          {
+           "type": "number"
+          }
+         ]
+        },
+        {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         "minItems": 1,
+         "maxItems": 1
+        }
+       ],
+       "x-ec-codes": [
+        "SEM-COM-MSG-009"
+       ]
+      }
+     },
+     "required": [
+      "unit",
+      "value"
+     ]
+    },
+    {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "unit": {
+        "anyOf": [
+         {
+          "enum": [
+           "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "enum": [
+            "https://repository.product-passport.ec.europa.eu/core/vocabs/measurement-unit#ohm"
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-010"
+        ]
+       },
+       "value": {
+        "anyOf": [
+         {
+          "anyOf": [
+           {
+            "type": "string",
+            "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+           },
+           {
+            "type": "number"
+           }
+          ]
+         },
+         {
+          "type": "array",
+          "items": {
+           "anyOf": [
+            {
+             "type": "string",
+             "pattern": "^([+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?|[+-]?INF|NaN)$"
+            },
+            {
+             "type": "number"
+            }
+           ]
+          },
+          "minItems": 1,
+          "maxItems": 1
+         }
+        ],
+        "x-ec-codes": [
+         "SEM-COM-MSG-009"
+        ]
+       }
+      },
+      "required": [
+       "unit",
+       "value"
+      ]
+     },
+     "minItems": 1,
+     "maxItems": 1
+    }
+   ],
+   "x-ec-codes": [
+    "SEM-BAT-MSG-081"
+   ]
+  }
+ },
+ "required": [
+  "batteryStatus",
+  "capacityFade",
+  "contentSpecificationIds",
+  "expectedLifetimeCyclesRest",
+  "expectedLifetimeYears",
+  "internalResistance",
+  "internalResistanceIncrease",
+  "ohmicResistance",
+  "powerCapability",
+  "powerFade",
+  "ratedCapacity",
+  "remainingCapacity",
+  "remainingPowerCapability",
+  "remainingRoundTripEfficiency",
+  "selfDischargingRateSet"
+ ],
+ "x-dpp-gaps": []
+}

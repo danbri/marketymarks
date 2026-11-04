@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const www = fileURLToPath(new URL('../www/dpp/', import.meta.url));
 const targets = [];
-for (const dir of ['components', 'components/profiles', 'lib', 'check', 'view', 'token', 'crosswalk', 'sign']) {
+for (const dir of ['components', 'components/profiles', 'lib', 'check', 'view', 'token', 'crosswalk', 'sign', 'author']) {
   for (const f of await readdir(www + dir).catch(() => [])) if (/\.(mjs|html|json)$/.test(f)) targets.push(path.join(dir, f));
 }
 const h = createHash('sha256');

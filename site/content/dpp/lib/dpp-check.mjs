@@ -184,7 +184,7 @@ export class Checker {
   async toRDF(passport, profile) {
     const ctx = await this.contextFor(profile);
     const doc = { '@context': ctx, '@type': 'dpp:DigitalProductPassport', ...passport };
-    if (passport.digitalProductPassportId) doc['@id'] = passport.digitalProductPassportId;
+    if (typeof passport.digitalProductPassportId === 'string') doc['@id'] = passport.digitalProductPassportId;
     return this.F.jsonldToRdf(JSON.stringify(doc));
   }
 
@@ -219,7 +219,13 @@ export class Checker {
     if (!passport || typeof passport !== 'object' || Array.isArray(passport)) throw new Error('A passport must be a JSON object.');
     const notes = [];
     if (!profile.ids.length) notes.push('No contentSpecificationIds: checked against the core rules only.');
-    const data = await this.toRDF(passport, profile);
+    let data;
+    try { data = await this.toRDF(passport, profile); }
+    catch (e) {
+      // not even convertible with the EC context (e.g. a number where an identifier must be): a failure, not a crash
+      return { verdict: 'fails', problems: [{ code: 'JSON-LD', explanation: `The passport could not be read with the EC JSON-LD context: ${e.message}`, field: null, value: null, rule: null, focus: null }],
+        notes, view, profile: { product: profile.product, sub: profile.sub }, triples: 0, checkedNodes: 0, shapeFiles: [], ms: Date.now() - t0 };
+    }
     const sh = await this.shapes(profile, view);
     const main = await F.shaclValidate(await F.datasetMerge(data, await this.vocabularies()), sh.main);
     const unk = sh.unknownFields ? await F.shaclValidate(data, sh.unknownFields) : { conforms: true, report: null };

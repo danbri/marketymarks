@@ -33,6 +33,11 @@ export function subgroupOf(passport) {
   return ['evb', 'ind', 'lmt'].find((s) => ids.some((x) => String(x).includes(`/subgroup/${s}/`))) || null;
 }
 
+// Look up a key in the vocabulary tables as an own property only: a JSON key such as
+// "constructor" or "__proto__" must not match Object.prototype (found by the Lean model).
+export const fieldOf = (terms, key) => (terms && Object.hasOwn(terms.fields, key) ? terms.fields[key] : undefined);
+export const codeOf = (terms, iri) => (terms && typeof iri === 'string' && Object.hasOwn(terms.codes, iri) ? terms.codes[iri] : undefined);
+
 // --- languages -------------------------------------------------------------
 const LANG_TAG = /^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/;
 // keep only valid BCP 47 tags (a POSIX locale such as "C" or "C.UTF-8" would make Intl throw); English as the fallback
@@ -92,7 +97,7 @@ export function classify(key, v, terms) {
   if (typeof v === 'boolean') return 'boolean';
   if (typeof v === 'number') return 'number';
   if (typeof v === 'string') {
-    if (terms?.codes[v]) return 'code';
+    if (codeOf(terms, v)) return 'code';
     if (/Country$/.test(key) && /^[A-Z]{3}$/.test(v)) return 'country';
     if (DATE_TIME.test(v) || DATE.test(v) || YEAR_MONTH.test(v)) return 'date';
     if (/^(https?:|mailto:)/.test(v)) return 'link';
@@ -107,11 +112,11 @@ export function classify(key, v, terms) {
 
 const numberFmt = (n, langs) => { try { return new Intl.NumberFormat(cleanLangs(langs), { maximumFractionDigits: 6 }).format(n); } catch { return String(n); } };
 export function unitSymbol(iri, terms) {
-  const c = terms?.codes[iri];
+  const c = codeOf(terms, iri);
   return c ? (c.symbol || c.label) : String(iri).replace(/.*[#/]/, '');
 }
 export function codeLabel(iri, terms) {
-  const c = terms?.codes[iri];
+  const c = codeOf(terms, iri);
   return c ? c.label : String(iri).replace(/.*[#/]/, '');
 }
 export function formatDate(v, langs = userLangs()) {
@@ -158,14 +163,14 @@ export function textOf(key, v, terms, langs = userLangs()) {
 }
 
 export function fieldLabel(key, terms) {
-  let l = terms?.fields[key]?.label || key;
+  let l = fieldOf(terms, key)?.label || key;
   // some EC core labels are just the camelCase field name: split them into words
   if (!/\s/.test(l) && /[a-z][A-Z]/.test(l)) l = l.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase().replace(/\bdpp\b/g, 'DPP');
   return l.charAt(0).toUpperCase() + l.slice(1);
 }
 // which audience may see a field: 'pub' or restricted levels
 export function accessOf(key, terms) {
-  const a = terms?.fields[key]?.access || [];
+  const a = fieldOf(terms, key)?.access || [];
   return a.includes('pub') ? 'pub' : a.filter((x) => x !== 'pub');
 }
 export const ACCESS_LABELS = {
@@ -181,7 +186,7 @@ export const ACCESS_LABELS = {
 // their parent; fields the vocabulary doesn't know are shown only in 'all'.
 export function visibleTo(key, audience, terms) {
   if (!audience || audience === 'all') return true;
-  const f = terms?.fields[key];
+  const f = fieldOf(terms, key);
   if (!f) return false;                       // not in the EC vocabulary: only in 'all'
   const a = f.access || [];
   if (!a.length) return true;                 // core and structural fields (ids, unit, value, …) carry no level: they go with their parent
