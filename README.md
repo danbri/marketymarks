@@ -23,3 +23,13 @@ jsDelivr.
 - `site/content/dpp/ec/1.0.0/`: unchanged copy of the EC files (EUPL-1.2, see `NOTICE.md`)
 - `site/test/dpp-check.test.mjs`: every EC sample must pass and every
   deliberately broken passport must fail (`cd site && npm test`; also run in CI before deploy)
+
+## Command line (`site/bin/dpp.mjs`)
+
+Run `cd site && npm install`, then `npx dpp …`:
+- `check`, `show`, `self-test`;
+- `keygen`, `sign`, `verify`;
+- `token`;
+- `serve` (reference passport host) and `mock-registry`.
+
+`npx dpp` alone prints the usage.
