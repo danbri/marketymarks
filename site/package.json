@@ -6,12 +6,13 @@
     "build": "node tools/build-dpp-terms.mjs && node tools/build-dpp-shapes.mjs && eleventy && node tools/copy-engine.mjs && node tools/stamp-assets.mjs",
     "serve": "eleventy --serve",
     "watch": "eleventy --watch",
-    "test": "node test/dpp-model.test.mjs && node test/dpp-auth.test.mjs && node test/dpp-check.test.mjs && node test/dpp-vc.test.mjs && node test/dpp-cli.test.mjs && node test/dpp-schemaorg.test.mjs",
+    "test": "node test/dpp-model.test.mjs && node test/dpp-auth.test.mjs && node test/dpp-check.test.mjs && node test/dpp-vc.test.mjs && node test/dpp-cli.test.mjs && node test/dpp-schemaorg.test.mjs && node test/dpp-compiler.test.mjs",
     "test:servers": "node test/dpp-servers.test.mjs && node test/dpp-registry-client.test.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "@factoidal/core": "^0.30.0"
+    "@factoidal/core": "^0.30.0",
+    "ajv": "^8.17.1"
   },
   "bin": {
     "dpp": "bin/dpp.mjs"
