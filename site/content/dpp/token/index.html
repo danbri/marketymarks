@@ -1,0 +1,134 @@
+---
+permalink: dpp/token/index.html
+templateEngineOverride: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPP Token Check</title>
+<style>
+  :root { --bg: #fff; --ink: #111; --muted: #555; --line: #ddd; --edge: #767676; --soft: #fafafa; --ok: #075a32; --bad: #a3200f; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --ink: #e8e8e8; --muted: #b3b3b3; --line: #333; --edge: #8a8a8a; --soft: #1a1a1a; --ok: #6fd3a0; --bad: #ff8a7a; } }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--ink); }
+  body { font: 15px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; max-width: 60rem; margin: 3rem auto 4rem; padding: 0 16px; }
+  a { color: inherit; text-underline-offset: 3px; }
+  header { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; }
+  h1, h2 { font-size: 1rem; margin: 0 0 .75rem; }
+  header a, .lede, label, .muted { color: var(--muted); }
+  .panel { border-top: 1px solid var(--line); padding: 1rem 0; }
+  .grid { display: grid; grid-template-columns: max-content 1fr; gap: .5rem .8rem; align-items: center; }
+  input, select, textarea, button { font: inherit; color: var(--ink); }
+  input, select, textarea { background: var(--bg); border: 1px solid var(--edge); padding: 4px 6px; width: 100%; }
+  textarea { min-height: 7rem; font-size: 12px; background: var(--soft); resize: vertical; }
+  textarea::placeholder, input::placeholder { color: var(--muted); opacity: 1; }
+  button { background: var(--bg); border: 1px solid var(--ink); padding: 5px 12px; cursor: pointer; width: auto; }
+  button.primary { background: var(--ink); color: var(--bg); }
+  .row { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin: .6rem 0; }
+  .row select { width: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 5px 8px 5px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 400; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); font-weight: 700; }
+  .verdict { font-weight: 700; margin-bottom: .6rem; }
+  pre { background: var(--soft); padding: .6rem; overflow: auto; font-size: 12px; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header><h1>dpp token check <span style="font-weight:400;color:var(--muted)">(experimental)</span></h1><a href="../">marketymarks / dpp</a></header>
+<p class="lede">When the EU DPP Registry fetches the protected part of a passport from your server, it sends an access token. Your server must check it in the 13 steps of the EC's self-hosting authentication guide (chapter 7.1). Paste a token here to see each step. Nothing leaves your browser.</p>
+
+<div class="panel">
+  <h2>1. Your server</h2>
+  <div class="grid">
+    <label for="env">EC environment</label>
+    <select id="env"><option value="acceptance">Acceptance (auth.acc.product-passport.ec.europa.eu)</option><option value="production">Production (auth.product-passport.ec.europa.eu)</option></select>
+    <label for="origin">Your HTTPS origin</label>
+    <input id="origin" value="https://dpp.example.com" spellcheck="false">
+    <label for="org">Expected org-identifier</label>
+    <input id="org" value="ORG-ACME-123" spellcheck="false" placeholder="from your local access policy for this passport">
+  </div>
+</div>
+
+<div class="panel">
+  <h2>2. Token and keys</h2>
+  <div class="row">
+    <button id="make" type="button">Make a test token</button>
+    <select id="variant" aria-label="Kind of test token">
+      <option value="valid">valid</option><option value="expired">expired</option><option value="long">lifetime over 120 s</option>
+      <option value="aud">wrong audience</option><option value="scope">wrong scope</option><option value="org">wrong org-identifier</option>
+      <option value="principal">principal_type missing</option><option value="rri">malformed requestor identifiers</option>
+      <option value="prod">issued by the other environment</option><option value="sig">bad signature</option><option value="typ">typ JWT</option>
+    </select>
+    <span class="muted">signed with a key made in this page; its public key goes into the JWKS box</span>
+  </div>
+  <label for="token">Access token (compact JWT)</label>
+  <textarea id="token" spellcheck="false" placeholder="eyJ0eXAiOiJhdCtqd3QiLCJhbGciOiJFUzM4NCIs…"></textarea>
+  <label for="jwks">JWKS of the EC DPP Authentication Service</label>
+  <textarea id="jwks" spellcheck="false" placeholder='{"keys":[{"kty":"EC","crv":"P-384","kid":"…","x":"…","y":"…"}]}'></textarea>
+  <p class="muted">Your server must fetch the JWKS from the configured EC address and cache it; never pin a key from a guide or a message. Paste the current JWKS here, or make a test token.</p>
+  <div class="row"><button id="run" class="primary" type="button">Check token</button></div>
+</div>
+
+<div class="panel" id="out" hidden></div>
+
+<footer>Implements the "DPP Registry Self-Hosting Authentication Guide" (EC, 2026), chapters 6–7. A test aid, not a substitute for testing with tokens issued by the EC Acceptance environment. Not an official EC tool.</footer>
+
+<script type="module">
+import { createChecker, createTestIssuer, ENVIRONMENTS, STEPS, peek } from '../lib/dpp-auth.mjs';
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let testIssuer;
+
+$('make').addEventListener('click', async () => {
+  testIssuer ??= await createTestIssuer({ kid: 'test-p384-in-page' });
+  const env = $('env').value, other = env === 'acceptance' ? 'production' : 'acceptance';
+  const now = Math.floor(Date.now() / 1000);
+  const base = testIssuer.claims({ issuer: ENVIRONMENTS[env].issuer, origin: $('origin').value, org: $('org').value });
+  const v = $('variant').value;
+  const over = {
+    expired: { iat: now - 600, exp: now - 480 }, long: { exp: now + 600 }, aud: { aud: 'https://someone-else.example.com' },
+    scope: { scope: 'dpp:registry:read dpp:registry:write' }, org: { resource_requestor_identifiers: [{ type: 'ORG_IDENTIFIER', value: 'ORG-CONTOSO-456' }] },
+    principal: { principal_type: undefined }, rri: { resource_requestor_identifiers: [{ type: 'ORG_IDENTIFIER' }] },
+    prod: { iss: ENVIRONMENTS[other].issuer },
+  }[v] || {};
+  let t = await testIssuer.sign({ ...base, ...over }, v === 'typ' ? { typ: 'JWT' } : {});
+  if (v === 'sig') t = t.slice(0, -6) + (t.endsWith('AAAAAA') ? 'BBBBBB' : 'AAAAAA');
+  $('token').value = t;
+  $('jwks').value = JSON.stringify(testIssuer.jwks, null, 1);
+  run();
+});
+
+async function run() {
+  const out = $('out'); out.hidden = false;
+  let jwks;
+  try { jwks = JSON.parse($('jwks').value || '{"keys":[]}'); } catch { out.innerHTML = '<p class="bad">The JWKS is not valid JSON.</p>'; return; }
+  let checker;
+  try { checker = createChecker({ environment: $('env').value, origin: $('origin').value.trim(), jwks }); }
+  catch (e) { out.innerHTML = `<p class="bad">${esc(e.message)}</p>`; return; }
+  const token = $('token').value.trim();
+  const d = await checker.decide({ https: true, authorization: token ? `Bearer ${token}` : null,
+    expectedRequestor: $('org').value.trim() ? { type: 'ORG_IDENTIFIER', value: $('org').value.trim() } : null });
+  const reached = new Map(d.steps.map((s) => [s.step, s]));
+  const what = { 200: d.representation === 'full' ? '200 OK: return the public and protected representation' : '200 OK: return the public representation only',
+    401: '401 Unauthorized: return no passport content (do not fall back to the public representation)',
+    403: '403 Forbidden: return no protected content and do not reveal the expected requestor', reject: 'Reject the request (not HTTPS)' }[d.status];
+  const rows = STEPS.map(([n, label, fail]) => {
+    const s = reached.get(n);
+    const mark = !s ? '<span class="muted">not reached</span>' : s.ok ? '<span class="ok">passed</span>' : `<span class="bad">failed → ${fail}</span>`;
+    return `<tr><td>${n}</td><td>${esc(label)}</td><td>${mark}${s && !s.ok ? `<div>${esc(s.detail)}</div>` : ''}</td></tr>`;
+  }).join('');
+  const p = token ? peek(token) : null;
+  out.innerHTML = `<div class="verdict ${d.status === 200 ? 'ok' : 'bad'}">${esc(what)}</div>
+    ${d.wwwAuthenticate ? `<p class="muted">Response header: WWW-Authenticate: ${esc(d.wwwAuthenticate)}</p>` : ''}
+    <table><thead><tr><th>Step</th><th>Check</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table>
+    ${p ? `<h2 style="margin-top:1rem">Decoded (not trusted until step 5 passes)</h2><pre>${esc(JSON.stringify(p, null, 2))}</pre>` : ''}`;
+}
+$('run').addEventListener('click', run);
+</script>
+</body>
+</html>
