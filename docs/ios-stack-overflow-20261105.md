@@ -45,8 +45,20 @@ The likely reason is that cold wasm uses more stack than warmed-up wasm. This wa
 - Node, old and new checker, 41 passports x 5 views: 205 compared, 0 different (verdict, problems, notes).
 - Not tested: a real iPhone.
 
-## Open work in Factoidal
+## Factoidal fixes
 
-- Find why `REPLACE` with this pattern uses so much stack (`L4Factoidal/SPARQL/Expr.lean` imports the regex modules).
-  Any SHACL `sh:pattern` or SPARQL regex over long text can have the same fault.
-- Reduce the stack that engine start needs. The site cannot fix this cause.
+- **0.31.0** (https://github.com/danbri/factoidal-core/releases/tag/v0.31.0). `cmatchE`, the ordered regex matcher, nested
+  frames for each character of a star; a star over one character class is now a loop. `ofHex` decoded a test fixture
+  at engine start, 1,024 frames deep; it is now a loop. A star over a group still recurses.
+- **0.31.1** (https://github.com/danbri/factoidal-core/pull/356, in progress). Two more fixtures recursed at engine start:
+  `swapLabelGo` and `bytesOfHexLiteral`.
+
+Live site on 0.31.0, WebKit, 100 checks at each limit:
+
+| Stack limit | Result |
+|---|---|
+| 5 MB, 1 MB, 768 KB | 0 errors, same verdicts |
+| 640 KB | the engine does not start |
+
+A native Lean test does not gate stack use: the old matcher passed it. The gate is `npm/factoidal/test/stack-use.test.mjs`,
+which runs the wasm. Not tested: a real iPhone.
