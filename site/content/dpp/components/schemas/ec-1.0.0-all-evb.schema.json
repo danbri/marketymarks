@@ -323,7 +323,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -577,7 +576,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -824,7 +822,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -1020,7 +1017,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -1340,7 +1336,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -1732,7 +1727,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -2085,7 +2079,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -2328,7 +2321,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -2579,7 +2571,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -2775,7 +2766,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -2979,7 +2969,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -3175,7 +3164,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -3542,7 +3530,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -3724,7 +3711,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -4027,7 +4013,6 @@
          },
          "propertyNames": {
           "enum": [
-           "@context",
            "DigitalProductPassport",
            "batchNumber",
            "batteryCapacity",
@@ -4263,7 +4248,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -4394,7 +4378,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -4690,7 +4673,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -4926,7 +4908,6 @@
            },
            "propertyNames": {
             "enum": [
-             "@context",
              "DigitalProductPassport",
              "batchNumber",
              "batteryCapacity",
@@ -5057,7 +5038,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -5361,7 +5341,6 @@
          },
          "propertyNames": {
           "enum": [
-           "@context",
            "DigitalProductPassport",
            "batchNumber",
            "batteryCapacity",
@@ -5597,7 +5576,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -5728,7 +5706,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -6024,7 +6001,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -6260,7 +6236,6 @@
            },
            "propertyNames": {
             "enum": [
-             "@context",
              "DigitalProductPassport",
              "batchNumber",
              "batteryCapacity",
@@ -6391,7 +6366,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -6695,7 +6669,6 @@
          },
          "propertyNames": {
           "enum": [
-           "@context",
            "DigitalProductPassport",
            "batchNumber",
            "batteryCapacity",
@@ -6931,7 +6904,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -7062,7 +7034,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -7358,7 +7329,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -7594,7 +7564,6 @@
            },
            "propertyNames": {
             "enum": [
-             "@context",
              "DigitalProductPassport",
              "batchNumber",
              "batteryCapacity",
@@ -7725,7 +7694,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -7916,7 +7884,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -8098,7 +8065,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -8288,7 +8254,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -8535,7 +8500,6 @@
              },
              "propertyNames": {
               "enum": [
-               "@context",
                "DigitalProductPassport",
                "batchNumber",
                "batteryCapacity",
@@ -8771,7 +8735,6 @@
               },
               "propertyNames": {
                "enum": [
-                "@context",
                 "DigitalProductPassport",
                 "batchNumber",
                 "batteryCapacity",
@@ -8968,7 +8931,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -9215,7 +9177,6 @@
               },
               "propertyNames": {
                "enum": [
-                "@context",
                 "DigitalProductPassport",
                 "batchNumber",
                 "batteryCapacity",
@@ -9451,7 +9412,6 @@
                },
                "propertyNames": {
                 "enum": [
-                 "@context",
                  "DigitalProductPassport",
                  "batchNumber",
                  "batteryCapacity",
@@ -9727,7 +9687,6 @@
          },
          "propertyNames": {
           "enum": [
-           "@context",
            "DigitalProductPassport",
            "batchNumber",
            "batteryCapacity",
@@ -9963,7 +9922,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -10093,7 +10051,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -10346,7 +10303,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -10582,7 +10538,6 @@
            },
            "propertyNames": {
             "enum": [
-             "@context",
              "DigitalProductPassport",
              "batchNumber",
              "batteryCapacity",
@@ -10712,7 +10667,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -10934,7 +10888,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -11116,7 +11069,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -11306,7 +11258,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -11488,7 +11439,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -11678,7 +11628,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -11860,7 +11809,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -12123,7 +12071,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -12333,7 +12280,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -12617,7 +12563,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -12901,7 +12846,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -13142,7 +13086,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -13352,7 +13295,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -13570,7 +13512,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -13780,7 +13721,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -13998,7 +13938,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -14208,7 +14147,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -14426,7 +14364,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -14636,7 +14573,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -14826,7 +14762,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -15008,7 +14943,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -15197,7 +15131,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -15379,7 +15312,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -15775,7 +15707,6 @@
              },
              "propertyNames": {
               "enum": [
-               "@context",
                "DigitalProductPassport",
                "batchNumber",
                "batteryCapacity",
@@ -16004,7 +15935,6 @@
               },
               "propertyNames": {
                "enum": [
-                "@context",
                 "DigitalProductPassport",
                 "batchNumber",
                 "batteryCapacity",
@@ -16153,7 +16083,6 @@
          },
          "propertyNames": {
           "enum": [
-           "@context",
            "DigitalProductPassport",
            "batchNumber",
            "batteryCapacity",
@@ -16428,7 +16357,6 @@
               },
               "propertyNames": {
                "enum": [
-                "@context",
                 "DigitalProductPassport",
                 "batchNumber",
                 "batteryCapacity",
@@ -16657,7 +16585,6 @@
                },
                "propertyNames": {
                 "enum": [
-                 "@context",
                  "DigitalProductPassport",
                  "batchNumber",
                  "batteryCapacity",
@@ -16806,7 +16733,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -16936,7 +16862,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -17213,7 +17138,6 @@
               },
               "propertyNames": {
                "enum": [
-                "@context",
                 "DigitalProductPassport",
                 "batchNumber",
                 "batteryCapacity",
@@ -17442,7 +17366,6 @@
                },
                "propertyNames": {
                 "enum": [
-                 "@context",
                  "DigitalProductPassport",
                  "batchNumber",
                  "batteryCapacity",
@@ -17591,7 +17514,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -17866,7 +17788,6 @@
                },
                "propertyNames": {
                 "enum": [
-                 "@context",
                  "DigitalProductPassport",
                  "batchNumber",
                  "batteryCapacity",
@@ -18095,7 +18016,6 @@
                 },
                 "propertyNames": {
                  "enum": [
-                  "@context",
                   "DigitalProductPassport",
                   "batchNumber",
                   "batteryCapacity",
@@ -18244,7 +18164,6 @@
            },
            "propertyNames": {
             "enum": [
-             "@context",
              "DigitalProductPassport",
              "batchNumber",
              "batteryCapacity",
@@ -18374,7 +18293,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -18653,7 +18571,6 @@
          },
          "propertyNames": {
           "enum": [
-           "@context",
            "DigitalProductPassport",
            "batchNumber",
            "batteryCapacity",
@@ -18882,7 +18799,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -19011,7 +18927,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -19285,7 +19200,6 @@
           },
           "propertyNames": {
            "enum": [
-            "@context",
             "DigitalProductPassport",
             "batchNumber",
             "batteryCapacity",
@@ -19514,7 +19428,6 @@
            },
            "propertyNames": {
             "enum": [
-             "@context",
              "DigitalProductPassport",
              "batchNumber",
              "batteryCapacity",
@@ -19643,7 +19556,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -19882,7 +19794,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -20064,7 +19975,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -20254,7 +20164,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -20436,7 +20345,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -20626,7 +20534,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -20808,7 +20715,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -20998,7 +20904,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -21180,7 +21085,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -21444,7 +21348,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -21640,7 +21543,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -21842,7 +21744,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -22024,7 +21925,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -22214,7 +22114,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -22396,7 +22295,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -22586,7 +22484,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -22768,7 +22665,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -22958,7 +22854,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -23140,7 +23035,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -23330,7 +23224,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -23512,7 +23405,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -23702,7 +23594,6 @@
      },
      "propertyNames": {
       "enum": [
-       "@context",
        "DigitalProductPassport",
        "batchNumber",
        "batteryCapacity",
@@ -23884,7 +23775,6 @@
       },
       "propertyNames": {
        "enum": [
-        "@context",
         "DigitalProductPassport",
         "batchNumber",
         "batteryCapacity",
@@ -24053,7 +23943,6 @@
  },
  "propertyNames": {
   "enum": [
-   "@context",
    "DigitalProductPassport",
    "batchNumber",
    "batteryCapacity",

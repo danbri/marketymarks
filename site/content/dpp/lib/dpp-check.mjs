@@ -88,6 +88,30 @@ async function parseAll(F, load, files) {
   return ds;
 }
 
+// Limits on input, checked before the engine runs. The EC model is about 4 levels deep. Without
+// these, deep nesting freezes the page (a check took 44 s at depth 100, over 2 minutes at 200) and
+// long lists overflow the stack (about 4,000 items in Node, fewer on phones).
+export const LIMITS = { depth: 16, listItems: 2000, values: 50000 };
+
+// Walks the passport without recursion. Returns { keyword } for a JSON-LD key, { tooBig } for an
+// input over the limits, or {}. EC passport JSON has no '@' keys, and they can hide data from the rules.
+export function inspectInput(passport) {
+  const stack = [[passport, 1]]; let values = 0;
+  while (stack.length) {
+    const [v, depth] = stack.pop();
+    if (!v || typeof v !== 'object') continue;
+    if (depth > LIMITS.depth) return { tooBig: `nesting deeper than ${LIMITS.depth} levels` };
+    const isList = Array.isArray(v);
+    if (isList && v.length > LIMITS.listItems) return { tooBig: `a list of more than ${LIMITS.listItems} items` };
+    for (const k of Object.keys(v)) {
+      if (++values > LIMITS.values) return { tooBig: `more than ${LIMITS.values} values` };
+      if (!isList && k.startsWith('@')) return { keyword: k };
+      stack.push([v[k], depth + 1]);
+    }
+  }
+  return {};
+}
+
 export class Checker {
   constructor(F, load) { this.F = F; this.load = load; this.cache = {}; }
 
@@ -227,6 +251,11 @@ export class Checker {
     const F = this.F, t0 = Date.now();
     if (!passport || typeof passport !== 'object' || Array.isArray(passport)) throw new Error('A passport must be a JSON object.');
     const notes = [];
+    const early = (verdict, problems, note) => ({ verdict, problems, notes: note ? [note] : [], view,
+      profile: { product: profile.product, sub: profile.sub }, triples: 0, checkedNodes: 0, shapeFiles: [], ms: Date.now() - t0 });
+    const input = inspectInput(passport);
+    if (input.keyword) return early('fails', [{ code: 'JSON-LD-KEYWORD', explanation: `EC passport JSON must not contain the JSON-LD keyword ${input.keyword}. It can change what the rules see.`, field: input.keyword, value: null, rule: null, focus: null }]);
+    if (input.tooBig) return early('not-checked', [], `This input is too large to check here: ${input.tooBig}. This is not a pass.`);
     if (!profile.ids.length) notes.push('No contentSpecificationIds: checked against the core rules only.');
     let data;
     try { data = await this.toRDF(passport, profile); }
@@ -277,6 +306,10 @@ export class Checker {
       ['names no EC rule set (core only)', { ...base, contentSpecificationIds: [] }],
     ];
     for (const [name, passport] of broken) cases.push({ kind: 'broken', name, passport, view: 'pub', expected: 'fails' });
+    cases.push({ kind: 'broken', name: 'JSON-LD keyword that hides data', passport: { ...base, '@included': [{ batteryCategory: 'nope' }] }, view: 'pub', expected: 'fails' });
+    { const deep = {}; let d = deep; for (let i = 0; i < 300; i++) { d.a = {}; d = d.a; }
+      cases.push({ kind: 'broken', name: 'nesting too deep to check', passport: { ...base, x: deep }, view: 'pub', expected: 'not-checked' }); }
+    cases.push({ kind: 'broken', name: 'list too long to check', passport: { ...base, hazardousSubstances: Array.from({ length: 5000 }, (_, i) => 's' + i) }, view: 'pub', expected: 'not-checked' });
     { const { contentSpecificationIds: _, ...noSpec } = JSON.parse(await this.load('product/batteries/subgroup/evb/1.0.0/tests/conforms/res1-batteries-evb.json'));
       cases.push({ kind: 'broken', name: 'restricted view naming no rule set', passport: noSpec, view: 'res1', expected: 'not-checked' }); }
     const out = [];
