@@ -26,6 +26,11 @@ const SH = 'http://www.w3.org/ns/shacl#';
 const DPP_TYPE = EC + 'core/vocabs/core-vocabulary#DigitalProductPassport';
 const UNKNOWN_FIELD_RULE = 'SEM-COM-MSG-013';
 const VIEWS = ['pub', 'res1', 'res2', 'res3'];
+const VALUE_AS_PATH = '(?value AS ?path)';
+const FIELD_IN_RULE = /\$this\s+(\S+)\s+\?value/;
+const ONE_TOKEN = /^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$|^<[^> ]+>$/;
+// A failure of the engine or the device, not of the passport: never report it as a passport problem.
+const ENGINE_FAULT = /call stack|too much recursion|engine did not load|out of memory|memory access out of bounds|unreachable/i;
 export const VIEW_LABELS = {
   all: 'Full passport (all fields)',
   pub: 'Public view',
@@ -133,14 +138,18 @@ export class Checker {
               FILTER(BOUND(?q2)) }`);  // never drop a rule whose rewrite failed
     // the same EC language-tag pattern in rules that were not moved (e.g. in nested shapes): report
     // ?value as the value, and take the field from the rule's own triple pattern ($this <field> ?value)
-    await shapes.update(`PREFIX sh: <${SH}>
+    // This runs in JS, not in a SPARQL REPLACE: that REPLACE overflowed the stack in WebKit at a 1 MB
+    // limit until the wasm warmed up (docs/ios-stack-overflow-20261105.md).
+    const langRules = await shapes.query(`PREFIX sh: <${SH}> SELECT DISTINCT ?q WHERE { ?c sh:select ?q . FILTER(CONTAINS(?q, "${VALUE_AS_PATH}")) }`);
+    const rewrites = langRules.map((r) => r.get('q').value).map((q) => {
+      const prop = FIELD_IN_RULE.exec(q)?.[1];
+      // use the extracted name only if it is one token; otherwise just report ?value
+      const sel = prop && ONE_TOKEN.test(prop) ? `?value (${prop} AS ?path)` : '?value';
+      return `(${JSON.stringify(q)} ${JSON.stringify(q.replaceAll(VALUE_AS_PATH, () => sel))})`;
+    });
+    if (rewrites.length) await shapes.update(`PREFIX sh: <${SH}>
       DELETE { ?c sh:select ?q } INSERT { ?c sh:select ?q2 }
-      WHERE { ?c sh:select ?q . FILTER(CONTAINS(?q, "(?value AS ?path)"))
-              BIND(REPLACE(?q, "^.*?\\\\$this\\\\s+(\\\\S+)\\\\s+\\\\?value.*$", "$1", "s") AS ?prop)
-              # use the extracted name only if it is one token; otherwise just report ?value
-              BIND(IF(REGEX(?prop, "^[A-Za-z][A-Za-z0-9_.-]*:[A-Za-z0-9_.-]+$|^<[^> ]+>$"), CONCAT("?value (", ?prop, " AS ?path)"), "?value") AS ?sel)
-              BIND(REPLACE(?q, "\\\\(\\\\?value AS \\\\?path\\\\)", ?sel) AS ?q2)
-              FILTER(BOUND(?q2) && CONTAINS(?q2, "SELECT")) }`);  // never delete a rule whose rewrite failed
+      WHERE { VALUES (?q ?q2) { ${rewrites.join(' ')} } ?c sh:select ?q }`);
     // workaround 1b: give shapes reached only via sh:node their own target
     await shapes.update(`PREFIX sh: <${SH}> INSERT { ?child sh:targetObjectsOf ?p } WHERE {
       ?ps sh:path ?p ; sh:node ?child . ?child sh:sparql ?c . FILTER(isIRI(?p)) }`);
@@ -222,6 +231,7 @@ export class Checker {
     let data;
     try { data = await this.toRDF(passport, profile); }
     catch (e) {
+      if (e instanceof RangeError || ENGINE_FAULT.test(e?.message || '')) throw e;
       // not even convertible with the EC context (e.g. a number where an identifier must be): a failure, not a crash
       return { verdict: 'fails', problems: [{ code: 'JSON-LD', explanation: `The passport could not be read with the EC JSON-LD context: ${e.message}`, field: null, value: null, rule: null, focus: null }],
         notes, view, profile: { product: profile.product, sub: profile.sub }, triples: 0, checkedNodes: 0, shapeFiles: [], ms: Date.now() - t0 };
