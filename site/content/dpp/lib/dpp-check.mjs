@@ -93,8 +93,11 @@ async function parseAll(F, load, files) {
 // long lists overflow the stack (about 4,000 items in Node, fewer on phones).
 export const LIMITS = { depth: 16, listItems: 2000, values: 50000 };
 
-// Walks the passport without recursion. Returns { keyword } for a JSON-LD key, { tooBig } for an
-// input over the limits, or {}. EC passport JSON has no '@' keys, and they can hide data from the rules.
+// Walks the passport without recursion. Returns { unsure } for JSON-LD the checker cannot be sure
+// about, { tooBig } for an input over the limits, or {}. JSON-LD is a valid passport format (EC
+// guides): @id, @type and a @context that names an EC context are fine. Other keywords, or any
+// other context, can change what the rules see, so the honest answer is "not checked", not a verdict.
+const isEcContext = (c) => (Array.isArray(c) ? c.length > 0 && c.every(isEcContext) : typeof c === 'string' && c.startsWith(EC) && c.endsWith('.jsonld'));
 export function inspectInput(passport) {
   const stack = [[passport, 1]]; let values = 0;
   while (stack.length) {
@@ -105,7 +108,11 @@ export function inspectInput(passport) {
     if (isList && v.length > LIMITS.listItems) return { tooBig: `a list of more than ${LIMITS.listItems} items` };
     for (const k of Object.keys(v)) {
       if (++values > LIMITS.values) return { tooBig: `more than ${LIMITS.values} values` };
-      if (!isList && k.startsWith('@')) return { keyword: k };
+      if (!isList && k.startsWith('@') && k !== '@id' && k !== '@type') {
+        if (k !== '@context') return { unsure: `the JSON-LD keyword ${k}` };
+        if (depth > 1 || !isEcContext(v[k])) return { unsure: 'a JSON-LD @context that is not an EC context' };
+        continue;
+      }
       stack.push([v[k], depth + 1]);
     }
   }
@@ -216,7 +223,9 @@ export class Checker {
   // Turn EC JSON into RDF with the right (flattened) EC context.
   async toRDF(passport, profile) {
     const ctx = await this.contextFor(profile);
-    const doc = { '@context': ctx, '@type': 'dpp:DigitalProductPassport', ...passport };
+    // a passport's own EC @context is replaced by the local copy (the EC address does not resolve)
+    const { '@context': _ownContext, ...fields } = passport;
+    const doc = { '@type': 'dpp:DigitalProductPassport', ...fields, '@context': ctx };
     if (typeof passport.digitalProductPassportId === 'string') doc['@id'] = passport.digitalProductPassportId;
     return this.F.jsonldToRdf(JSON.stringify(doc));
   }
@@ -254,7 +263,7 @@ export class Checker {
     const early = (verdict, problems, note) => ({ verdict, problems, notes: note ? [note] : [], view,
       profile: { product: profile.product, sub: profile.sub }, triples: 0, checkedNodes: 0, shapeFiles: [], ms: Date.now() - t0 });
     const input = inspectInput(passport);
-    if (input.keyword) return early('fails', [{ code: 'JSON-LD-KEYWORD', explanation: `EC passport JSON must not contain the JSON-LD keyword ${input.keyword}. It can change what the rules see.`, field: input.keyword, value: null, rule: null, focus: null }]);
+    if (input.unsure) return early('not-checked', [], `This passport uses ${input.unsure}, which can change what the rules see. This is not a pass and not a failure.`);
     if (input.tooBig) return early('not-checked', [], `This input is too large to check here: ${input.tooBig}. This is not a pass.`);
     if (!profile.ids.length) notes.push('No contentSpecificationIds: checked against the core rules only.');
     let data;
@@ -306,7 +315,10 @@ export class Checker {
       ['names no EC rule set (core only)', { ...base, contentSpecificationIds: [] }],
     ];
     for (const [name, passport] of broken) cases.push({ kind: 'broken', name, passport, view: 'pub', expected: 'fails' });
-    cases.push({ kind: 'broken', name: 'JSON-LD keyword that hides data', passport: { ...base, '@included': [{ batteryCategory: 'nope' }] }, view: 'pub', expected: 'fails' });
+    cases.push({ kind: 'broken', name: 'JSON-LD keyword that can hide data', passport: { ...base, '@included': [{ batteryCategory: 'nope' }] }, view: 'pub', expected: 'not-checked' });
+    cases.push({ kind: 'broken', name: 'a context that is not an EC context', passport: { ...base, '@context': { batteryCategory: 'urn:x:ignored' }, batteryCategory: 'nope' }, view: 'pub', expected: 'not-checked' });
+    cases.push({ kind: 'EC sample', name: 'the same sample as JSON-LD', passport: { '@context': EC + 'product/batteries/subgroup/evb/1.0.0/contexts/evb-context.jsonld', '@id': base.digitalProductPassportId, '@type': 'dpp:DigitalProductPassport', ...base }, view: 'pub', expected: 'passes' });
+    cases.push({ kind: 'broken', name: 'JSON-LD passport with a bad code', passport: { '@context': EC + 'core/contexts/core.jsonld', ...base, batteryCategory: EC + 'product/batteries/vocabs/battery-category#flyingCarBattery' }, view: 'pub', expected: 'fails' });
     { const deep = {}; let d = deep; for (let i = 0; i < 300; i++) { d.a = {}; d = d.a; }
       cases.push({ kind: 'broken', name: 'nesting too deep to check', passport: { ...base, x: deep }, view: 'pub', expected: 'not-checked' }); }
     cases.push({ kind: 'broken', name: 'list too long to check', passport: { ...base, hazardousSubstances: Array.from({ length: 5000 }, (_, i) => 's' + i) }, view: 'pub', expected: 'not-checked' });

@@ -131,7 +131,7 @@ export function compile(tree, terms, { id, title, context = {} } = {}) {
   }
   function nodeSchema(n, ctx = context) {
     // the unknown-field rule (when the passport shape has it) reaches every node of the passport
-    const s = { type: 'object', properties: {}, ...(closedEverywhere && { propertyNames: { enum: vocabKeys } }) };
+    const s = { type: 'object', properties: {}, ...(closedEverywhere && { propertyNames: { enum: ['@context', '@id', '@type', ...vocabKeys] } }) };
     const required = [];
     for (const [k, p] of Object.entries(n.props)) {
       s.properties[k] = propSchema(p, k, ctx);

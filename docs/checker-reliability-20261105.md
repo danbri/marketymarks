@@ -17,7 +17,7 @@ Page: https://marketymarks.com/dpp/check/ . See also `docs/ios-stack-overflow-20
 | Engine does not start | stack limit near or below 1 MB | yes, in emulation (fails at 960, 896 and 768 KB and below) | open, needs a Factoidal change; the page now reports it as an engine fault |
 | Page freezes | deep nesting: 3 s at depth 50, 44 s at depth 100, over 2 minutes at depth 200 | yes | guarded: over 16 levels gives "not checked" |
 | Check crashes | list of about 4,000 items or more in Node (fewer on phones, not measured) | yes | guarded: over 2,000 items gives "not checked" |
-| Wrong pass | `@included` in a passport hides content from the rules | yes | fixed: any `@` key fails with JSON-LD-KEYWORD |
+| Wrong pass | `@included` in a passport hides content from the rules | yes | fixed: gives "not checked" |
 
 ## Root causes that remain in Factoidal
 
@@ -32,4 +32,6 @@ Page: https://marketymarks.com/dpp/check/ . See also `docs/ios-stack-overflow-20
 - No test on a real iPhone or Android phone.
 - Memory on older phones is not measured. The engine is 31 MB of wasm.
 - The list limit (2,000) and depth limit (16) are chosen values, with margin below the measured faults.
-- A passport with `@context` or other `@` keys now fails. Use plain EC JSON.
+- JSON-LD passports are valid (EC guides). `@id`, `@type` and a `@context` naming an EC context are accepted; the local
+  EC context is used. Any other context, and keywords such as `@included`, `@graph` and `@reverse`, give "not checked".
+- Correction: fdf41d7 failed every `@` key. That was wrong, because it failed valid JSON-LD passports.
