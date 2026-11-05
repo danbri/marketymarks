@@ -110,7 +110,10 @@ export function inspectInput(passport) {
       if (++values > LIMITS.values) return { tooBig: `more than ${LIMITS.values} values` };
       if (!isList && k.startsWith('@') && k !== '@id' && k !== '@type') {
         if (k !== '@context') return { unsure: `the JSON-LD keyword ${k}` };
-        if (depth > 1 || !isEcContext(v[k])) return { unsure: 'a JSON-LD @context that is not an EC context' };
+        if (depth > 1 || !isEcContext(v[k])) {
+          const urls = [].concat(v[k]).filter((c) => typeof c === 'string');
+          return { unsure: urls.length ? `the remote JSON-LD context ${urls[0]}, which this checker does not fetch` : 'a JSON-LD @context that is not an EC context' };
+        }
         continue;
       }
       stack.push([v[k], depth + 1]);
@@ -265,6 +268,7 @@ export class Checker {
     const input = inspectInput(passport);
     if (input.unsure) return early('not-checked', [], `This passport uses ${input.unsure}, which can change what the rules see. This is not a pass and not a failure.`);
     if (input.tooBig) return early('not-checked', [], `This input is too large to check here: ${input.tooBig}. This is not a pass.`);
+    if (passport['@context']) notes.push(`The passport names a remote context (${[].concat(passport['@context'])[0]}). A reader must fetch it and trust it, and it can change or go away. This check used the local EC 1.0.0 copy.`);
     if (!profile.ids.length) notes.push('No contentSpecificationIds: checked against the core rules only.');
     let data;
     try { data = await this.toRDF(passport, profile); }

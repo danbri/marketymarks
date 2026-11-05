@@ -34,4 +34,5 @@ Page: https://marketymarks.com/dpp/check/ . See also `docs/ios-stack-overflow-20
 - The list limit (2,000) and depth limit (16) are chosen values, with margin below the measured faults.
 - JSON-LD passports are valid (EC guides). `@id`, `@type` and a `@context` naming an EC context are accepted; the local
   EC context is used. Any other context, and keywords such as `@included`, `@graph` and `@reverse`, give "not checked".
+- A remote `@context` is flagged in the notes: a reader must fetch and trust it, and it can change or go away.
 - Correction: fdf41d7 failed every `@` key. That was wrong, because it failed valid JSON-LD passports.
