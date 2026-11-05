@@ -50,15 +50,18 @@ The likely reason is that cold wasm uses more stack than warmed-up wasm. This wa
 - **0.31.0** (https://github.com/danbri/factoidal-core/releases/tag/v0.31.0). `cmatchE`, the ordered regex matcher, nested
   frames for each character of a star; a star over one character class is now a loop. `ofHex` decoded a test fixture
   at engine start, 1,024 frames deep; it is now a loop. A star over a group still recurses.
-- **0.31.1** (https://github.com/danbri/factoidal-core/pull/356, in progress). Two more fixtures recursed at engine start:
-  `swapLabelGo` and `bytesOfHexLiteral`.
+- **0.31.1** (https://github.com/danbri/factoidal-core/releases/tag/v0.31.1). Two more fixtures recursed at engine start:
+  `swapLabelGo` and `bytesOfHexLiteral`. They are now loops.
 
-Live site on 0.31.0, WebKit, 100 checks at each limit:
+Live site, WebKit, 100 checks at each limit:
 
-| Stack limit | Result |
-|---|---|
-| 5 MB, 1 MB, 768 KB | 0 errors, same verdicts |
-| 640 KB | the engine does not start |
+| Stack limit | 0.31.0 | 0.31.1 |
+|---|---|---|
+| 5 MB, 1 MB | 0 errors | 0 errors |
+| 768 KB | 0 errors | not rerun live |
+| 640 KB | engine does not start | 0 errors (candidate build, local) |
+| 512 KB, 384 KB | not tested live | 0 errors, same verdicts |
+| 256 KB | not tested live | engine does not start |
 
 A native Lean test does not gate stack use: the old matcher passed it. The gate is `npm/factoidal/test/stack-use.test.mjs`,
 which runs the wasm. Not tested: a real iPhone.
