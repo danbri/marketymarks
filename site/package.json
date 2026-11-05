@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "@factoidal/core": "^0.31.0",
+    "@factoidal/core": "^0.31.1",
     "ajv": "^8.17.1"
   },
   "bin": {
